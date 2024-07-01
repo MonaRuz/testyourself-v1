@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app"
+import { getFirestore} from 'firebase/firestore/lite';
 
 const firebaseConfig = {
     apiKey:import.meta.env.API_KEY,
@@ -6,8 +7,9 @@ const firebaseConfig = {
     projectId: import.meta.env.PROJECT_ID,
     storageBucket:import.meta.env.STORAGE_BUCKET,
     messagingSenderId: import.meta.env.MESSAGING_SENDER_ID,
-    appId: import.meta.envAPP_ID.
+    appId: import.meta.envAPP_ID,
   };
 
   const app = initializeApp(firebaseConfig);
-  export default app
+  const db=getFirestore(app)
+  export default db
