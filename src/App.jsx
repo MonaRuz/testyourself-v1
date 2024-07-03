@@ -3,8 +3,24 @@
 // import { useEffect } from "react"
 // import { useState } from "react"
 
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import Home from "./pages/Home";
+import Dashboard from "./pages/Dashboard";
+
+const router=createBrowserRouter([
+	{
+		path:"/",
+		element:<Home/>
+	},
+	{
+		path:"/dashboard",
+		element:<Dashboard/>
+	}
+])
+
+
 export default function App() {
-  // const[categories,setCategories]=useState({})
+
 	// async function getCategories(db) {
 	// 	const categoriesCol = collection(db, "categories")
 	// 	const citySnapshot = await getDocs(categoriesCol)
@@ -12,14 +28,6 @@ export default function App() {
 	// 	console.log(categories)
 	// 	setCategories(categories)
 	// }
-	// useEffect(()=>{
 
-  //   getCategories(db)
-  // },[])
-
-	return (
-		<div>
-			
-		</div>
-	)
+	return <RouterProvider router={router}/>
 }
