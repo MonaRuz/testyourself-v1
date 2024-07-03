@@ -1,5 +1,5 @@
-import Logout from "./Logout";
-import User from "./User";
+import Logout from "../features/authentication/Logout";
+import User from "../features/authentication/User";
 
 export default function Header() {
   return (
