@@ -9,7 +9,7 @@ export default function Home() {
 	return (
 		<div className='h-dvh bg-black px-3'>
 			<Logo />
-			<div className='text-purple-200 text-9xl flex justify-center my-5'>
+			<div className='text-purple-200 text-9xl flex justify-center mt-5 mb-10'>
 				<MdOutlineSchool />
 			</div>
 			<div>
