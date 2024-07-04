@@ -23,12 +23,12 @@ const router = createBrowserRouter([
 		element: <Home />,
 	},
 	{
-		path:"/login",
-		element:<Login/>
+		path: "/login",
+		element: <Login />,
 	},
 	{
-		path:"/register",
-		element:<Register/>
+		path: "/register",
+		element: <Register />,
 	},
 	{
 		element: <AppLayout />,
@@ -38,37 +38,42 @@ const router = createBrowserRouter([
 				element: <Dashboard />,
 			},
 			{
-				path:"/category-overview",
-				element:<CategoryOverview/>
+				path: "/new-category",
+				element: <NewCategory />,
 			},
 			{
-				path:"/new-category",
-				element:<NewCategory/>
-			},
-			{
-				path:"/edit-question",
-				element:<EditQuestion/>
-			},
-			{
-				path:"/new-question",
-				element:<NewQuestion/>
-			},
-			{
-				path:"/test",
-				children:[
+				path: "/category",
+				children: [
 					{
-						path:"/instructions",
-						element:<TestInstructions/>
+						path:"/category/overview",
+						element:<CategoryOverview />
 					},
 					{
-						path:"/category-test",
-						element:<Test/>
+						path: "/category/questionID/edit",
+						element: <EditQuestion />,
 					},
 					{
-						path:"/results",
-						element:<Results/>
-					}
-				]
+						path: "/category/new",
+						element: <NewQuestion />,
+					},
+				],
+			},
+			{
+				path: "/test",
+				children: [
+					{
+						path: "/test/instructions",
+						element: <TestInstructions />,
+					},
+					{
+						path: "/test/category-test",
+						element: <Test />,
+					},
+					{
+						path: "/test/results",
+						element: <Results />,
+					},
+				],
 			},
 		],
 	},

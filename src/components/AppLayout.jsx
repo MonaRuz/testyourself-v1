@@ -1,11 +1,13 @@
-import Box from "./Box"
+import { Outlet } from "react-router-dom"
 import Header from "./Header"
 
 export default function AppLayout() {
   return (
     <div>
       <Header/>
-      <Box/>
+      <main>
+        <Outlet/>
+      </main>
     </div>
   )
 }
