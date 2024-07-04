@@ -1,8 +1,11 @@
+import { useNavigate } from "react-router-dom"
 import Button from "../components/Button"
 import Logo from "../components/Logo"
 import { MdOutlineSchool } from "react-icons/md"
 
 export default function Home() {
+  const navigate=useNavigate()
+
 	return (
 		<div className='h-dvh bg-black'>
 			<Logo />
@@ -13,8 +16,8 @@ export default function Home() {
         <p className="text-blue-200 text-center">Practice your knowledge in any field!Whether you're a student or self-taught,<br/> write your own questions and answers and rate your performance.</p>
       </div>
       <div className="flex justify-center gap-4 pt-12">
-        <Button style={{backgroundColor: "#88FFB6",width:"130px",height:"40px"}}>Login</Button>
-        <Button style={{backgroundColor: "#FFF48B",width:"130px",height:"40px"}}>Register</Button>
+        <Button onClick={()=>navigate("/login")} style={{backgroundColor: "#88FFB6",width:"130px",height:"40px"}}>Login</Button>
+        <Button onClick={()=>navigate("/register")} style={{backgroundColor: "#FFF48B",width:"130px",height:"40px"}}>Register</Button>
       </div>
 		</div>
 	)
