@@ -19,7 +19,7 @@ export default function Home() {
 					<br /> write your own questions and answers and rate your performance.
 				</p>
 			</div>
-			<div className='flex justify-center gap-4 pt-12'>
+			<div className='flex justify-center gap-4 mt-28'>
 				<Button
 					onClick={() => navigate("/login")}
 					style={{ backgroundColor: "#88FFB6", width: "130px", height: "40px",fontFamily:"kanit" }}
