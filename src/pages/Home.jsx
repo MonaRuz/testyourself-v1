@@ -1,3 +1,7 @@
+import Logo from "../components/Logo";
+
 export default function Home() {
-	return <div>Home page</div>
+	return <div className="h-dvh bg-black">
+    <Logo/>
+  </div>
 }

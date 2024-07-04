@@ -1,13 +1,12 @@
-import { Link } from "react-router-dom";
 import Logout from "../features/authentication/Logout";
 import User from "../features/authentication/User";
+import Logo from "./Logo";
 
 export default function Header() {
   return (
     <div>
         <div>
-            <Link to="/">Test Yourself</Link>
-            <h2>Test your knowledge!</h2>
+            <Logo/>
         </div>
         <div>
             <User/>
