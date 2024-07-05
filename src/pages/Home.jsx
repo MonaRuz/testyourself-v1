@@ -22,13 +22,23 @@ export default function Home() {
 			<div className='flex justify-center gap-4 mt-28'>
 				<Button
 					onClick={() => navigate("/login")}
-					style={{ backgroundColor: "#88FFB6", width: "130px", height: "40px",fontFamily:"kanit" }}
+					style={{
+						backgroundColor: "#88FFB6",
+						width: "130px",
+						height: "40px",
+						fontFamily: "kanit"
+					}}
 				>
 					Login
 				</Button>
 				<Button
 					onClick={() => navigate("/register")}
-					style={{ backgroundColor: "#FFF48B", width: "130px", height: "40px",fontFamily:"kanit" }}
+					style={{
+						backgroundColor: "#FFF48B",
+						width: "130px",
+						height: "40px",
+						fontFamily: "kanit",
+					}}
 				>
 					Register
 				</Button>
