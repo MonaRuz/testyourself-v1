@@ -6,7 +6,7 @@ export default function Dashboard() {
 			<p className='text-blue-200 text-center pt-4 text-sm md:text-lg'>
 				Open one of your category or create new category
 			</p>
-			<div className='flex my-5'>
+			<div className='flex my-5 md:my-10'>
 				<Button
 					style={{
 						backgroundColor: "#88FFB6",
