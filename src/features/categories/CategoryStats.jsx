@@ -1,5 +1,5 @@
 
-export default function Category() {
+export default function CategoryStats() {
   return (
     <div>Category</div>
   )
