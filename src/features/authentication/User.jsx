@@ -2,10 +2,10 @@ import { FaRegUserCircle } from "react-icons/fa"
 export default function User() {
 	return (
 		<div className='text-green-200 flex gap-2'>
-			<div className='pt-1'>
+			<div className='text-2xl'>
 				<FaRegUserCircle />
 			</div>
-			<p>user</p>
+			<p className="font-[kanit]">User</p>
 		</div>
 	)
 }

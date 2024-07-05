@@ -4,11 +4,11 @@ import Logo from "./Logo";
 
 export default function Header() {
   return (
-    <div>
-        <div>
+    <div className="flex flex-col md:flex-row items-center md:justify-between border-b border-b-blue-200">
+        <div className="mb-5">
             <Logo/>
         </div>
-        <div>
+        <div className="flex flex-row items-center gap-10 pb-5 md:pb-0">
             <User/>
             <Logout/>
         </div>
