@@ -24,9 +24,17 @@ export default function CategoryOverview() {
 					Add questions
 				</Button>
 			</div>
-			<div className="flex flex-col items-center ">
-				<CategoryStats />
-				<Questions />
+			<div className='flex flex-col'>
+				<div className='flex flex-col items-center lg:flex-row'>
+					<div>
+						<CategoryStats />
+            <Button style={{backgroundColor: "rgb(252 165 165)",
+						width: "150px",
+						height: "40px",
+						fontFamily: "kanit"}}>Delete category</Button>
+					</div>
+					<Questions />
+				</div>
 			</div>
 		</div>
 	)
