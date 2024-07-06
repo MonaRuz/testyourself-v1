@@ -1,6 +1,31 @@
+import Button from "../../components/Button"
+import CategoryStats from "./CategoryStats"
+import Questions from "../questions/QuestionsList"
 
 export default function CategoryOverview() {
-  return (
-    <div>CategoryOverview</div>
-  )
+	return (
+		<div>
+			<h2 className='text-purple-200 border-b border-purple-200 text-center pb-1 text-lg'>
+				Category overview
+			</h2>
+			<p className='text-blue-200 text-center text-sm py-3'>
+				Start test, add new questions or search in existing questions to edit
+				them.
+			</p>
+			<div className="flex justify-center">
+				<Button
+					style={{
+						backgroundColor: "#88FFB6",
+						width: "200px",
+						height: "40px",
+						fontFamily: "kanit",
+					}}
+				>
+					Add questions
+				</Button>
+			</div>
+			<CategoryStats />
+			<Questions />
+		</div>
+	)
 }

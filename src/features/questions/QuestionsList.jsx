@@ -1,5 +1,5 @@
 
-export default function Questions() {
+export default function QuestionsList() {
   return (
     <div>Questions</div>
   )
