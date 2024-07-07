@@ -14,8 +14,8 @@ export default function CategoryOverview() {
 				Start test, add new questions or search in existing questions to edit
 				them.
 			</p>
-			<div className='flex flex-col items-center lg:flex-row justify-center'>
-				<div className="flex">
+			<div className='flex flex-col items-center lg:flex-row justify-center gap-2 lg:m-10'>
+				<div className="flex gap-2">
 					<Button
 						onClick={() => navigate("/test/instructions")}
 						style={{
@@ -39,7 +39,7 @@ export default function CategoryOverview() {
 						Add questions
 					</Button>
 				</div>
-				<div className="flex">
+				<div className="flex gap-2">
 					<Button
 						onClick={() => navigate("/dashboard")}
 						style={{
@@ -52,6 +52,7 @@ export default function CategoryOverview() {
 						Back
 					</Button>
 					<Button
+					onClick={()=>navigate("/category/delete")}
 						style={{
 							backgroundColor: "rgb(252 165 165)",
 							width: "133px",

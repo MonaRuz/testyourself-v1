@@ -16,6 +16,7 @@ import Test from "./features/categoryTest/Test"
 import NewCategory from "./features/categories/NewCategory"
 import Results from "./features/categoryTest/Results"
 import TestInstructions from "./features/categoryTest/TestInstructions"
+import DeleteCategory from "./features/categories/DeleteCategory"
 
 const router = createBrowserRouter([
 	{
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
 					{
 						path: "/category/new-question",
 						element: <NewQuestion />,
+					},
+					{
+						path: "/category/delete",
+						element: <DeleteCategory/>,
 					},
 				],
 			},
