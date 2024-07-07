@@ -53,7 +53,7 @@ const router = createBrowserRouter([
 						element: <EditQuestion />,
 					},
 					{
-						path: "/category/new",
+						path: "/category/new-question",
 						element: <NewQuestion />,
 					},
 				],

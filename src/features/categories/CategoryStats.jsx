@@ -1,3 +1,4 @@
+
 export default function CategoryStats() {
 	return (
 		<div className='mt-[13px] px-2'>
