@@ -12,7 +12,7 @@ export default function CategoryOverview() {
 				Start test, add new questions or search in existing questions to edit
 				them.
 			</p>
-			<div className='flex justify-center mb-3'>
+			<div className='flex flex-col justify-center items-center sm:flex-row mb-3'>
 				<Button
 					style={{
 						backgroundColor: "#88FFB6",
@@ -23,16 +23,20 @@ export default function CategoryOverview() {
 				>
 					Add questions
 				</Button>
+				<Button
+					style={{
+						backgroundColor: "rgb(252 165 165)",
+						width: "200px",
+						height: "40px",
+						fontFamily: "kanit",
+					}}
+				>
+					Delete category
+				</Button>
 			</div>
 			<div className='flex flex-col'>
-				<div className='flex flex-col items-center lg:flex-row'>
-					<div>
-						<CategoryStats />
-            <Button style={{backgroundColor: "rgb(252 165 165)",
-						width: "150px",
-						height: "40px",
-						fontFamily: "kanit"}}>Delete category</Button>
-					</div>
+				<div className='flex flex-col items-center lg:flex-row lg:justify-center lg:gap-5 lg:items-start'>
+					<CategoryStats />
 					<Questions />
 				</div>
 			</div>
