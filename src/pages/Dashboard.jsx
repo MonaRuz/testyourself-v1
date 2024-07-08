@@ -10,7 +10,7 @@ export default function Dashboard() {
 			</p>
 			<div className='flex my-5 md:my-10'>
 				<Button
-        onClick={()=>navigate("/category/new")}
+        onClick={()=>navigate("/new-category")}
 					style={{
 						backgroundColor: "#88FFB6",
 						width: "250px",
