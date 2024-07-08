@@ -18,12 +18,12 @@ export default function NewQuestion() {
 					onSubmit={handleNewQuestion}
 					className='flex flex-col items-center'
 				>
-					<label className='text-blue-200 text-center'>
+					<label className='text-blue-200 text-center text-sm sm:text-base'>
 						{" "}
 						New question:<br></br>
 						<textarea className='bg-black border border-yellow-200 mt-2 w-72'></textarea>
 					</label>
-					<label className='text-blue-200 text-center'>
+					<label className='text-blue-200 text-center text-sm sm:text-base'>
 						{" "}
 						New answer:<br></br>
 						<textarea className='bg-black border border-yellow-200 mt-2 w-72'></textarea>
