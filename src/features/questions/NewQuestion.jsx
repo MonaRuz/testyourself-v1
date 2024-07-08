@@ -1,4 +1,5 @@
-import { useNavigate } from "react-router-dom"
+//later add conditionaly paragraph informing user abour successfully created question and answer
+//add warn about no filled inputs
 import Button from "../../components/Button"
 
 export default function NewQuestion() {
