@@ -1,7 +1,9 @@
 
+import { useNavigate } from "react-router-dom"
 import Button from "../../components/Button"
 
 export default function EditQuestion() {
+  const navigate=useNavigate()
 
 	function handleEditQuestion(id) {
 		//edit question handling
@@ -26,7 +28,16 @@ export default function EditQuestion() {
 						Answer:<br></br>
 						<textarea className='bg-black border border-yellow-200 mt-2 w-72'></textarea>
 					</label>
-					<div className='flex justify-center mt-5'>
+					<div className='flex flex-col justify-center gap-3 mt-5'>
+          <Button
+							onClick={()=>navigate("/category/overview")}
+							style={{
+								backgroundColor: "rgb(254 240 138)",
+								width: "250px",
+								height: "40px",
+								fontFamily: "kanit",
+							}}
+						>Back</Button>
 						<Button
 							onClick={()=>handleEditQuestion(id)}
 							style={{

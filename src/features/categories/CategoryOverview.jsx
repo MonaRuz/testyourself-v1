@@ -43,7 +43,7 @@ export default function CategoryOverview() {
 					<Button
 						onClick={() => navigate("/dashboard")}
 						style={{
-							backgroundColor: "rgb(252 165 165)",
+							backgroundColor: "rgb(254 240 138)",
 							width: "133px",
 							height: "40px",
 							fontFamily: "kanit",
