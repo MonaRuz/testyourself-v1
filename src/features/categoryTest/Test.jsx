@@ -1,4 +1,5 @@
 import Progressbar from "./Progressbar"
+import TestButtons from "./TestButtons"
 import TestQuestion from "./TestQuestion"
 
 export default function Test() {
@@ -6,6 +7,7 @@ export default function Test() {
     <div>
       <Progressbar/>
       <TestQuestion/>
+      <TestButtons/>
     </div>
     
   )
