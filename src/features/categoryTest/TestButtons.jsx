@@ -4,7 +4,7 @@ export default function TestButtons() {
   const navigate=useNavigate()
 	return (
 		<div className="flex flex-col justify-center items-center gap-1">
-			<div className=" mt-5">
+			<div className=" mt-16">
 				{/* <div className="flex flex-col justify-center gap-3">
 					<Button
 
