@@ -63,8 +63,11 @@ const router = createBrowserRouter([
 					},
 					{
 						path: "/category/test",
-						element: <TestInstructions />,
 						children: [
+							{
+								path: "/category/test/instructions",
+								element: <TestInstructions />,
+							},
 							{
 								path: "/category/test/run",
 								element: <Test />,
