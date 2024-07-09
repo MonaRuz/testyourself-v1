@@ -46,8 +46,8 @@ const router = createBrowserRouter([
 				path: "/category",
 				children: [
 					{
-						path:"/category/overview",
-						element:<CategoryOverview />
+						path: "/category/overview",
+						element: <CategoryOverview />,
 					},
 					{
 						path: "/category/questionID/edit",
@@ -59,24 +59,21 @@ const router = createBrowserRouter([
 					},
 					{
 						path: "/category/delete",
-						element: <DeleteCategory/>,
+						element: <DeleteCategory />,
 					},
-				],
-			},
-			{
-				path: "/test",
-				children: [
 					{
-						path: "/test/instructions",
+						path: "/category/test",
 						element: <TestInstructions />,
-					},
-					{
-						path: "/test/category-test",
-						element: <Test />,
-					},
-					{
-						path: "/test/results",
-						element: <Results />,
+						children: [
+							{
+								path: "/category/test/run",
+								element: <Test />,
+							},
+							{
+								path: "/category/test/results",
+								element: <Results />,
+							},
+						],
 					},
 				],
 			},
