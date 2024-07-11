@@ -1,9 +1,12 @@
 import Logo from "../../components/Logo"
 import Button from "../../components/Button"
+import { useNavigate } from "react-router-dom"
 
 export default function Login() {
+	const navigate=useNavigate()
 	function handleLogin(e) {
 		e.preventDefault()
+		navigate("/dashboard")
 		//code for logging in and redirect to dashboard
 	}
 	//write some message for unsuccessful logging
