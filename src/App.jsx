@@ -85,13 +85,5 @@ const router = createBrowserRouter([
 ])
 
 export default function App() {
-	// async function getCategories(db) {
-	// 	const categoriesCol = collection(db, "categories")
-	// 	const citySnapshot = await getDocs(categoriesCol)
-	// 	const categories = citySnapshot.docs.map((doc) => doc.data())
-	// 	console.log(categories)
-	// 	setCategories(categories)
-	// }
-
 	return <RouterProvider router={router} />
 }

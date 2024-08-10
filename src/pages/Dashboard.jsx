@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom"
 import Button from "../components/Button"
 import CategoriesList from "../features/categories/CategoriesList"
 export default function Dashboard() {
+	
   const navigate=useNavigate()
 	return (
 		<div>
@@ -26,3 +27,5 @@ export default function Dashboard() {
 		</div>
 	)
 }
+
+
