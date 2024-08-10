@@ -1,7 +1,16 @@
+import { useQuery } from "@tanstack/react-query"
 import { useNavigate } from "react-router-dom"
+import { getCategories } from "../../services/apiCategories"
 
 export default function CategoriesList() {
     const navigate=useNavigate()
+    const{isLoading,data:categories,error}=useQuery({
+      queryKey:["categories"],
+      queryFn:getCategories,
+    })
+
+
+    
   return (
     <div>
         <h3 className="text-purple-200 text-center border-y-2 sm:text-lg border-purple-200 pb-1 mb-5 md:w-96 m-auto lg:my-10">Your categories:</h3>

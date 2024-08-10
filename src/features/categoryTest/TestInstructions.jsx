@@ -10,7 +10,7 @@ export default function TestInstructions() {
 			</h3>
 			<div className='flex flex-col gap-1 items-center'>
 				<Button
-					onClick={() => navigate("/category/test/run")}
+					onClick={() => navigate("/category/test/running-test")}
 					style={{
 						backgroundColor: "#88FFB6",
 						width: "250px",

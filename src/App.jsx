@@ -1,9 +1,8 @@
-// import { collection, getDocs } from "firebase/firestore/lite"
-// import db from "../src/firebase/config"
-// import { useEffect } from "react"
-// import { useState } from "react"
 
-import { RouterProvider, createBrowserRouter } from "react-router-dom"
+
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import Home from "./pages/Home"
 import Dashboard from "./pages/Dashboard"
 import AppLayout from "./components/AppLayout"
@@ -16,74 +15,75 @@ import Test from "./features/categoryTest/Test"
 import NewCategory from "./features/categories/NewCategory"
 import Results from "./features/categoryTest/Results"
 import TestInstructions from "./features/categoryTest/TestInstructions"
-import DeleteCategory from "./features/categories/DeleteCategory"
-
-const router = createBrowserRouter([
-	{
-		path: "/",
-		element: <Home />,
-	},
-	{
-		path: "/login",
-		element: <Login />,
-	},
-	{
-		path: "/register",
-		element: <Register />,
-	},
-	{
-		element: <AppLayout />,
-		children: [
-			{
-				path: "/dashboard",
-				element: <Dashboard />,
-			},
-			{
-				path: "/new-category",
-				element: <NewCategory />,
-			},
-			{
-				path: "/category",
-				children: [
-					{
-						path: "/category/overview",
-						element: <CategoryOverview />,
-					},
-					{
-						path: "/category/questionID/edit",
-						element: <EditQuestion />,
-					},
-					{
-						path: "/category/new-question",
-						element: <NewQuestion />,
-					},
-					{
-						path: "/category/delete",
-						element: <DeleteCategory />,
-					},
-					{
-						path: "/category/test",
-						children: [
-							{
-								path: "/category/test/instructions",
-								element: <TestInstructions />,
-							},
-							{
-								path: "/category/test/run",
-								element: <Test />,
-							},
-							{
-								path: "/category/test/results",
-								element: <Results />,
-							},
-						],
-					},
-				],
-			},
-		],
-	},
-])
 
 export default function App() {
-	return <RouterProvider router={router} />
+	const queryClient = new QueryClient({
+		defaultOptions: {
+			queries: {
+				staleTime: 0,
+			},
+		},
+	})
+	
+
+
+	return (
+		<QueryClientProvider client={queryClient}>
+			<BrowserRouter>
+				<Routes>
+					<Route
+						path='/'
+						element={<Home />}
+					/>
+					<Route
+						path='login'
+						element={<Login />}
+					/>
+					<Route
+						path='register'
+						element={<Register />}
+					/>
+					<Route element={<AppLayout />}>
+						<Route
+							path='dashboard'
+							element={<Dashboard />}
+						/>
+						<Route
+							path='new-category'
+							element={<NewCategory />}
+						/>
+						<Route path='category'>
+							<Route
+								path='overview'
+								element={<CategoryOverview />}
+							/>
+							<Route
+								path='questionID/edit'
+								element={<EditQuestion />}
+							/>
+							<Route
+								path='new-question'
+								element={<NewQuestion />}
+							/>
+							<Route path='test'>
+								<Route
+									path='instructions'
+									element={<TestInstructions />}
+								/>
+								<Route
+									path='running-test'
+									element={<Test />}
+								/>
+								<Route
+									path='results'
+									element={<Results />}
+								/>
+							</Route>
+						</Route>
+					</Route>
+				</Routes>
+			</BrowserRouter>
+			<ReactQueryDevtools initialIsOpen={false} />
+		</QueryClientProvider>
+	)
 }
