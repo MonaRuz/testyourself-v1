@@ -9,3 +9,7 @@ export async function getCategories() {
 	})
 	return categories
 }
+
+// export async function getCategory(categoryId) {
+	
+// }

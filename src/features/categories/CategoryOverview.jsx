@@ -1,14 +1,15 @@
 import Button from "../../components/Button"
 import CategoryStats from "./CategoryStats"
 import Questions from "../questions/QuestionsList"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 
 export default function CategoryOverview() {
 	const navigate = useNavigate()
+	const {category}=useParams()
 	return (
 		<div>
 			<h2 className='text-purple-200 border-b border-purple-200 text-center pb-1 text-lg'>
-				Category overview
+				{category}
 			</h2>
 			<p className='text-blue-200 text-center text-sm py-3 sm:text-base'>
 				Start test, add new questions or search in existing questions to edit

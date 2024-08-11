@@ -52,9 +52,9 @@ export default function App() {
 							path='new-category'
 							element={<NewCategory />}
 						/>
-						<Route path='category'>
+						<Route path=':category'>
 							<Route
-								path='overview/:id'
+								path='overview'
 								element={<CategoryOverview />}
 							/>
 							<Route
