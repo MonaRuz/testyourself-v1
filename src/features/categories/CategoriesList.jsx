@@ -1,14 +1,17 @@
-import { useQuery } from "@tanstack/react-query"
+// import { useQuery } from "@tanstack/react-query"
 import { useNavigate } from "react-router-dom"
-import { getCategories } from "../../services/apiCategories"
+// import { getCategories } from "../../services/apiCategories"
 import Spinner from "../../components/Spinner"
+import useCategories from "./useCategories";
 
 export default function CategoriesList() {
     const navigate=useNavigate()
-    const{isLoading,data:categories,error}=useQuery({
-      queryKey:["categories"],
-      queryFn:getCategories,
-    })
+    // const{isLoading,data:categories,error}=useQuery({
+    //   queryKey:["categories"],
+    //   queryFn:getCategories,
+    // })
+
+    const{isLoading,categories,error}=useCategories()
 
 console.log(categories);
 
