@@ -54,7 +54,7 @@ export default function App() {
 						/>
 						<Route path='category'>
 							<Route
-								path='overview'
+								path='overview/:id'
 								element={<CategoryOverview />}
 							/>
 							<Route
