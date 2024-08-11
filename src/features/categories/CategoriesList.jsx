@@ -9,6 +9,7 @@ export default function CategoriesList() {
       queryFn:getCategories,
     })
 
+console.log(categories);
 
     
   return (
