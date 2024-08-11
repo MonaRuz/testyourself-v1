@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import { useNavigate } from "react-router-dom"
 import { getCategories } from "../../services/apiCategories"
+import Spinner from "../../components/Spinner"
 
 export default function CategoriesList() {
     const navigate=useNavigate()
@@ -11,7 +12,8 @@ export default function CategoriesList() {
 
 console.log(categories);
 
-    
+if(isLoading)return <Spinner/>    
+
   return (
     <div>
         <h3 className="text-purple-200 text-center border-y-2 sm:text-lg border-purple-200 pb-1 mb-5 md:w-96 m-auto lg:my-10">Your categories:</h3>
