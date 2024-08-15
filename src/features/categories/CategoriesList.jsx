@@ -1,31 +1,34 @@
-// import { useQuery } from "@tanstack/react-query"
 import { useNavigate } from "react-router-dom"
-// import { getCategories } from "../../services/apiCategories"
 import Spinner from "../../components/Spinner"
-import useCategories from "./useCategories";
+import useCategories from "./useCategories"
+
+//todo: error handling
 
 export default function CategoriesList() {
-    const navigate=useNavigate()
-    // const{isLoading,data:categories,error}=useQuery({
-    //   queryKey:["categories"],
-    //   queryFn:getCategories,
-    // })
+	const navigate = useNavigate()
 
-    const{isLoading,categories,error}=useCategories()
+	const { isLoading, categories, error } = useCategories()
 
-console.log(categories);
+	if (isLoading) return <Spinner />
 
-
-if(isLoading)return <Spinner/>    
-
-  return (
-    <div>
-        <h3 className="text-purple-200 text-center border-y-2 sm:text-lg border-purple-200 pb-1 mb-5 md:w-96 m-auto lg:my-10">Your categories:</h3>
-        <ul className="text-yellow-200 text-center sm:grid sm:grid-cols-2 sm:gap-4 md:w-3/4 mx-auto">
-        {categories.map((category)=>{
-          return<li onClick={()=>navigate(`/${category.category}/overview`)} className="border border-yellow-200 hover:border hover:border-none hover:bg-yellow-200 hover:text-black my-1 py-2" key={category.id}>{category.category}</li>
-        })}
-        </ul>
-    </div>
-  )
+	return (
+		<div>
+			<h3 className='text-purple-200 text-center border-y-2 sm:text-lg border-purple-200 pb-1 mb-5 md:w-96 m-auto lg:my-10'>
+				Your categories:
+			</h3>
+			<ul className='text-yellow-200 text-center sm:grid sm:grid-cols-2 sm:gap-4 md:w-3/4 mx-auto'>
+				{categories.map((category) => {
+					return (
+						<li
+							onClick={() => navigate(`/${category.category}/overview`)}
+							className='border border-yellow-200 hover:border hover:border-none hover:bg-yellow-200 hover:text-black my-1 py-2'
+							key={category.id}
+						>
+							{category.category}
+						</li>
+					)
+				})}
+			</ul>
+		</div>
+	)
 }

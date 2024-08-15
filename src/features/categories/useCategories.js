@@ -8,3 +8,4 @@ export default function useCategories(){
       })
     return{isLoading,categories,error}
 }
+

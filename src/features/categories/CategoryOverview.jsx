@@ -2,10 +2,22 @@ import Button from "../../components/Button"
 import CategoryStats from "./CategoryStats"
 import Questions from "../questions/QuestionsList"
 import { useNavigate, useParams } from "react-router-dom"
+// import useCategory from "../categories/useCategory"
+import { getCategory } from "../../services/apiCategories"
+import { useQuery } from "@tanstack/react-query"
 
 export default function CategoryOverview() {
 	const navigate = useNavigate()
 	const {category}=useParams()
+	// const{isLoading,selectedCategory,error}=useCategory(category)
+	const{isLoading,data:selectedCategory,error}=useQuery({
+		queryKey:["category"],
+        queryFn:()=>getCategory(category),
+	})
+
+// console.log(selectedCategory);
+
+
 	return (
 		<div>
 			<h2 className='text-purple-200 border-b border-purple-200 text-center pb-1 text-lg'>
