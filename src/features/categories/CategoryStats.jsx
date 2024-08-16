@@ -1,4 +1,5 @@
-export default function CategoryStats() {
+export default function CategoryStats({selectedCategory}) {
+	const{highscore,currentScore,progress,questionsAmount,category}=selectedCategory
 	return (
 		<div className='mt-[13px] px-2'>
 			<h3 className='text-purple-200 border-y border-purple-200 pb-1 mb-5 text-center'>
@@ -8,19 +9,19 @@ export default function CategoryStats() {
 				<tbody>
 					<tr>
 						<th className='text-blue-200 font-normal'>Questions:</th>
-						<th className='text-yellow-200 font-normal'>83</th>
+						<th className='text-yellow-200 font-normal'>{questionsAmount}</th>
 					</tr>
 					<tr>
 						<th className='text-blue-200 font-normal'>Progress:</th>
-						<th className='text-yellow-200 font-normal'>25 / 83</th>
+						<th className='text-yellow-200 font-normal'>{progress} / {questionsAmount}</th>
 					</tr>
 					<tr>
 						<th className='text-blue-200 font-normal'>Current score:</th>
-						<th className='text-yellow-200 font-normal'>50 %</th>
+						<th className='text-yellow-200 font-normal'>{currentScore} %</th>
 					</tr>
 					<tr>
 						<th className='text-blue-200 font-normal'>Highscore:</th>
-						<th className='text-yellow-200 font-normal'>80 %</th>
+						<th className='text-yellow-200 font-normal'>{highscore} %</th>
 					</tr>
 				</tbody>
 			</table>

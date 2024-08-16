@@ -15,7 +15,7 @@ export default function CategoryOverview() {
         queryFn:()=>getCategory(category),
 	})
 
-// console.log(selectedCategory);
+console.log(selectedCategory);
 
 
 	return (
@@ -79,7 +79,7 @@ export default function CategoryOverview() {
 			</div>
 			<div className='flex flex-col'>
 				<div className='flex flex-col items-center lg:flex-row lg:justify-center lg:gap-5 lg:items-start'>
-					<CategoryStats />
+					<CategoryStats selectedCategory={selectedCategory}/>
 					<Questions />
 				</div>
 			</div>

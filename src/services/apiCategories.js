@@ -22,18 +22,12 @@ export async function getCategory(category) {
 		collection(db, "categories"),
 		where("category", "==", category)
 	)
-	const selectedCategory = await getDocs(q);
-selectedCategory.forEach((doc) => {
-  // doc.data() is never undefined for query doc snapshots
-  console.log(doc.id, " => ", doc.data());
-});
-
-
-
-	// const docRef = doc(db, "categories", category);
-
-	// const docSnap = await getDoc(docRef);
-	// const selectedCategory=docSnap.data()
+	let selectedCategory={}
+	const data = await getDocs(q)
+	data.forEach((doc) => {
+		selectedCategory=doc.data()
+		return selectedCategory
+	})
 
 	return selectedCategory
 }
