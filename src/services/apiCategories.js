@@ -1,9 +1,4 @@
-import {
-	collection,
-	getDocs,
-	query,
-	where,
-} from "firebase/firestore/lite"
+import { collection, getDocs,doc,getDoc, query, where } from "firebase/firestore/lite"
 import db from "../firebase/config"
 //todo: handling errors
 export async function getCategories() {
@@ -23,9 +18,12 @@ export async function getCategory(category) {
 	let selectedCategory={}
 	const data = await getDocs(q)
 	data.forEach((doc) => {
-		selectedCategory={id:doc.id,data:doc.data()}
+		selectedCategory=({id:doc.id,...doc.data()})
 		return selectedCategory
+		
 	})
+console.log(selectedCategory);
 
 	return selectedCategory
 }
+

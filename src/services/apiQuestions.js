@@ -1,16 +1,15 @@
-import {collectionGroup,query,where,getDocs,collection,doc} from "firebase/firestore/lite"
+import { query, getDocs, collection } from "firebase/firestore/lite"
 import db from "../firebase/config"
 
 export async function getQuestions(categoryId) {
-    
-    console.log(categoryId);
-	const questions = query(collection(db, 'categories', categoryId,"questions"));
-const querySnapshot = await getDocs(questions);
-querySnapshot.forEach((doc) => {
-    console.log(doc.id, ' => ', doc.data());
-});
+	const q = query(collection(db, "categories", categoryId, "questions"))
+	const querySnapshot = await getDocs(q)
+	let questions = []
+	querySnapshot.forEach((doc) => {
+		const data={...doc.data(),id:doc.id()}
+        console.log(data);
+        
+	})
 
-return questions
+	return questions
 }
-
-

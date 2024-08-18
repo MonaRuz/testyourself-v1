@@ -12,6 +12,7 @@ export default function CategoryOverview() {
 	const navigate = useNavigate()
 	const {category}=useParams()
 	const{isLoading,selectedCategory,error}=useCategory(category)
+// console.log(selectedCategory);
 
 
 	if(isLoading)return<Spinner/>
