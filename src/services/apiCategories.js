@@ -1,8 +1,6 @@
 import {
 	collection,
 	getDocs,
-	doc,
-	getDoc,
 	query,
 	where,
 } from "firebase/firestore/lite"
@@ -25,7 +23,7 @@ export async function getCategory(category) {
 	let selectedCategory={}
 	const data = await getDocs(q)
 	data.forEach((doc) => {
-		selectedCategory=doc.data()
+		selectedCategory={id:doc.id,data:doc.data()}
 		return selectedCategory
 	})
 

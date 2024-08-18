@@ -1,22 +1,20 @@
 import Button from "../../components/Button"
 import CategoryStats from "./CategoryStats"
-import Questions from "../questions/QuestionsList"
+import QuestionsList from "../questions/QuestionsList"
 import { useNavigate, useParams } from "react-router-dom"
-// import useCategory from "../categories/useCategory"
-import { getCategory } from "../../services/apiCategories"
-import { useQuery } from "@tanstack/react-query"
+import useCategory from "../categories/useCategory"
+// import { getCategory } from "../../services/apiCategories"
+// import { useQuery } from "@tanstack/react-query"
+import Spinner from "../../components/Spinner"
+
 
 export default function CategoryOverview() {
 	const navigate = useNavigate()
 	const {category}=useParams()
-	// const{isLoading,selectedCategory,error}=useCategory(category)
-	const{isLoading,data:selectedCategory,error}=useQuery({
-		queryKey:["category"],
-        queryFn:()=>getCategory(category),
-	})
+	const{isLoading,selectedCategory,error}=useCategory(category)
 
-console.log(selectedCategory);
 
+	if(isLoading)return<Spinner/>
 
 	return (
 		<div>
@@ -80,7 +78,7 @@ console.log(selectedCategory);
 			<div className='flex flex-col'>
 				<div className='flex flex-col items-center lg:flex-row lg:justify-center lg:gap-5 lg:items-start'>
 					<CategoryStats selectedCategory={selectedCategory}/>
-					<Questions />
+					<QuestionsList selectedCategory={selectedCategory}/>
 				</div>
 			</div>
 		</div>
