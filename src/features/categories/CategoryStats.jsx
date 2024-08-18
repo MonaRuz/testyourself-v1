@@ -1,5 +1,6 @@
 export default function CategoryStats({selectedCategory}) {
-	const{highscore,currentScore,progress,questionsAmount,category}=selectedCategory
+	const{id,highscore,currentScore,progress,questionsAmount,category}=selectedCategory
+	
 	return (
 		<div className='mt-[13px] px-2'>
 			<h3 className='text-purple-200 border-y border-purple-200 pb-1 mb-5 text-center'>

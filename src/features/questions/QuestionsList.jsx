@@ -10,7 +10,8 @@ export default function QuestionsList({selectedCategory}) {
     queryKey:["questions"],
     queryFn:()=>getQuestions(selectedCategory.id)
   })
-  // console.log(questions);
+console.log(questions);
+
   
   return (
     <div className="w-full lg:max-w-xl">

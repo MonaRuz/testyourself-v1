@@ -6,9 +6,8 @@ export async function getQuestions(categoryId) {
 	const querySnapshot = await getDocs(q)
 	let questions = []
 	querySnapshot.forEach((doc) => {
-		const data={...doc.data(),id:doc.id()}
-        console.log(data);
-        
+		questions.push({id:doc.id,...doc.data()})
+        return questions
 	})
 
 	return questions

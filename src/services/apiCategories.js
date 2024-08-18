@@ -11,6 +11,8 @@ export async function getCategories() {
 }
 
 export async function getCategory(category) {
+
+	
 	const q = query(
 		collection(db, "categories"),
 		where("category", "==", category)
@@ -18,11 +20,9 @@ export async function getCategory(category) {
 	let selectedCategory={}
 	const data = await getDocs(q)
 	data.forEach((doc) => {
-		selectedCategory=({id:doc.id,...doc.data()})
+		selectedCategory={id:doc.id,...doc.data()}
 		return selectedCategory
-		
 	})
-console.log(selectedCategory);
 
 	return selectedCategory
 }
