@@ -7,7 +7,7 @@ export async function getQuestions(categoryId) {
 	let questions = []
 	querySnapshot.forEach((doc) => {
 		questions.push({id:doc.id,...doc.data()})
-        return questions
+        return questions[0]
 	})
 
 	return questions

@@ -7,15 +7,12 @@ import useCategory from "../categories/useCategory"
 // import { useQuery } from "@tanstack/react-query"
 import Spinner from "../../components/Spinner"
 
-
 export default function CategoryOverview() {
 	const navigate = useNavigate()
-	const {category}=useParams()
-	const{isLoading,selectedCategory,error}=useCategory(category)
-// console.log(selectedCategory);
+	const { category } = useParams()
+	const { isLoading, selectedCategory, error } = useCategory(category)
 
-
-	if(isLoading)return<Spinner/>
+	if (isLoading) return <Spinner />
 
 	return (
 		<div>
@@ -27,7 +24,7 @@ export default function CategoryOverview() {
 				them.
 			</p>
 			<div className='flex flex-col items-center lg:flex-row justify-center gap-2 lg:m-10'>
-				<div className="flex gap-2">
+				<div className='flex gap-2'>
 					<Button
 						onClick={() => navigate("/category/test/instructions")}
 						style={{
@@ -51,7 +48,7 @@ export default function CategoryOverview() {
 						Add questions
 					</Button>
 				</div>
-				<div className="flex gap-2">
+				<div className='flex gap-2'>
 					<Button
 						onClick={() => navigate("/dashboard")}
 						style={{
@@ -64,7 +61,7 @@ export default function CategoryOverview() {
 						Back
 					</Button>
 					<Button
-					onClick={()=>navigate("/category/delete")}
+						onClick={() => navigate("/category/delete")}
 						style={{
 							backgroundColor: "rgb(252 165 165)",
 							width: "133px",
@@ -78,8 +75,8 @@ export default function CategoryOverview() {
 			</div>
 			<div className='flex flex-col'>
 				<div className='flex flex-col items-center lg:flex-row lg:justify-center lg:gap-5 lg:items-start'>
-					<CategoryStats selectedCategory={selectedCategory}/>
-					<QuestionsList selectedCategory={selectedCategory}/>
+					<CategoryStats selectedCategory={selectedCategory} />
+					<QuestionsList selectedCategory={selectedCategory} />
 				</div>
 			</div>
 		</div>
