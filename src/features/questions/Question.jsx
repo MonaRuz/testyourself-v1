@@ -1,16 +1,17 @@
-import { IoIosArrowDown } from "react-icons/io"
+
 //short question to preview...
 
-export default function Question({question}) {
+import { useNavigate } from "react-router-dom"
+
+export default function Question({question,selectedCategory}) {
+	const navigate=useNavigate()
+	console.log(selectedCategory);
 	
 	return (
-		<div className="flex justify-between border border-yellow-200 my-2 p-2 max-w-xl m-auto">
-			<p className='text-blue-200 text-sm'>
-				{question}
+		<div onClick={()=>navigate(`/${selectedCategory.category}/${question.id}/edit`)} className="flex justify-between border border-yellow-200 my-2 px-4 py-2 max-w-xl m-auto pointer-events-auto hover:border-green-200">
+			<p className='text-blue-200 text-sm truncate hover:text-green-200 cursor-pointer'>
+				{question.question}
 			</p>
-			<div className="text-green-200">
-				<IoIosArrowDown />
-			</div>
 		</div>
 	)
 }

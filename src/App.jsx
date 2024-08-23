@@ -58,7 +58,7 @@ export default function App() {
 								element={<CategoryOverview />}
 							/>
 							<Route
-								path='questionID/edit'
+								path=':questionID/edit'
 								element={<EditQuestion />}
 							/>
 							<Route

@@ -23,7 +23,7 @@ export default function QuestionsList({ selectedCategory }) {
 
 					<li key={q.id}>
 						<Question
-							question={q.question}							
+							question={q}					selectedCategory={selectedCategory}	
 						/>
 					</li>
 				)
