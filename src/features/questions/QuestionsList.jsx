@@ -3,7 +3,9 @@ import Question from "./Question"
 import Spinner from "../../components/Spinner"
 import useQuestions from "../categories/useQuestions"
 
+
 export default function QuestionsList({ selectedCategory }) {
+	
 	const{isLoading,questions,error}=useQuestions(selectedCategory.id)
 
 
@@ -24,6 +26,7 @@ export default function QuestionsList({ selectedCategory }) {
 					<li key={q.id}>
 						<Question
 							question={q}					selectedCategory={selectedCategory}	
+							
 						/>
 					</li>
 				)

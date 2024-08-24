@@ -1,4 +1,4 @@
-import { query, getDocs, collection } from "firebase/firestore/lite"
+import { query, getDocs, getDoc, collection } from "firebase/firestore/lite"
 import db from "../firebase/config"
 
 export async function getQuestions(categoryId) {
@@ -16,4 +16,23 @@ export async function getQuestions(categoryId) {
 	}
 
 	return questions
+}
+
+export async function getQuestion(selectedCategory,questionId){
+	const q = query(collection(db, "categories", questionId, "questions",questionId))
+
+	try {
+		const querySnapshot = await getDoc(q)
+		// querySnapshot.forEach((doc) => {
+		// 	questions.push({ id: doc.id, ...doc.data() })
+		// 	return questions
+		// })
+		console.log(querySnapshot);
+		
+	} catch (err) {
+		console.error(err)
+		throw new Error("Question cannot be fetched.")
+	}
+
+	return question
 }
