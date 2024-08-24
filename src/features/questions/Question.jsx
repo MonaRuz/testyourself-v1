@@ -3,6 +3,7 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io"
 
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
+import Button from "../../components/Button"
 
 export default function Question({ question, selectedCategory }) {
 	const [isOpen, setIsOpen] = useState(false)
@@ -16,7 +17,7 @@ export default function Question({ question, selectedCategory }) {
 		<div
 			// onClick={()=>navigate(`/${selectedCategory.category}/${question.id}/edit`)}
 			onClick={handleOpen}
-			className='flex flex-col justify-between border border-orange-200 mb-3 divide-y divide-orange-200'
+			className='flex flex-col justify-between  bg-zinc-900 mb-3 divide-y divide-yellow-200'
 		>
 			<div className='flex justify-between'>
 				<p
@@ -25,15 +26,23 @@ export default function Question({ question, selectedCategory }) {
 				>
 					{question.question}
 				</p>
-				<div className="text-yellow-200 p-3">{isOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}</div>
+				<div className='text-yellow-200 p-3'>
+					{isOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
+				</div>
 			</div>
 			{isOpen && (
-				<p
-					className='text-blue-200 text-sm px-4 py-2 cursor-pointer'
-					onClick={handleOpen}
-				>
-					{question.answer}
-				</p>
+				<div>
+					<p
+						className='text-blue-200 text-sm px-4 py-2 cursor-pointer'
+						onClick={handleOpen}
+					>
+						{question.answer}
+					</p>
+					<div className="flex justify-center gap-4 mb-3">
+						<button className="text-zinc-900 bg-green-200 w-20 py-1 border-2 border-zinc-900 hover:border-none font-['kanit']">Edit</button>
+						<button className="text-zinc-900 bg-red-300 w-20 py-1 border-2 border-zinc-900 hover:border-none font-['kanit']">Delete</button>
+					</div>
+				</div>
 			)}
 		</div>
 	)
