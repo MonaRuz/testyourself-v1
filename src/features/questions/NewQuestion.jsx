@@ -1,14 +1,34 @@
 //later add conditionaly paragraph informing user abour successfully created question and answer
 //add warn about no filled inputs
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import Button from "../../components/Button"
+import { useForm } from "react-hook-form"
+import { QueryClient, useMutation } from "@tanstack/react-query"
+import { createQuestion } from "../../services/apiQuestions"
+import Spinner from "../../components/Spinner"
 
 export default function NewQuestion() {
 	const navigate=useNavigate()
+	const {category}=useParams()
 
-	function handleNewQuestion() {
-		//new question handling
+	const{register,handleSubmit,reset}=useForm()
+	const{mutate,isLoading:isCreating}=useMutation({
+		mutationFn:(data)=>createQuestion(data),
+		onSuccess:()=>{
+			//toast
+			QueryClient.invalidateQueries({queryKey:["questions"]}),
+			reset()
+		},
+		onError:(err)=>
 	}
+)
+
+	function onSubmit(data) {
+		//new question handling
+		mutate(data)
+	}
+	
+	if(isCreating)return<Spinner/>
 
 	return (
 		<div>
@@ -17,23 +37,23 @@ export default function NewQuestion() {
 			</p>
 			<div className='mt-3'>
 				<form
-					onSubmit={handleNewQuestion}
+					onSubmit={handleSubmit(onSubmit)}
 					className='flex flex-col items-center'
 				>
 					<label className='text-blue-200 text-center text-sm sm:text-base'>
 						{" "}
 						New question:<br></br>
-						<textarea className='bg-black border border-yellow-200 mt-2 w-72'></textarea>
+						<textarea {...register("question")}className='bg-black border border-yellow-200 mt-2 w-72'></textarea>
 					</label>
 					<label className='text-blue-200 text-center text-sm sm:text-base'>
 						{" "}
 						New answer:<br></br>
-						<textarea className='bg-black border border-yellow-200 mt-2 w-72'></textarea>
+						<textarea {...register("answer")}className='bg-black border border-yellow-200 mt-2 w-72'></textarea>
 					</label>
-				</form>
-				<div className='flex justify-center gap-3 mt-5'>
+					<div className='flex justify-center gap-3 mt-5'>
 					<Button
-						onClick={()=>navigate("category/overview")}
+					type="button"
+						onClick={()=>navigate(-1)}
 						style={{
 							backgroundColor: "rgb(254 240 138)",
 							width: "130px",
@@ -44,7 +64,7 @@ export default function NewQuestion() {
 						Back
 					</Button>
 					<Button
-						onClick={handleNewQuestion}
+						type="submit"
 						style={{
 							backgroundColor: "#88FFB6",
 							width: "130px",
@@ -55,6 +75,8 @@ export default function NewQuestion() {
 						Add question
 					</Button>
 				</div>
+				</form>
+				
 			</div>
 		</div>
 	)

@@ -1,4 +1,4 @@
-import { query, getDocs, getDoc, collection } from "firebase/firestore/lite"
+import { query, getDocs, getDoc,doc,addDoc, collection } from "firebase/firestore/lite"
 import db from "../firebase/config"
 
 export async function getQuestions(categoryId) {
@@ -18,21 +18,15 @@ export async function getQuestions(categoryId) {
 	return questions
 }
 
-export async function getQuestion(selectedCategory,questionId){
-	const q = query(collection(db, "categories", questionId, "questions",questionId))
+export async function createQuestion(data){
+// const qRef=doc(db,"categories",categoryId,"questions")
+// try{
+// 	await addDoc(qRef,newQuestion)
+// }catch(err){
+// 	console.error(err)
+// 	throw new Error("Question could not by created.")
+// }
+// return newQuestion
+console.log(data);
 
-	try {
-		const querySnapshot = await getDoc(q)
-		// querySnapshot.forEach((doc) => {
-		// 	questions.push({ id: doc.id, ...doc.data() })
-		// 	return questions
-		// })
-		console.log(querySnapshot);
-		
-	} catch (err) {
-		console.error(err)
-		throw new Error("Question cannot be fetched.")
-	}
-
-	return question
 }

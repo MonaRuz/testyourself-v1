@@ -1,6 +1,6 @@
 import Question from "./Question"
 import Spinner from "../../components/Spinner"
-import useQuestions from "../categories/useQuestions"
+import useQuestions from "./useQuestions"
 import { useState } from "react"
 
 export default function QuestionsList({ selectedCategory }) {

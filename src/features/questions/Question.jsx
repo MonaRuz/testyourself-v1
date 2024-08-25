@@ -3,7 +3,7 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io"
 
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
-import Button from "../../components/Button"
+
 
 export default function Question({ question, selectedCategory }) {
 	const [isOpen, setIsOpen] = useState(false)
@@ -39,7 +39,7 @@ export default function Question({ question, selectedCategory }) {
 						{question.answer}
 					</p>
 					<div className="flex justify-center gap-4 mb-3">
-						<button className="text-zinc-900 bg-green-200 w-20 py-1 border-2 border-zinc-900 hover:border-none font-['kanit']">Edit</button>
+						<button onClick={()=>navigate()} className="text-zinc-900 bg-green-200 w-20 py-1 border-2 border-zinc-900 hover:border-none font-['kanit']">Edit</button>
 						<button className="text-zinc-900 bg-red-300 w-20 py-1 border-2 border-zinc-900 hover:border-none font-['kanit']">Delete</button>
 					</div>
 				</div>

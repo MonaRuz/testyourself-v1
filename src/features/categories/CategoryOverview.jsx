@@ -37,7 +37,7 @@ export default function CategoryOverview() {
 						Run test
 					</Button>
 					<Button
-						onClick={() => navigate("/category/new-question")}
+						onClick={() => navigate(`/${category}/new-question`)}
 						style={{
 							backgroundColor: "#88FFB6",
 							width: "133px",
