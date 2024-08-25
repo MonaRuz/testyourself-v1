@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form"
 import { QueryClient, useMutation } from "@tanstack/react-query"
 import { createQuestion } from "../../services/apiQuestions"
 import Spinner from "../../components/Spinner"
+import toast from "react-hot-toast"
 
 export default function NewQuestion() {
 	const navigate=useNavigate()
@@ -15,11 +16,11 @@ export default function NewQuestion() {
 	const{mutate,isLoading:isCreating}=useMutation({
 		mutationFn:(data)=>createQuestion(data),
 		onSuccess:()=>{
-			//toast
+			toast.success("Question was successfully created.")
 			QueryClient.invalidateQueries({queryKey:["questions"]}),
 			reset()
 		},
-		onError:(err)=>
+		onError:(err)=>toast.error("Question wan not added.")
 	}
 )
 

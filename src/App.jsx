@@ -15,6 +15,7 @@ import Test from "./features/categoryTest/Test"
 import NewCategory from "./features/categories/NewCategory"
 import Results from "./features/categoryTest/Results"
 import TestInstructions from "./features/categoryTest/TestInstructions"
+import { Toaster } from "react-hot-toast"
 
 export default function App() {
 	const queryClient = new QueryClient({
@@ -84,6 +85,11 @@ export default function App() {
 				</Routes>
 			</BrowserRouter>
 			<ReactQueryDevtools initialIsOpen={false} />
+			<Toaster position="top-center" gutter={12} containerStyle={{margin:"18px"}} toastOptions={{
+				success:{
+					duration:3000,
+				},style:{fontSize:"16px",maxWidth:"500px",padding:"16px 24px",backgroundColor:"black",color:"green"}
+			}}/>
 		</QueryClientProvider>
 	)
 }
