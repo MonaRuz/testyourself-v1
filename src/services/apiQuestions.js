@@ -26,7 +26,7 @@ try{
 	console.error(err)
 	throw new Error("Question could not be created.")
 }
-console.log(newQuestion);
+
 return newQuestion
 
 }

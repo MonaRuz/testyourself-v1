@@ -8,9 +8,10 @@ import { createQuestion } from "../../services/apiQuestions"
 import Spinner from "../../components/Spinner"
 import toast from "react-hot-toast"
 import useCategory from "../categories/useCategory"
-import queryClient  from "../../App"
+import  {useQueryClient } from "@tanstack/react-query"
 
 export default function NewQuestion() {
+	const queryClient=useQueryClient()
 	const navigate=useNavigate()
 	const {category}=useParams()
 
@@ -24,7 +25,7 @@ export default function NewQuestion() {
 		mutationFn:createQuestion,
 		onSuccess:()=>{
 			toast.success("Question was successfully created.")
-			queryClient.invalidateQueries({queryKey:["questions"]}),
+			queryClient.invalidateQueries(),
 			//debug this:
 			reset()
 		},
@@ -33,7 +34,6 @@ export default function NewQuestion() {
 )
 
 	function onSubmit(newQuestion) {
-		//new question handling
 		//check empty fields	
 		if(newQuestion.question===""||newQuestion.answer==="")return
 		mutate({selectedCategoryId,newQuestion})
