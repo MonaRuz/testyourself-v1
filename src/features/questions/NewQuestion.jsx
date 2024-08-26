@@ -3,43 +3,34 @@
 import { useNavigate, useParams } from "react-router-dom"
 import Button from "../../components/Button"
 import { useForm } from "react-hook-form"
-import { useMutation } from "@tanstack/react-query"
-import { createQuestion } from "../../services/apiQuestions"
 import Spinner from "../../components/Spinner"
-import toast from "react-hot-toast"
 import useCategory from "../categories/useCategory"
-import  {useQueryClient } from "@tanstack/react-query"
+import { useNewQuestion } from "./useNewQuestion"
 
 export default function NewQuestion() {
-	const queryClient=useQueryClient()
-	const navigate=useNavigate()
-	const {category}=useParams()
+	const navigate = useNavigate()
+	const { category } = useParams()
 
-	const{isLoading,selectedCategory,error}=useCategory(category)
-	const selectedCategoryId=selectedCategory?.id
-	
+	const { isLoading, selectedCategory} = useCategory(category)
+	const selectedCategoryId = selectedCategory?.id
 
-	const{register,handleSubmit,reset}=useForm()
+	const { register, handleSubmit, reset } = useForm()
 
-	const{mutate,isLoading:isCreating}=useMutation({
-		mutationFn:createQuestion,
-		onSuccess:()=>{
-			toast.success("Question was successfully created.")
-			queryClient.invalidateQueries(),
-			//debug this:
-			reset()
-		},
-		onError:(err)=>toast.error(err.message)
-	}
-)
+	const { createQuestion, isCreating } = useNewQuestion()
 
 	function onSubmit(newQuestion) {
-		//check empty fields	
-		if(newQuestion.question===""||newQuestion.answer==="")return
-		mutate({selectedCategoryId,newQuestion})
+		if (newQuestion.question === "" || newQuestion.answer === "") return
+		createQuestion(
+			{ selectedCategoryId, newQuestion },
+			{
+				onSuccess: () => {
+					reset()
+				},
+			}
+		)
 	}
-	
-	if(isCreating)return<Spinner/>
+
+	if (isCreating||isLoading) return <Spinner />
 
 	return (
 		<div>
@@ -54,40 +45,45 @@ export default function NewQuestion() {
 					<label className='text-blue-200 text-center text-sm sm:text-base'>
 						{" "}
 						New question:<br></br>
-						<textarea {...register("question")}className='bg-black border border-yellow-200 mt-2 w-72'></textarea>
+						<textarea
+							{...register("question")}
+							className='bg-black border border-yellow-200 mt-2 w-72'
+						></textarea>
 					</label>
 					<label className='text-blue-200 text-center text-sm sm:text-base'>
 						{" "}
 						New answer:<br></br>
-						<textarea {...register("answer")}className='bg-black border border-yellow-200 mt-2 w-72'></textarea>
+						<textarea
+							{...register("answer")}
+							className='bg-black border border-yellow-200 mt-2 w-72'
+						></textarea>
 					</label>
 					<div className='flex justify-center gap-3 mt-5'>
-					<Button
-					type="button"
-						onClick={()=>navigate(-1)}
-						style={{
-							backgroundColor: "rgb(254 240 138)",
-							width: "130px",
-							height: "40px",
-							fontFamily: "kanit",
-						}}
-					>
-						Back
-					</Button>
-					<Button
-						type="submit"
-						style={{
-							backgroundColor: "#88FFB6",
-							width: "130px",
-							height: "40px",
-							fontFamily: "kanit",
-						}}
-					>
-						Add question
-					</Button>
-				</div>
+						<Button
+							type='button'
+							onClick={() => navigate(-1)}
+							style={{
+								backgroundColor: "rgb(254 240 138)",
+								width: "130px",
+								height: "40px",
+								fontFamily: "kanit",
+							}}
+						>
+							Back
+						</Button>
+						<Button
+							type='submit'
+							style={{
+								backgroundColor: "#88FFB6",
+								width: "130px",
+								height: "40px",
+								fontFamily: "kanit",
+							}}
+						>
+							Add question
+						</Button>
+					</div>
 				</form>
-				
 			</div>
 		</div>
 	)

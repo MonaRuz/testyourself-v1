@@ -1,4 +1,11 @@
-import { query, getDocs, getDoc,doc,addDoc, collection } from "firebase/firestore/lite"
+import {
+	query,
+	getDocs,
+	getDoc,
+	doc,
+	addDoc,
+	collection,
+} from "firebase/firestore/lite"
 import db from "../firebase/config"
 
 export async function getQuestions(categoryId) {
@@ -18,15 +25,21 @@ export async function getQuestions(categoryId) {
 	return questions
 }
 
-export async function createQuestion({selectedCategoryId,newQuestion}){
-const qRef=collection(db,"categories",selectedCategoryId,"questions")
-try{
-	await addDoc(qRef,{question:newQuestion.question,answer:newQuestion.answer})
-}catch(err){
-	console.error(err)
-	throw new Error("Question could not be created.")
+export async function createQuestion({ selectedCategoryId, newQuestion }) {
+	const qRef = collection(db, "categories", selectedCategoryId, "questions")
+	try {
+		await addDoc(qRef, {
+			question: newQuestion.question,
+			answer: newQuestion.answer,
+		})
+	} catch (err) {
+		console.error(err)
+		throw new Error("Question could not be created.")
+	}
+
+	return newQuestion
 }
 
-return newQuestion
-
+export async function deleteQuestion(questionId) {
+	
 }
