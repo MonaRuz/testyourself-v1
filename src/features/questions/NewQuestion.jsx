@@ -3,30 +3,40 @@
 import { useNavigate, useParams } from "react-router-dom"
 import Button from "../../components/Button"
 import { useForm } from "react-hook-form"
-import { QueryClient, useMutation } from "@tanstack/react-query"
+import { useMutation } from "@tanstack/react-query"
 import { createQuestion } from "../../services/apiQuestions"
 import Spinner from "../../components/Spinner"
 import toast from "react-hot-toast"
+import useCategory from "../categories/useCategory"
+import queryClient  from "../../App"
 
 export default function NewQuestion() {
 	const navigate=useNavigate()
 	const {category}=useParams()
 
+	const{isLoading,selectedCategory,error}=useCategory(category)
+	const selectedCategoryId=selectedCategory?.id
+	
+
 	const{register,handleSubmit,reset}=useForm()
+
 	const{mutate,isLoading:isCreating}=useMutation({
-		mutationFn:(data)=>createQuestion(data),
+		mutationFn:createQuestion,
 		onSuccess:()=>{
 			toast.success("Question was successfully created.")
-			QueryClient.invalidateQueries({queryKey:["questions"]}),
+			queryClient.invalidateQueries({queryKey:["questions"]}),
+			//debug this:
 			reset()
 		},
-		onError:(err)=>toast.error("Question wan not added.")
+		onError:(err)=>toast.error(err.message)
 	}
 )
 
-	function onSubmit(data) {
+	function onSubmit(newQuestion) {
 		//new question handling
-		mutate(data)
+		//check empty fields	
+		if(newQuestion.question===""||newQuestion.answer==="")return
+		mutate({selectedCategoryId,newQuestion})
 	}
 	
 	if(isCreating)return<Spinner/>

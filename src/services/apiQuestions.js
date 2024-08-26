@@ -18,15 +18,15 @@ export async function getQuestions(categoryId) {
 	return questions
 }
 
-export async function createQuestion(data){
-// const qRef=doc(db,"categories",categoryId,"questions")
-// try{
-// 	await addDoc(qRef,newQuestion)
-// }catch(err){
-// 	console.error(err)
-// 	throw new Error("Question could not by created.")
-// }
-// return newQuestion
-console.log(data);
+export async function createQuestion({selectedCategoryId,newQuestion}){
+const qRef=collection(db,"categories",selectedCategoryId,"questions")
+try{
+	await addDoc(qRef,{question:newQuestion.question,answer:newQuestion.answer})
+}catch(err){
+	console.error(err)
+	throw new Error("Question could not be created.")
+}
+console.log(newQuestion);
+return newQuestion
 
 }
