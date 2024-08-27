@@ -1,33 +1,21 @@
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io"
 //short question to preview...
-
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { deleteQuestion } from "../../services/apiQuestions"
-import toast from "react-hot-toast"
+import { useDeleteQuestion } from "./useDeleteQuestion"
 
 export default function Question({ question, selectedCategory }) {
 	const [isOpen, setIsOpen] = useState(false)
 	const navigate = useNavigate()
-	const queryClient = useQueryClient()
-
-	const { isLoading: isDeleting, mutate } = useMutation({
-		mutationFn: ({ categoryId, questionId }) =>
-			deleteQuestion(categoryId, questionId),
-		onSuccess: () => {
-			toast.success("Question was successfully deleted.")
-			queryClient.invalidateQueries({ queryKey: ["questions"] })
-		},
-		onError: (err) => toast.error(err.message),
-	})
+	
+	const{deleteQuestion}=useDeleteQuestion()
 
 	function handleOpen() {
 		setIsOpen(!isOpen)
 	}
 
 	function handleDeleteQuestion(id) {
-		mutate({categoryId:selectedCategory.id,questionId: id})
+		deleteQuestion({categoryId:selectedCategory.id,questionId: id})
 	}
 
 	return (
