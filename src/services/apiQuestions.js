@@ -1,7 +1,7 @@
 import {
 	query,
 	getDocs,
-	getDoc,
+	deleteDoc,
 	doc,
 	addDoc,
 	collection,
@@ -40,6 +40,13 @@ export async function createQuestion({ selectedCategoryId, newQuestion }) {
 	return newQuestion
 }
 
-export async function deleteQuestion(questionId) {
+export async function deleteQuestion(categoryId,questionId) {
+	const qRef=doc(db,"categories",categoryId,"questions",questionId)
+	try{
+		await deleteDoc(qRef)
+	}catch(err){
+		console.error(err)
+		throw new Error("Question could not be deleted.")
+	}
 	
 }

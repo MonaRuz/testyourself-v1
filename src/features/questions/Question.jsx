@@ -3,14 +3,31 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io"
 
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
-
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { deleteQuestion } from "../../services/apiQuestions"
+import toast from "react-hot-toast"
 
 export default function Question({ question, selectedCategory }) {
 	const [isOpen, setIsOpen] = useState(false)
 	const navigate = useNavigate()
+	const queryClient = useQueryClient()
+
+	const { isLoading: isDeleting, mutate } = useMutation({
+		mutationFn: ({ categoryId, questionId }) =>
+			deleteQuestion(categoryId, questionId),
+		onSuccess: () => {
+			toast.success("Question was successfully deleted.")
+			queryClient.invalidateQueries({ queryKey: ["questions"] })
+		},
+		onError: (err) => toast.error(err.message),
+	})
 
 	function handleOpen() {
 		setIsOpen(!isOpen)
+	}
+
+	function handleDeleteQuestion(id) {
+		mutate({categoryId:selectedCategory.id,questionId: id})
 	}
 
 	return (
@@ -38,9 +55,19 @@ export default function Question({ question, selectedCategory }) {
 					>
 						{question.answer}
 					</p>
-					<div className="flex justify-center gap-4 mb-3">
-						<button onClick={()=>navigate()} className="text-zinc-900 bg-green-200 w-20 py-1 border-2 border-zinc-900 hover:border-none font-['kanit']">Edit</button>
-						<button className="text-zinc-900 bg-red-300 w-20 py-1 border-2 border-zinc-900 hover:border-none font-['kanit']">Delete</button>
+					<div className='flex justify-center gap-4 mb-3'>
+						<button
+							onClick={() => navigate()}
+							className="text-zinc-900 bg-green-200 w-20 py-1 border-2 border-zinc-900 hover:border-none font-['kanit']"
+						>
+							Edit
+						</button>
+						<button
+							onClick={() => handleDeleteQuestion(question.id)}
+							className="text-zinc-900 bg-red-300 w-20 py-1 border-2 border-zinc-900 hover:border-none font-['kanit']"
+						>
+							Delete
+						</button>
 					</div>
 				</div>
 			)}
