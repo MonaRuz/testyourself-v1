@@ -1,6 +1,7 @@
 import {
 	query,
 	getDocs,
+	getDoc,
 	deleteDoc,
 	doc,
 	addDoc,
@@ -23,6 +24,21 @@ export async function getQuestions(categoryId) {
 	}
 
 	return questions
+}
+
+export async function getQuestion(categoryId,questionId){
+
+	const qRef=doc(db,"categories",categoryId,"questions",questionId)
+	
+	try{
+		const qSnap=await getDoc(qRef)
+		const question=qSnap.data()
+		return question
+
+	}catch(err){
+		console.error(err)
+		throw new Error("Question was not found.")
+	}
 }
 
 export async function createQuestion({ selectedCategoryId, newQuestion }) {
@@ -50,3 +66,7 @@ export async function deleteQuestion(categoryId,questionId) {
 	}
 	
 }
+
+// export async function editQuestion(categoryId,questionId){
+
+// }
