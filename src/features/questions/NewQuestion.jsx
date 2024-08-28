@@ -46,7 +46,7 @@ export default function NewQuestion() {
 						{" "}
 						New question:<br></br>
 						<textarea
-							{...register("question")}
+							{...register("question",{required:"This field is required!"})}
 							className='bg-black border border-yellow-200 mt-2 w-72'
 						></textarea>
 					</label>
@@ -54,7 +54,7 @@ export default function NewQuestion() {
 						{" "}
 						New answer:<br></br>
 						<textarea
-							{...register("answer")}
+							{...register("answer",{required:"This field is required!"})}
 							className='bg-black border border-yellow-200 mt-2 w-72'
 						></textarea>
 					</label>

@@ -2,6 +2,7 @@ import {
 	query,
 	getDocs,
 	getDoc,
+	setDoc,
 	deleteDoc,
 	doc,
 	addDoc,
@@ -67,6 +68,15 @@ export async function deleteQuestion(categoryId,questionId) {
 	
 }
 
-// export async function editQuestion(categoryId,questionId){
-
-// }
+export async function editQuestion(categoryId,questionId,editedQuestion){
+	console.log(categoryId,questionId,editedQuestion);
+	
+	// const qRef=doc(db,"categories",categoryId,"questions",questionId)
+	// try{
+	// 	await setDoc(qRef,editedQuestion)
+	// 	return editQuestion
+	// }catch(err){
+	// 	console.error(err)
+	// 	throw new Error("Question could not be deleted.")
+	// }
+}
