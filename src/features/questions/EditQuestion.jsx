@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form"
 import { useEffect } from "react"
 import { useEditQuestion } from "./useEditQuestion"
 import Spinner from "../../components/Spinner"
+import { useQuestion } from "./useQuestion"
 
 export default function EditQuestion() {
 	const navigate = useNavigate()
@@ -22,10 +23,7 @@ export default function EditQuestion() {
 
 	const { isEditing, editQuestion } = useEditQuestion()
 
-	const { isLoading: isLoadingQuestion, data: question } = useQuery({
-		queryKey: ["question"],
-		queryFn: () => getQuestion(categoryId, questionId),
-	})
+	const{isLoadingQuestion,question}=useQuestion(categoryId,questionId)
 
 	const { register, handleSubmit, reset } = useForm({
 		defaultValues: {
