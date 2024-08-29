@@ -8,39 +8,50 @@ import { useForm } from "react-hook-form"
 //restrict amount of letters
 export default function NewCategory() {
 	const navigate = useNavigate()
-	const queryClient=useQueryClient()
+	const queryClient = useQueryClient()
 
-const{register,handleSubmit}=useForm()
+	const { register, handleSubmit } = useForm()
 
-const{isLoading,mutate}=useMutation({
-	mutationFn:createCategory,
-	onSuccess:()=>{
-		toast.success("New category was successfully created")
-		queryClient.invalidateQueries({
-			queryKey:["categories"]
-		})
-	},
-	onError:(err)=>toast.error(err.message)
-})
+	const { isLoading: isCreating, mutate } = useMutation({
+		mutationFn: createCategory,
+		onSuccess: () => {
+			toast.success("New category was successfully created")
+			queryClient.invalidateQueries({
+				queryKey: ["categories"],
+			})
+		},
+		onError: (err) => toast.error(err.message),
+	})
 
-function handleNewCategory(newCategory) {
-	console.log(newCategory);
-	
-    // navigate(`/${newCategory}/overview`)
-}
+	function handleNewCategory(data) {
+		console.log(data)
+
+		const newCategory = data.categoryName.split(" ").join("")
+		console.log(newCategory)
+
+		mutate(newCategory)
+		if (!isCreating) navigate(`/${newCategory}/overview`)
+	}
 
 	return (
-		<form onSubmit={handleSubmit(handleNewCategory)} className='flex flex-col justify-center items-center'>
+		<form
+			onSubmit={handleSubmit(handleNewCategory)}
+			className='flex flex-col justify-center items-center'
+		>
+			<p className='text-red-300 text-sm mt-3'>
+				( ...The new category name will not have any spaces!... )
+			</p>
 			<label className='text-yellow-200 text-center my-5'>
 				Name of new category:<br></br>
 				<input
-				id="categoryName"
-				{...register("categoryName",{required:"This field must be filled!"})}
+					id='categoryName'
+					{...register("categoryName", {
+						required: "This field must be filled!",
+					})}
 					className='bg-black border border-yellow-200 w-72 my-5 h-8'
 					type='text'
 				/>
 			</label>
-
 			<Button
 				onClick={handleNewCategory}
 				style={{

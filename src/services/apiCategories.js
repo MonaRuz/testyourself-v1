@@ -1,6 +1,7 @@
 import {
 	collection,
 	getDocs,
+	addDoc,
 	query,
 	where,
 } from "firebase/firestore/lite"
@@ -41,6 +42,17 @@ export async function getCategory(category) {
 }
 
 export async function createCategory(newCategory){
-	console.log(newCategory);
-	
+	try{
+		await addDoc(collection(db,"categories"),{
+			category:newCategory,
+			currentScore:0,
+			highscore:0,
+			progress:0,
+			questionsAmount:0
+		})
+		return newCategory
+	}catch(err){
+		console.error(err)
+		throw new Error("New category was not created")
+	}
 }
