@@ -10,7 +10,9 @@ import Spinner from "../../components/Spinner"
 export default function CategoryOverview() {
 	const navigate = useNavigate()
 	const { category } = useParams()
-	const { isLoading, selectedCategory, error } = useCategory(category)
+	const { isLoading, selectedCategory} = useCategory(category)
+
+
 
 	if (isLoading) return <Spinner>Category overview</Spinner>
 

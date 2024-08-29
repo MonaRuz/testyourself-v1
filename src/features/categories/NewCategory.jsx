@@ -4,24 +4,16 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { createCategory } from "../../services/apiCategories"
 import toast from "react-hot-toast"
 import { useForm } from "react-hook-form"
+import { useNewCategory } from "./useNewCategory"
 
 //restrict amount of letters
 export default function NewCategory() {
 	const navigate = useNavigate()
-	const queryClient = useQueryClient()
+	
 
 	const { register, handleSubmit } = useForm()
 
-	const { isLoading: isCreating, mutate } = useMutation({
-		mutationFn: createCategory,
-		onSuccess: () => {
-			toast.success("New category was successfully created")
-			queryClient.invalidateQueries({
-				queryKey: ["categories"],
-			})
-		},
-		onError: (err) => toast.error(err.message),
-	})
+	const{isCategoryCreating,createCategory}=useNewCategory()
 
 	function handleNewCategory(data) {
 		console.log(data)
@@ -29,8 +21,8 @@ export default function NewCategory() {
 		const newCategory = data.categoryName.split(" ").join("")
 		console.log(newCategory)
 
-		mutate(newCategory)
-		if (!isCreating) navigate(`/${newCategory}/overview`)
+		createCategory(newCategory)
+		if (!isCategoryCreating) navigate(`/${newCategory}/overview`)
 	}
 
 	return (
