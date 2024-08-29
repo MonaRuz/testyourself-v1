@@ -39,3 +39,8 @@ export async function getCategory(category) {
 
 	return selectedCategory
 }
+
+export async function createCategory(newCategory){
+	console.log(newCategory);
+	
+}

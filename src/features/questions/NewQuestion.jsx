@@ -35,7 +35,7 @@ export default function NewQuestion() {
 	return (
 		<div>
 			<p className='text-blue-200 text-center p-3 text-sm sm:text-base mt-3'>
-				Create new question for category CATEGORY. All fields must be fulfilled.
+				Create new question for category {selectedCategory?.category}. Both fields must be filled.
 			</p>
 			<div className='mt-3'>
 				<form

@@ -5,7 +5,7 @@ import { useState } from "react"
 
 export default function QuestionsList({ selectedCategory }) {
 	const [searchedExpression, setSearchedExpression] = useState()
-	const { isLoading, questions, error } = useQuestions(selectedCategory.id)
+	const { isLoading, questions } = useQuestions(selectedCategory.id)
 
 	const searchedQuestions =
 		searchedExpression?.length > 0

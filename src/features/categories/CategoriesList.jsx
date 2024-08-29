@@ -9,7 +9,7 @@ export default function CategoriesList() {
 
 	const { isLoading, categories, error } = useCategories()
 
-	if (isLoading) return <Spinner />
+	if (isLoading) return <Spinner>Categories</Spinner>
 
 	return (
 		<div>

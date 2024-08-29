@@ -12,7 +12,7 @@ export default function CategoryOverview() {
 	const { category } = useParams()
 	const { isLoading, selectedCategory, error } = useCategory(category)
 
-	if (isLoading) return <Spinner />
+	if (isLoading) return <Spinner>Category overview</Spinner>
 
 	return (
 		<div>
