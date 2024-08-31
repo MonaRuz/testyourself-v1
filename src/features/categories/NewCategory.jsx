@@ -1,8 +1,5 @@
 import { useNavigate } from "react-router-dom"
 import Button from "../../components/Button"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { createCategory } from "../../services/apiCategories"
-import toast from "react-hot-toast"
 import { useForm } from "react-hook-form"
 import { useNewCategory } from "./useNewCategory"
 
@@ -18,7 +15,7 @@ export default function NewCategory() {
 	function handleNewCategory(data) {
 		console.log(data)
 
-		const newCategory = data.categoryName.split(" ").join("")
+		const newCategory = data?.categoryName.split(" ").join("")
 		console.log(newCategory)
 
 		createCategory(newCategory)
