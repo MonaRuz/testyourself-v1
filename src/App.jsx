@@ -16,6 +16,7 @@ import NewCategory from "./features/categories/NewCategory"
 import Results from "./features/categoryTest/Results"
 import TestInstructions from "./features/categoryTest/TestInstructions"
 import { Toaster } from "react-hot-toast"
+import DeleteCategory from "./features/categories/DeleteCategory"
 
 export default function App() {
 	const queryClient = new QueryClient({
@@ -52,6 +53,10 @@ export default function App() {
 						<Route
 							path='new-category'
 							element={<NewCategory />}
+						/>
+						<Route
+							path=':category/delete'
+							element={<DeleteCategory />}
 						/>
 						<Route path=':category'>
 							<Route

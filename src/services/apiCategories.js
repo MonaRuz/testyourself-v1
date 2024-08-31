@@ -2,6 +2,8 @@ import {
 	collection,
 	getDocs,
 	addDoc,
+	deleteDoc,
+	doc,
 	query,
 	where,
 } from "firebase/firestore/lite"
@@ -55,4 +57,15 @@ export async function createCategory(newCategory){
 		console.error(err)
 		throw new Error("New category was not created")
 	}
+}
+
+export async function deleteCategory(categoryId) {
+	try{
+		await deleteDoc(doc(db, "categories", categoryId))
+		return categoryId
+	}catch(err){
+		console.error(err)
+		throw new Error("Category was not deleted")
+	}
+	
 }

@@ -13,7 +13,6 @@ export default function CategoryOverview() {
 	const { isLoading, selectedCategory} = useCategory(category)
 
 
-
 	if (isLoading) return <Spinner>Category overview</Spinner>
 
 	return (
@@ -63,7 +62,7 @@ export default function CategoryOverview() {
 						Back
 					</Button>
 					<Button
-						onClick={() => navigate("/category/delete")}
+						onClick={() => navigate(`/${selectedCategory.category}/delete`)}
 						style={{
 							backgroundColor: "rgb(252 165 165)",
 							width: "133px",
