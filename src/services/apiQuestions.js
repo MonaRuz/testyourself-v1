@@ -27,23 +27,29 @@ export async function getQuestions(categoryId) {
 	return questions
 }
 
-export async function getQuestion(categoryId,questionId){
+export async function getQuestion(categoryId, questionId) {
+	const qRef = doc(db, "categories", categoryId, "questions", questionId)
 
-	const qRef=doc(db,"categories",categoryId,"questions",questionId)
-	
-	try{
-		const qSnap=await getDoc(qRef)
-		const question=qSnap.data()
+	try {
+		const qSnap = await getDoc(qRef)
+		const question = qSnap.data()
 		return question
-
-	}catch(err){
+	} catch (err) {
 		console.error(err)
 		throw new Error("Question was not found.")
 	}
 }
 
-export async function createQuestion({ selectedCategoryId, newQuestion }) {
+export async function createQuestion({
+	selectedCategoryId,
+	newQuestion,
+
+}) {
+	
+
+
 	const qRef = collection(db, "categories", selectedCategoryId, "questions")
+	
 	try {
 		await addDoc(qRef, {
 			question: newQuestion.question,
@@ -54,27 +60,26 @@ export async function createQuestion({ selectedCategoryId, newQuestion }) {
 		throw new Error("Question could not be created.")
 	}
 
+	
 	return newQuestion
 }
 
-export async function deleteQuestion(categoryId,questionId) {
-	const qRef=doc(db,"categories",categoryId,"questions",questionId)
-	try{
+export async function deleteQuestion(categoryId, questionId) {
+	const qRef = doc(db, "categories", categoryId, "questions", questionId)
+	try {
 		await deleteDoc(qRef)
-	}catch(err){
+	} catch (err) {
 		console.error(err)
 		throw new Error("Question could not be deleted.")
 	}
-	
 }
 
-export async function editQuestion({categoryId,questionId,editedQuestion}){
-	
-	const qRef=doc(db,"categories",categoryId,"questions",questionId)
-	try{
-		await setDoc(qRef,editedQuestion)
+export async function editQuestion({ categoryId, questionId, editedQuestion }) {
+	const qRef = doc(db, "categories", categoryId, "questions", questionId)
+	try {
+		await setDoc(qRef, editedQuestion)
 		return editedQuestion
-	}catch(err){
+	} catch (err) {
 		console.error(err)
 		throw new Error("Question could not be edited.")
 	}

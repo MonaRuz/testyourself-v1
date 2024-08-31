@@ -3,23 +3,22 @@ import Button from "../../components/Button"
 import { useForm } from "react-hook-form"
 import { useNewCategory } from "./useNewCategory"
 
-//restrict amount of letters
+
 export default function NewCategory() {
 	const navigate = useNavigate()
-	
 
 	const { register, handleSubmit } = useForm()
 
-	const{isCategoryCreating,createCategory}=useNewCategory()
+	const { createCategory } = useNewCategory()
 
 	function handleNewCategory(data) {
-		console.log(data)
-
-		const newCategory = data?.categoryName.split(" ").join("")
-		console.log(newCategory)
-
-		createCategory(newCategory)
-		if (!isCategoryCreating) navigate(`/${newCategory}/overview`)
+		//debug error: "split" on undefined value
+		const newCategory = data.categoryName.split(" ").join("")
+		createCategory(newCategory, {
+			onSuccess: () => {
+				navigate(`/${newCategory}/overview`)
+			},
+		})
 	}
 
 	return (

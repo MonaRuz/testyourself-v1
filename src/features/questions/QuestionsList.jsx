@@ -1,11 +1,11 @@
 import Question from "./Question"
 import Spinner from "../../components/Spinner"
-import useQuestions from "./useQuestions"
+import {useQuestions} from "./useQuestions"
 import { useState } from "react"
 
 export default function QuestionsList({ selectedCategory }) {
 	const [searchedExpression, setSearchedExpression] = useState()
-	const { isLoading, questions } = useQuestions(selectedCategory.id)
+	const { isLoadingQuestions, questions } = useQuestions(selectedCategory.id)
 
 	const searchedQuestions =
 		searchedExpression?.length > 0
@@ -16,7 +16,7 @@ export default function QuestionsList({ selectedCategory }) {
 			  )
 			: questions
 
-	if (isLoading) return <Spinner />
+	if (isLoadingQuestions) return <Spinner />
 
 	return (
 		<div className='w-full lg:max-w-xl'>

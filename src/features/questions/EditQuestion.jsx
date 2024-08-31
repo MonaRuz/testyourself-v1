@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom"
 import Button from "../../components/Button"
-import useCategory from "../categories/useCategory"
+import {useCategory} from "../categories/useCategory"
 import { useForm } from "react-hook-form"
 import { useEffect } from "react"
 import { useEditQuestion } from "./useEditQuestion"
@@ -60,7 +60,7 @@ export default function EditQuestion() {
 						<textarea
 							id='question'
 							{...register("question")}
-							className='bg-black border border-yellow-200 mt-2 w-72'
+							className='bg-black border border-yellow-200 mt-2 w-[250px] sm:w-96 md:w-[600px] text-sm p-2 h-20'
 						></textarea>
 					</label>
 					<label className='text-blue-200 text-center text-sm sm:text-base'>
@@ -69,7 +69,7 @@ export default function EditQuestion() {
 						<textarea
 							id='answer'
 							{...register("answer")}
-							className='bg-black border border-yellow-200 mt-2 w-72'
+							className='bg-black border border-yellow-200 mt-2 w-[250px] sm:w-96 md:w-[600px] text-sm p-2 h-20'
 						></textarea>
 					</label>
 					<div className='flex flex-col justify-center gap-3 mt-5'>

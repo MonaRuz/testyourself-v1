@@ -1,5 +1,14 @@
+import {useQuestions} from "../questions/useQuestions"
+import Spinner from "../../components/Spinner"
+
 export default function CategoryStats({selectedCategory}) {
-	const{id,highscore,currentScore,progress,questionsAmount,category}=selectedCategory
+	const{id,highscore,currentScore,progress}=selectedCategory
+
+	const { isLoadingQuestions, questions } = useQuestions(id)
+
+	const questionsAmount=questions?.length
+	
+	if(isLoadingQuestions)return<Spinner>category statistics</Spinner>
 	
 	return (
 		<div className='mt-[13px] px-2'>

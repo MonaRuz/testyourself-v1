@@ -2,18 +2,16 @@ import Button from "../../components/Button"
 import CategoryStats from "./CategoryStats"
 import QuestionsList from "../questions/QuestionsList"
 import { useNavigate, useParams } from "react-router-dom"
-import useCategory from "../categories/useCategory"
-// import { getCategory } from "../../services/apiCategories"
-// import { useQuery } from "@tanstack/react-query"
+import {useCategory} from "../categories/useCategory"
 import Spinner from "../../components/Spinner"
 
 export default function CategoryOverview() {
 	const navigate = useNavigate()
 	const { category } = useParams()
-	const { isLoading, selectedCategory} = useCategory(category)
+	const { isLoadingCategory, selectedCategory} = useCategory(category)
 
 
-	if (isLoading) return <Spinner>Category overview</Spinner>
+	if (isLoadingCategory) return <Spinner>Category overview</Spinner>
 
 	return (
 		<div>
@@ -27,7 +25,7 @@ export default function CategoryOverview() {
 			<div className='flex flex-col items-center lg:flex-row justify-center gap-2 lg:m-10'>
 				<div className='flex gap-2'>
 					<Button
-						onClick={() => navigate("/category/test/instructions")}
+						onClick={() => navigate(`/${category}/test/instructions`)}
 						style={{
 							backgroundColor: "#88FFB6",
 							width: "133px",

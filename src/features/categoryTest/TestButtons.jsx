@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import Button from "../../components/Button"
-export default function TestButtons() {
+export default function TestButtons({category}) {
   const navigate=useNavigate()
 	return (
 		<div className="flex flex-col justify-center items-center gap-1">
@@ -39,7 +39,7 @@ export default function TestButtons() {
 			</div>
 			<div>
 				<Button
-          onClick={()=>navigate("/category/test/instructions")}
+          onClick={()=>navigate(`/${category}/test/instructions`)}
 					style={{
 						backgroundColor: "rgb(254 240 138)",
 						width: "300px",

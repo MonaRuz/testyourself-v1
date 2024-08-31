@@ -1,16 +1,19 @@
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import Button from "../../components/Button"
 //conditionally rendered button restart
 export default function TestInstructions() {
 	const navigate = useNavigate()
+	const params=useParams()
+	const category=params.category
+	
 	return (
 		<div className='mt-3'>
 			<h3 className='text-center text-purple-200 border-y border-purple-200 mb-3 pb-1'>
-				Test in category...
+				Test in category <span className="text-green-200">{category}</span>
 			</h3>
 			<div className='flex flex-col gap-1 items-center'>
 				<Button
-					onClick={() => navigate("/category/test/running-test")}
+					onClick={() => navigate(`/${category}/test/running-test`)}
 					style={{
 						backgroundColor: "#88FFB6",
 						width: "250px",
@@ -31,7 +34,7 @@ export default function TestInstructions() {
 					Restart test
 				</Button>
 				<Button
-					onClick={() => navigate("/category/overview")}
+					onClick={() => navigate(`/${category}/overview`)}
 					style={{
 						backgroundColor: "rgb(254 240 138)",
 						width: "250px",

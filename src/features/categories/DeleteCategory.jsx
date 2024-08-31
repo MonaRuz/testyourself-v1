@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom"
 import Button from "../../components/Button"
-import useCategory from "./useCategory"
+import {useCategory} from "./useCategory"
 import Spinner from "../../components/Spinner"
 import { useDeleteCategory } from "./useDeleteCategory"
 
@@ -9,7 +9,7 @@ export default function DeleteCategory() {
 	const param = useParams()
     const navigate=useNavigate()
 
-	const { isLoading, selectedCategory } = useCategory(param.category)
+	const { isLoadingCategory, selectedCategory } = useCategory(param.category)
 
     const{deleteCategory}=useDeleteCategory()
 
@@ -17,7 +17,7 @@ export default function DeleteCategory() {
 		deleteCategory(id)
 	}
 
-	if (isLoading) return <Spinner>deleting category page</Spinner>
+	if (isLoadingCategory) return <Spinner>deleting category page</Spinner>
 
 	return (
 		<div >

@@ -4,38 +4,46 @@ import { useNavigate, useParams } from "react-router-dom"
 import Button from "../../components/Button"
 import { useForm } from "react-hook-form"
 import Spinner from "../../components/Spinner"
-import useCategory from "../categories/useCategory"
+import {useCategory} from "../categories/useCategory"
 import { useNewQuestion } from "./useNewQuestion"
+
 
 export default function NewQuestion() {
 	const navigate = useNavigate()
 	const { category } = useParams()
+	// const queryClient=useQueryClient()
 
-	const { isLoading, selectedCategory} = useCategory(category)
+	const { isLoadingCategory, selectedCategory} = useCategory(category)
 	const selectedCategoryId = selectedCategory?.id
-
+	
 	const { register, handleSubmit, reset } = useForm()
 
 	const { createQuestion, isCreating } = useNewQuestion()
 
+
+
+	
+	
+
 	function onSubmit(newQuestion) {
 		if (newQuestion.question === "" || newQuestion.answer === "") return
 		createQuestion(
-			{ selectedCategoryId, newQuestion },
+			{ selectedCategoryId, newQuestion,selectedCategory },
 			{
 				onSuccess: () => {
 					reset()
 				},
 			}
 		)
+
 	}
 
-	if (isCreating||isLoading) return <Spinner />
+	if (isLoadingCategory) return <Spinner />
 
 	return (
 		<div>
 			<p className='text-blue-200 text-center p-3 text-sm sm:text-base mt-3'>
-				Create new question for category {selectedCategory?.category}. Both fields must be filled.
+				Create new question for category <span className="text-green-200">{selectedCategory?.category}</span>. Both fields must be filled.
 			</p>
 			<div className='mt-3'>
 				<form
@@ -47,15 +55,16 @@ export default function NewQuestion() {
 						New question:<br></br>
 						<textarea
 							{...register("question",{required:"This field is required!"})}
-							className='bg-black border border-yellow-200 mt-2 w-72'
+							className='bg-black border border-yellow-200 mt-2 w-[250px] sm:w-96 md:w-[600px] text-sm p-2'
 						></textarea>
 					</label>
 					<label className='text-blue-200 text-center text-sm sm:text-base'>
 						{" "}
 						New answer:<br></br>
+						{/*todo: style scrollbar */}
 						<textarea
 							{...register("answer",{required:"This field is required!"})}
-							className='bg-black border border-yellow-200 mt-2 w-72'
+							className='bg-black border border-yellow-200 mt-2 text-sm p-2 w-[250px] sm:w-96 md:w-[600px]'
 						></textarea>
 					</label>
 					<div className='flex justify-center gap-3 mt-5'>
@@ -72,6 +81,7 @@ export default function NewQuestion() {
 							Back
 						</Button>
 						<Button
+							disabled={isCreating}
 							type='submit'
 							style={{
 								backgroundColor: "#88FFB6",
