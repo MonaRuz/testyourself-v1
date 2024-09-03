@@ -22,10 +22,10 @@ export default function Question({ question, selectedCategory }) {
 			onClick={handleOpen}
 			className='flex flex-col justify-between  bg-zinc-900 mb-3 divide-y divide-yellow-200'
 		>
-			<div className='flex justify-between'>
+			<div className='flex justify-between text-wrap'>
 				{/* todo: debug: truncate and text wrapping is not functioning */}
 				<p
-					className={`text-green-200 text-sm hover:text-violet-200 cursor-pointer pointer-events-auto hover:border-green-200 min-w-50 px-4 py-2 min-w-max
+					className={`text-green-200 text-sm hover:text-violet-200 cursor-pointer pointer-events-auto hover:border-green-200 min-w-50 px-4 py-2 
 				 ${!isOpen ? "truncate" : ""}`}
 				>
 					{question.question}

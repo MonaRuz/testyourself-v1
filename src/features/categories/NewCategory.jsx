@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form"
 import { useNewCategory } from "./useNewCategory"
 
 
+//todo: debug: error with undefined sent value first (after this data was successfully submited)
+
 export default function NewCategory() {
 	const navigate = useNavigate()
 
@@ -14,8 +16,7 @@ export default function NewCategory() {
 	const { createCategory } = useNewCategory()
 
 	function handleNewCategory(data) {
-		//debug error: "split" on undefined value
-		const newCategory = data.categoryName.split(" ").join("")
+		const newCategory = data.categoryName?.split(" ").join("")
 		createCategory(newCategory, {
 			onSuccess: () => {
 				navigate(`/${newCategory}/overview`)

@@ -44,7 +44,7 @@ export async function getCategory(category) {
 }
 
 export async function createCategory(newCategory){
-	console.log(newCategory);
+
 	
 	try{
 		await addDoc(collection(db,"categories"),{

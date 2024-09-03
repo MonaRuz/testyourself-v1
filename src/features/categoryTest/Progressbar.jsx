@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom"
 export default function Progressbar({category}) {
   
   return (
-    <div className="border border-yellow-200 mt-3 px-4 py-2 max-w-xl m-auto">
+    <div className="bg-zinc-800 mt-3 px-4 py-2 max-w-xl m-auto">
       <h3 className="text-yellow-200 text-center sm:text-lg">Test in category {category}</h3>
       <div className="text-green-200 flex items-center justify-between">
         <p>Progress: 1 / 83</p>

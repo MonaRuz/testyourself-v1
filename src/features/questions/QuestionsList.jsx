@@ -18,7 +18,7 @@ export default function QuestionsList({ selectedCategory }) {
 			: questions
 
 	if (isLoadingQuestions) return <Spinner>Category overview</Spinner>
-	if (questions.length <= 0)
+	if (questions?.length <= 0)
 		return (
 			<h2 className='text-red-300 mt-3'>
 				This category has not any questions yet.

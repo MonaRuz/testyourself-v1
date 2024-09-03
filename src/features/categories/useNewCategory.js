@@ -5,7 +5,7 @@ import toast from "react-hot-toast"
 export function useNewCategory(){
     const queryClient = useQueryClient()
     const {mutate:createCategory } = useMutation({
-		mutationFn: createCategoryApi,
+		mutationFn: (category)=>createCategoryApi(category),
 		onSuccess: () => {
 			toast.success("New category was successfully created")
 			queryClient.invalidateQueries({
