@@ -7,7 +7,9 @@ import { useNewCategory } from "./useNewCategory"
 export default function NewCategory() {
 	const navigate = useNavigate()
 
-	const { register, handleSubmit } = useForm()
+	const { register, handleSubmit,formState } = useForm()
+
+	const{errors}=formState
 
 	const { createCategory } = useNewCategory()
 
@@ -31,6 +33,7 @@ export default function NewCategory() {
 			</p>
 			<label className='text-yellow-200 text-center my-5'>
 				Name of new category:<br></br>
+				{errors?.categoryName?.message&&<p className="text-red-300 text-sm mt-1">{errors.categoryName.message}</p>}
 				<input
 					id='categoryName'
 					{...register("categoryName", {
