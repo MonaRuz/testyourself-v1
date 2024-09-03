@@ -8,15 +8,20 @@ import {useCategory} from "../categories/useCategory"
 import { useNewQuestion } from "./useNewQuestion"
 
 
+
 export default function NewQuestion() {
 	const navigate = useNavigate()
 	const { category } = useParams()
-	// const queryClient=useQueryClient()
 
 	const { isLoadingCategory, selectedCategory} = useCategory(category)
 	const selectedCategoryId = selectedCategory?.id
 	
-	const { register, handleSubmit, reset } = useForm()
+	const { register, handleSubmit, reset,formState } = useForm()
+
+	const {errors}=formState
+
+	console.log(errors);
+	
 
 	const { createQuestion, isCreating } = useNewQuestion()
 
@@ -53,14 +58,17 @@ export default function NewQuestion() {
 					<label className='text-blue-200 text-center text-sm sm:text-base'>
 						{" "}
 						New question:<br></br>
+						{errors?.question?.message&&<p className="text-red-300 text-sm mt-1">{errors.question.message}</p>}
 						<textarea
 							{...register("question",{required:"This field is required!"})}
 							className='bg-black border border-yellow-200 mt-2 w-[250px] sm:w-96 md:w-[600px] text-sm p-2 h-20'
 						></textarea>
+						
 					</label>
 					<label className='text-blue-200 text-center text-sm sm:text-base'>
 						{" "}
 						New answer:<br></br>
+						{errors?.answer?.message&&<p className="text-red-300 text-sm mt-1">{errors.answer.message}</p>}
 						{/*todo: style scrollbar */}
 						<textarea
 							{...register("answer",{required:"This field is required!"})}
