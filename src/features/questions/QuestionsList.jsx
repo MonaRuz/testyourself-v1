@@ -1,18 +1,12 @@
 import Question from "./Question"
 import Spinner from "../../components/Spinner"
 import { useQuestions } from "./useQuestions"
-import { useEffect, useState } from "react"
-import { useCategory } from "../categories/useCategory"
-import { useParams } from "react-router-dom"
+import { useState } from "react"
 
-//todo: check if list empty
-
-export default function QuestionsList() {
+export default function QuestionsList({ selectedCategory }) {
 	const [searchedExpression, setSearchedExpression] = useState()
-	const { category } = useParams()
-	const { isLoadingCategory, selectedCategory } = useCategory(category)
-	const { isLoadingQuestions, questions } = useQuestions(selectedCategory?.id)
 
+	const { isLoadingQuestions, questions } = useQuestions(selectedCategory?.id)
 
 	const searchedQuestions =
 		searchedExpression?.length > 0
@@ -23,11 +17,13 @@ export default function QuestionsList() {
 			  )
 			: questions
 
-
-
-	if (isLoadingCategory || isLoadingQuestions)
-		return <Spinner>Category overview</Spinner>
-
+	if (isLoadingQuestions) return <Spinner>Category overview</Spinner>
+	if (questions.length <= 0)
+		return (
+			<h2 className='text-red-300 mt-3'>
+				This category has not any questions yet.
+			</h2>
+		)
 	return (
 		<div className='w-full lg:max-w-xl'>
 			<h2 className='text-purple-200 border-y border-purple-200 pb-1 mt-3 mb-2 text-center'>
