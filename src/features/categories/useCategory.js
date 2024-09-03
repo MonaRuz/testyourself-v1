@@ -8,7 +8,7 @@ export function useCategory(category) {
 		error,
 	} = useQuery({
 		queryKey: ["category"],
-		queryFn: () => getCategory(category),
+		queryFn: () => getCategory(category)
 	})
 	return { isLoadingCategory, selectedCategory, error }
 }

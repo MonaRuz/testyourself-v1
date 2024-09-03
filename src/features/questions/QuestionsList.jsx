@@ -1,13 +1,18 @@
 import Question from "./Question"
 import Spinner from "../../components/Spinner"
-import {useQuestions} from "./useQuestions"
-import { useState } from "react"
+import { useQuestions } from "./useQuestions"
+import { useEffect, useState } from "react"
+import { useCategory } from "../categories/useCategory"
+import { useParams } from "react-router-dom"
 
 //todo: check if list empty
 
-export default function QuestionsList({ selectedCategory }) {
+export default function QuestionsList() {
 	const [searchedExpression, setSearchedExpression] = useState()
-	const { isLoadingQuestions, questions } = useQuestions(selectedCategory.id)
+	const { category } = useParams()
+	const { isLoadingCategory, selectedCategory } = useCategory(category)
+	const { isLoadingQuestions, questions } = useQuestions(selectedCategory?.id)
+
 
 	const searchedQuestions =
 		searchedExpression?.length > 0
@@ -18,7 +23,10 @@ export default function QuestionsList({ selectedCategory }) {
 			  )
 			: questions
 
-	if (isLoadingQuestions) return <Spinner />
+
+
+	if (isLoadingCategory || isLoadingQuestions)
+		return <Spinner>Category overview</Spinner>
 
 	return (
 		<div className='w-full lg:max-w-xl'>

@@ -8,7 +8,9 @@ export function useNewQuestion(){
 		mutationFn:createQuestionApi,
 		onSuccess:()=>{
 			toast.success("Question was successfully created.")
-			queryClient.invalidateQueries()
+			queryClient.invalidateQueries({
+				queryKey:["questions"]
+			})
 		},
 		onError:(err)=>toast.error(err.message)
 	})
