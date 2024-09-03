@@ -4,7 +4,7 @@ import QuestionsList from "../questions/QuestionsList"
 import { useNavigate, useParams } from "react-router-dom"
 import {useCategory} from "../categories/useCategory"
 import Spinner from "../../components/Spinner"
-
+//todo: debug: old data from prevous selected category
 export default function CategoryOverview() {
 	const navigate = useNavigate()
 	const { category } = useParams()

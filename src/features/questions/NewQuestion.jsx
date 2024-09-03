@@ -55,7 +55,7 @@ export default function NewQuestion() {
 						New question:<br></br>
 						<textarea
 							{...register("question",{required:"This field is required!"})}
-							className='bg-black border border-yellow-200 mt-2 w-[250px] sm:w-96 md:w-[600px] text-sm p-2'
+							className='bg-black border border-yellow-200 mt-2 w-[250px] sm:w-96 md:w-[600px] text-sm p-2 h-20'
 						></textarea>
 					</label>
 					<label className='text-blue-200 text-center text-sm sm:text-base'>
@@ -64,7 +64,7 @@ export default function NewQuestion() {
 						{/*todo: style scrollbar */}
 						<textarea
 							{...register("answer",{required:"This field is required!"})}
-							className='bg-black border border-yellow-200 mt-2 text-sm p-2 w-[250px] sm:w-96 md:w-[600px]'
+							className='bg-black border border-yellow-200 mt-2 text-sm p-2 w-[250px] sm:w-96 md:w-[600px] h-20'
 						></textarea>
 					</label>
 					<div className='flex justify-center gap-3 mt-5'>

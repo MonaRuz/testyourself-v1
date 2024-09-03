@@ -3,6 +3,8 @@ import Spinner from "../../components/Spinner"
 import {useQuestions} from "./useQuestions"
 import { useState } from "react"
 
+//todo: check if list empty
+
 export default function QuestionsList({ selectedCategory }) {
 	const [searchedExpression, setSearchedExpression] = useState()
 	const { isLoadingQuestions, questions } = useQuestions(selectedCategory.id)

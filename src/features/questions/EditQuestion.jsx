@@ -30,7 +30,9 @@ export default function EditQuestion() {
 	})
 
 	function handleEditQuestion(editedQuestion) {
-		editQuestion({ categoryId, questionId, editedQuestion })
+		editQuestion({ categoryId, questionId, editedQuestion },{onSuccess:()=>{
+			navigate(`/${selectedCategory?.category}/overview`)
+		}})
 	}
 
 	useEffect(
