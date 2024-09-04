@@ -4,7 +4,7 @@ import Logo from "./Logo";
 
 export default function Header() {
   return (
-    <div className="flex flex-col md:flex-row items-center md:justify-between border-b border-b-blue-200">
+    <div className="flex flex-col md:flex-row items-center md:justify-between border-b border-purple-300">
         <div className="mb-5">
             <Logo/>
         </div>

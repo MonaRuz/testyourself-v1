@@ -17,7 +17,7 @@ export default function CategoryOverview() {
 
 	return (
 		<div>
-			<h2 className='text-purple-200 border-b border-purple-200 text-center pb-1 text-lg'>
+			<h2 className='text-purple-300 border-b border-purple-300 text-center pb-1 text-lg'>
 				{category}
 			</h2>
 			<p className='text-blue-200 text-center text-sm py-3 sm:text-base'>

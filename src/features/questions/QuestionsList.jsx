@@ -26,7 +26,7 @@ export default function QuestionsList({ selectedCategory }) {
 		)
 	return (
 		<div className='w-full lg:max-w-xl'>
-			<h2 className='text-purple-200 border-y border-purple-200 pb-1 mt-3 mb-2 text-center'>
+			<h2 className='text-purple-300 border-y border-purple-300 py-1 mt-3 mb-2 text-center'>
 				Questions in category:
 			</h2>
 			<div className='flex justify-around items-center py-2 sm:justify-center'>
