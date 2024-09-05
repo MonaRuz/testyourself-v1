@@ -18,8 +18,21 @@ export async function getTestQuestions(categoryId){
     }
 }
 
-export async function updateTestQuestion(categoryId,questionId){
-    console.log(categoryId,questionId,);
+export async function updateCorrectAnswer(categoryId,questionId,numTestQuestions){
+
+    
+    const qRef = doc(db, "categories", categoryId, "questions", questionId)
+
+	try {
+		await setDoc(qRef,{correctAnswer:true},{progress:numTestQuestions},{merge:true})
+		
+	} catch (err) {
+		console.error(err)
+		throw new Error("Something went wrong with update test questions.")
+	}
+}
+
+export async function updateWrongAnswer(categoryId,questionId){
     
     const qRef = doc(db, "categories", categoryId, "questions", questionId)
 

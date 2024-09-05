@@ -12,8 +12,9 @@ import { useState } from "react"
 
 export default function Test() {
   const[isOpenAnswer,setIsOpenAnswer]=useState(false)
-  const[wrongAnswerEvent,setWrongAnswerEvent]
-=useState(false)
+  const[wrongAnswerEvent,setWrongAnswerEvent]=useState(false)
+
+
   const params=useParams()
   const category=params.category
 
@@ -22,7 +23,7 @@ export default function Test() {
   const categoryId=selectedCategory?.id
 
   const{isLoadingTestQuestions,testQuestions}=useTestQuestions(categoryId)
-
+  const numTestQuestions=testQuestions?.length
   const randomIndex=getRandomQuestion(testQuestions?.length)
 
   console.log(testQuestions);
@@ -34,9 +35,9 @@ export default function Test() {
 
   return (
     <div>
-      <Progressbar category={category} />
+      <Progressbar category={category} numTestQuestions={numTestQuestions}/>
       <TestQuestion question={testQuestions[randomIndex].question} answer={testQuestions[randomIndex].answer} isOpenAnswer={isOpenAnswer}/>
-      <TestButtons selectedCategory={selectedCategory} isOpenAnswer={isOpenAnswer} setIsOpenAnswer={setIsOpenAnswer} wrongAnswerEvent={wrongAnswerEvent} setWrongAnswerEvent={setWrongAnswerEvent} questionId={testQuestions[randomIndex].id}/>
+      <TestButtons selectedCategory={selectedCategory} isOpenAnswer={isOpenAnswer} setIsOpenAnswer={setIsOpenAnswer} wrongAnswerEvent={wrongAnswerEvent} setWrongAnswerEvent={setWrongAnswerEvent} questionId={testQuestions[randomIndex].id} numTestQuestions={numTestQuestions}/>
     </div>
     
   )

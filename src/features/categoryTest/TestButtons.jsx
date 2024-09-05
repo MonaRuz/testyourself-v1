@@ -1,41 +1,37 @@
 import { useNavigate } from "react-router-dom"
 import Button from "../../components/Button"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import {updateTestQuestion} from "../../services/apiTest"
+import {updateCorrectAnsweredQuestion} from "../../services/apiTest"
 import toast from "react-hot-toast"
+import { useCorrectAnswer } from "./useCorrectAnswer"
 export default function TestButtons({
 	selectedCategory,
 	isOpenAnswer,
 	setIsOpenAnswer,
 	setWrongAnswerEvent,
 	wrongAnswerEvent,
-	questionId
+	questionId,
+	numTestQuestions
 }) {
-	const queryClient=useQueryClient()
-	const categoryId=selectedCategory?.id
-	const categoryName=selectedCategory?.category
-	
-	
-	const{isLoading,mutate}=useMutation({
-		mutationFn:({categoryId,questionId})=>updateTestQuestion(categoryId,questionId),
-		onSuccess:()=>{
-			toast.success("Your answer was correct.")
-			queryClient.invalidateQueries({
-				queryKey:["testQuestions",categoryId]
-			})
-		},
-		onError:(err)=>toast.error(err.message)
-	})
 	
 	const navigate = useNavigate()
+	const categoryId=selectedCategory?.id
+	const categoryName=selectedCategory?.category
+	console.log(numTestQuestions);
+	
+	
+	const{updateCorrectAnswer,isCorectAnswerUpdating}=useCorrectAnswer(categoryId)
+
+	const{updateWrongAnsweredQuestion,isWrongAnswerUpdating}=useCorrectAnswer(categoryId)
+	
 
 	function handleWrongAnswer() {
-		setWrongAnswerEvent(!wrongAnswerEvent)
+		updateWrongAnsweredQuestion({categoryId,questionId})
 		setIsOpenAnswer(false)
 	}
 
 	function handleCorrectAnswer(){
-		mutate({categoryId,questionId})
+		updateCorrectAnswer({categoryId,questionId,numTestQuestions})
 	}
 	return (
 		<div className='flex flex-col justify-center items-center'>
