@@ -6,11 +6,14 @@ import {useCategory} from "../categories/useCategory"
 import Spinner from "../../components/Spinner"
 import { useTestQuestions } from "./useTestQuestions"
 import { getRandomQuestion } from "../../utilities/helpers"
+import { useState } from "react"
 
 //todo:prevent functions run twice
 
 export default function Test() {
-
+  const[isOpenAnswer,setIsOpenAnswer]=useState(false)
+  const[wrongAnswerEvent,setWrongAnswerEvent]
+=useState(false)
   const params=useParams()
   const category=params.category
 
@@ -33,8 +36,8 @@ export default function Test() {
   return (
     <div>
       <Progressbar category={category} />
-      <TestQuestion question={testQuestions[randomIndex].question} answer={testQuestions[randomIndex].answer}/>
-      <TestButtons category={category}/>
+      <TestQuestion question={testQuestions[randomIndex].question} answer={testQuestions[randomIndex].answer} isOpenAnswer={isOpenAnswer}/>
+      <TestButtons category={category} isOpenAnswer={isOpenAnswer} setIsOpenAnswer={setIsOpenAnswer} wrongAnswerEvent={wrongAnswerEvent} setWrongAnswerEvent={setWrongAnswerEvent}/>
     </div>
     
   )

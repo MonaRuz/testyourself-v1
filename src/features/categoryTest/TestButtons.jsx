@@ -1,13 +1,18 @@
 import { useNavigate } from "react-router-dom"
 import Button from "../../components/Button"
-export default function TestButtons({category}) {
+export default function TestButtons({category,isOpenAnswer,setIsOpenAnswer,setWrongAnswerEvent,wrongAnswerEvent}) {
   const navigate=useNavigate()
+
+  function handleWrongAnswer(){
+	setWrongAnswerEvent(!wrongAnswerEvent)
+	setIsOpenAnswer(false)
+  }
 	return (
 		<div className="flex flex-col justify-center items-center gap-1">
 			<div className=" mt-16">
-				{/* <div className="flex flex-col justify-center gap-3">
+				{!isOpenAnswer&&<div className="flex flex-col justify-center gap-3">
 					<Button
-
+						onClick={()=>setIsOpenAnswer(!isOpenAnswer)}
 						style={{
 							backgroundColor: "rgb(254 240 138)",
 							width: "300px",
@@ -15,10 +20,10 @@ export default function TestButtons({category}) {
 							fontFamily: "kanit",
 						}}
 					>Display correct answer</Button>
-				</div> */}
+				</div>}
 				<div className="flex gap-1 justify-center items-center">
 					<Button
-
+						onClick={handleWrongAnswer}
 						style={{
 							backgroundColor: "rgb(252 165 165)",
 							width: "148px",
