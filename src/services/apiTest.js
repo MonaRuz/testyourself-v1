@@ -1,4 +1,4 @@
-import { collection, getDocs, query, where } from "firebase/firestore/lite";
+import { collection, doc, getDocs, query, setDoc, where } from "firebase/firestore/lite";
 import db from "../firebase/config";
 
 
@@ -16,4 +16,18 @@ export async function getTestQuestions(categoryId){
         console.error(err)
         throw new Error("No test questions were found.")
     }
+}
+
+export async function updateTestQuestion(categoryId,questionId){
+    console.log(categoryId,questionId,);
+    
+    const qRef = doc(db, "categories", categoryId, "questions", questionId)
+
+	try {
+		await setDoc(qRef,{correctAnswer:true},{merge:true})
+		
+	} catch (err) {
+		console.error(err)
+		throw new Error("Something went wrong with update test questions.")
+	}
 }

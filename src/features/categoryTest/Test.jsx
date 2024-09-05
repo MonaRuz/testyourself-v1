@@ -25,11 +25,10 @@ export default function Test() {
 
   const randomIndex=getRandomQuestion(testQuestions?.length)
 
-  console.log(randomIndex);
+  console.log(testQuestions);
   
   // const{isLoadingQuestions,questions}=useQuestions(selectedCategory?.id)
 
-  console.log(testQuestions);
 
   if(isLoadingCategory||isLoadingTestQuestions)return<Spinner>test</Spinner>
 
@@ -37,7 +36,7 @@ export default function Test() {
     <div>
       <Progressbar category={category} />
       <TestQuestion question={testQuestions[randomIndex].question} answer={testQuestions[randomIndex].answer} isOpenAnswer={isOpenAnswer}/>
-      <TestButtons category={category} isOpenAnswer={isOpenAnswer} setIsOpenAnswer={setIsOpenAnswer} wrongAnswerEvent={wrongAnswerEvent} setWrongAnswerEvent={setWrongAnswerEvent}/>
+      <TestButtons selectedCategory={selectedCategory} isOpenAnswer={isOpenAnswer} setIsOpenAnswer={setIsOpenAnswer} wrongAnswerEvent={wrongAnswerEvent} setWrongAnswerEvent={setWrongAnswerEvent} questionId={testQuestions[randomIndex].id}/>
     </div>
     
   )
