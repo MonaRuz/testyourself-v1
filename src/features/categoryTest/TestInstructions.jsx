@@ -5,6 +5,7 @@ export default function TestInstructions() {
 	const navigate = useNavigate()
 	const params = useParams()
 	const category = params.category
+	
 
 	return (
 		<div className='mt-3'>
@@ -49,8 +50,8 @@ export default function TestInstructions() {
 			<h3 className='text-center text-purple-300 border-y border-purple-300 m-3 pb-1'>
 				Instructions
 			</h3>
-			<div className='mx-4 px-4 border-b border-purple-300'>
-				<ol className='list-disc  pb-5'>
+			<div className='mx-4 px-4 bg-zinc-900 '>
+				<ol className='list-disc  pb-5 px-4 pt-3'>
 					<li className='text-blue-200 text-sm sm:text-base '>
 						Try to answer the question as accurately as possible
 					</li>

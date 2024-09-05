@@ -40,27 +40,20 @@ export async function getQuestion(categoryId, questionId) {
 	}
 }
 
-export async function createQuestion({
-	selectedCategoryId,
-	newQuestion,
-
-}) {
-	
-
-
+export async function createQuestion({ selectedCategoryId, newQuestion }) {
 	const qRef = collection(db, "categories", selectedCategoryId, "questions")
-	
+
 	try {
 		await addDoc(qRef, {
 			question: newQuestion.question,
 			answer: newQuestion.answer,
+			correctAnswer:false,
 		})
 	} catch (err) {
 		console.error(err)
 		throw new Error("Question could not be created.")
 	}
 
-	
 	return newQuestion
 }
 
