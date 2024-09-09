@@ -48,6 +48,7 @@ export async function createCategory(newCategory){
 	
 	try{
 		await addDoc(collection(db,"categories"),{
+			attempts:0,
 			category:newCategory,
 			currentScore:0,
 			highscore:0,

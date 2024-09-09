@@ -1,9 +1,8 @@
 import { useNavigate } from "react-router-dom"
 import Button from "../../components/Button"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import {updateCorrectAnsweredQuestion} from "../../services/apiTest"
-import toast from "react-hot-toast"
-import { useCorrectAnswer } from "./useCorrectAnswer"
+import {useCorrectAnswer} from "../categoryTest/useCorrectAnswer"
+import {useWrongAnswer} from "../categoryTest/useWrongAnswer"
+
 export default function TestButtons({
 	selectedCategory,
 	isOpenAnswer,
@@ -11,27 +10,30 @@ export default function TestButtons({
 	setWrongAnswerEvent,
 	wrongAnswerEvent,
 	questionId,
-	numTestQuestions
+	numTestQuestions,
+	attempts
 }) {
+
 	
 	const navigate = useNavigate()
 	const categoryId=selectedCategory?.id
 	const categoryName=selectedCategory?.category
-	console.log(numTestQuestions);
+
 	
 	
 	const{updateCorrectAnswer,isCorectAnswerUpdating}=useCorrectAnswer(categoryId)
 
-	const{updateWrongAnsweredQuestion,isWrongAnswerUpdating}=useCorrectAnswer(categoryId)
+	const{updateWrongAnswer,isWrongAnswerUpdating}=useWrongAnswer(categoryId)
 	
 
 	function handleWrongAnswer() {
-		updateWrongAnsweredQuestion({categoryId,questionId})
+		updateWrongAnswer({categoryId,questionId,attempts})
 		setIsOpenAnswer(false)
+		setWrongAnswerEvent(!wrongAnswerEvent)
 	}
 
 	function handleCorrectAnswer(){
-		updateCorrectAnswer({categoryId,questionId,numTestQuestions})
+		updateCorrectAnswer({categoryId,questionId,numTestQuestions,attempts})
 	}
 	return (
 		<div className='flex flex-col justify-center items-center'>

@@ -5,7 +5,7 @@ import toast from "react-hot-toast"
 export function useWrongAnswer(categoryId){
     const queryClient=useQueryClient()
     const{isLoading:isWrongAnswerUpdating,mutate:updateWrongAnswer}=useMutation({
-		mutationFn:({categoryId,questionId})=>updateWrongAnswerApi(categoryId,questionId),
+		mutationFn:({categoryId,questionId,attempts})=>updateWrongAnswerApi(categoryId,questionId,attempts),
 		onSuccess:()=>{
 			toast.success("Your answer was not correct.")
 			queryClient.invalidateQueries({

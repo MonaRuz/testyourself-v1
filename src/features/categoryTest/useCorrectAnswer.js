@@ -1,11 +1,11 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { updateCorrectAnsweredQuestion as updateCorrectAnsweredQuestionApi } from "../../services/apiTest"
+import { updateCorrectAnswer as updateCorrectAnswerApi } from "../../services/apiTest"
 import toast from "react-hot-toast"
 
 export function useCorrectAnswer(categoryId){
     const queryClient=useQueryClient()
     const{isLoading:isCorectAnswerUpdating,mutate:updateCorrectAnswer}=useMutation({
-		mutationFn:({categoryId,questionId,numTestQuestions})=>updateCorrectAnsweredQuestionApi(categoryId,questionId,numTestQuestions),
+		mutationFn:({categoryId,questionId,numTestQuestions,attempts})=>updateCorrectAnswerApi(categoryId,questionId,numTestQuestions,attempts),
 		onSuccess:()=>{
 			toast.success("Your answer was correct.")
 			queryClient.invalidateQueries({
