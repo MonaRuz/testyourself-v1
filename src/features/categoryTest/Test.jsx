@@ -4,13 +4,16 @@ import TestButtons from "./TestButtons"
 import TestQuestion from "./TestQuestion"
 import { useCategory } from "../categories/useCategory"
 import Spinner from "../../components/Spinner"
-// import { useTestQuestions } from "./useTestQuestions"
+
 
 import { useEffect, useState } from "react"
+import { useQuestions } from "../questions/useQuestions"
 
 
 //todo:prevent functions run twice
 //missing questions in category styled components
+//useCallback to getTestQuestions
+//percentage
 
 export default function Test() {
  
@@ -18,13 +21,15 @@ export default function Test() {
 	const [wrongAnswerEvent, setWrongAnswerEvent] = useState(false)
   const[testQuestions,setTestQuestions]=useState([])
 
-
+  
 	const params = useParams()
 	const category = params.category
+  
+  const {isLoadingCategory,selectedCategory}=useCategory(category)
 
-	const { isLoadingCategory, selectedCategory } = useCategory(category)
+  const{questions}=useQuestions(selectedCategory?.id)
 
-
+  const allCategoryQuestions=questions?.length
 	const attempts = selectedCategory?.attempts
 
 
@@ -42,7 +47,8 @@ export default function Test() {
 
 	// const { isLoadingTestQuestions, testQuestions } = useTestQuestions(categoryId)
 
-	const numTestQuestions = testQuestions?.length
+	const numTestQuestions = testQuestions?.length-questions?.length
+
 	// const randomIndex = getRandomQuestion(testQuestions?.length)
   useEffect(function(){
     getTestQuestions()
@@ -54,8 +60,9 @@ export default function Test() {
 	return (
 		<div>
 			<Progressbar
+      allCategoryQuestions={allCategoryQuestions}
 				category={category}
-				// numTestQuestions={numTestQuestions}
+				numTestQuestions={numTestQuestions}
 			/>
 			<TestQuestion
 			// question={testQuestions[randomIndex]?.question}
