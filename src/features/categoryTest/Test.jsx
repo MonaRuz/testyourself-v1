@@ -5,62 +5,61 @@ import TestQuestion from "./TestQuestion"
 import { useCategory } from "../categories/useCategory"
 import Spinner from "../../components/Spinner"
 // import { useTestQuestions } from "./useTestQuestions"
-import { getRandomQuestion } from "../../utilities/helpers"
-import { useEffect, useRef, useState } from "react"
-import { useQuestions } from "../questions/useQuestions"
+
+import { useEffect, useState } from "react"
+
 
 //todo:prevent functions run twice
 //missing questions in category styled components
 
 export default function Test() {
+ 
 	const [isOpenAnswer, setIsOpenAnswer] = useState(false)
 	const [wrongAnswerEvent, setWrongAnswerEvent] = useState(false)
-	const [testQuestions, setTestQuestions] = useState([])
+  const[testQuestions,setTestQuestions]=useState([])
+
 
 	const params = useParams()
 	const category = params.category
 
 	const { isLoadingCategory, selectedCategory } = useCategory(category)
 
-	const categoryId = selectedCategory?.id
+
 	const attempts = selectedCategory?.attempts
 
-	const { isLoadingQuestions, questions } = useQuestions(categoryId)
 
-	// console.log(questions);
 
-	useEffect(
-		function () {
-			setTestQuestions(
-				questions?.filter((q) => {
-					console.log(q)
+	console.log(testQuestions);
 
-					return q.correctAnswer === true
-				})
-			)
-		},
-		[questions]
-	)
+	function getTestQuestions(){
+    const saved = localStorage.getItem(`${category}_testQuestions`)
+		const initialValue = JSON.parse(saved)
+		setTestQuestions(initialValue)
+  }
 
-  console.log(testQuestions);
+
   
 
 	// const { isLoadingTestQuestions, testQuestions } = useTestQuestions(categoryId)
 
 	const numTestQuestions = testQuestions?.length
-	const randomIndex = getRandomQuestion(testQuestions?.length)
+	// const randomIndex = getRandomQuestion(testQuestions?.length)
+  useEffect(function(){
+    getTestQuestions()
+  },[])
+  
 
-	if (isLoadingCategory || isLoadingQuestions) return <Spinner>test</Spinner>
+	if (isLoadingCategory ) return <Spinner>test</Spinner>
 
 	return (
 		<div>
 			<Progressbar
 				category={category}
-				numTestQuestions={numTestQuestions}
+				// numTestQuestions={numTestQuestions}
 			/>
 			<TestQuestion
-			question={testQuestions[randomIndex]?.question}
-			answer={testQuestions[randomIndex]?.answer}
+			// question={testQuestions[randomIndex]?.question}
+			// answer={testQuestions[randomIndex]?.answer}
 			isOpenAnswer={isOpenAnswer}
 			/>
 			<TestButtons
@@ -69,7 +68,7 @@ export default function Test() {
 			setIsOpenAnswer={setIsOpenAnswer}
 			wrongAnswerEvent={wrongAnswerEvent}
 			setWrongAnswerEvent={setWrongAnswerEvent}
-			questionId={testQuestions[randomIndex]?.id}
+			// questionId={testQuestions[randomIndex]?.id}
 			numTestQuestions={numTestQuestions}
 			attempts={attempts}
 			/>

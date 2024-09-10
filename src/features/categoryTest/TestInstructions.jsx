@@ -1,11 +1,32 @@
 import { useNavigate, useParams } from "react-router-dom"
 import Button from "../../components/Button"
-//conditionally rendered button restart
+import { useEffect, useState } from "react"
+import { useQuestions } from "../questions/useQuestions"
+import { useCategory } from "../categories/useCategory"
+//edit instructions
+//useCallback to resetTestQuestions
 export default function TestInstructions() {
 	const navigate = useNavigate()
 	const params = useParams()
 	const category = params.category
-	
+
+	const [testQuestions, setTestQuestions] = useState(() => {
+		const saved = localStorage.getItem(`${category}_testQuestions`)
+		const initialValue = JSON.parse(saved)
+		return initialValue || []
+	})
+
+	const { isLoadingCategory, selectedCategory } = useCategory(category)
+
+	const { isLoadingQuestions, questions } = useQuestions(selectedCategory?.id)
+
+	function resetTestQuestions(){
+		localStorage.setItem(`${category}_testQuestions`, JSON.stringify(questions))
+	}
+
+	useEffect(function () {
+		if(testQuestions.length<=0)resetTestQuestions()
+	}, [testQuestions.length])
 
 	return (
 		<div className='mt-3'>
@@ -24,16 +45,19 @@ export default function TestInstructions() {
 				>
 					Run test
 				</Button>
-				<Button
-					style={{
-						backgroundColor: "rgb(252 165 165)",
-						width: "250px",
-						height: "40px",
-						fontFamily: "kanit",
-					}}
-				>
-					Restart test
-				</Button>
+				{testQuestions?.length !== questions?.length && (
+					<Button
+						onClick={resetTestQuestions}
+						style={{
+							backgroundColor: "rgb(252 165 165)",
+							width: "250px",
+							height: "40px",
+							fontFamily: "kanit",
+						}}
+					>
+						Restart test
+					</Button>
+				)}
 				<Button
 					onClick={() => navigate(`/${category}/overview`)}
 					style={{

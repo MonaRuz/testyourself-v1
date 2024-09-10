@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import Button from "../../components/Button"
-import {useCorrectAnswer} from "../categoryTest/useCorrectAnswer"
-import {useWrongAnswer} from "../categoryTest/useWrongAnswer"
+// import {useCorrectAnswer} from "../categoryTest/useCorrectAnswer"
+// import {useWrongAnswer} from "../categoryTest/useWrongAnswer"
 
 export default function TestButtons({
 	selectedCategory,
@@ -9,9 +9,9 @@ export default function TestButtons({
 	setIsOpenAnswer,
 	setWrongAnswerEvent,
 	wrongAnswerEvent,
-	questionId,
-	numTestQuestions,
-	attempts
+	// questionId,
+	// numTestQuestions,
+	// attempts
 }) {
 
 	
@@ -21,19 +21,19 @@ export default function TestButtons({
 
 	
 	
-	const{updateCorrectAnswer,isCorectAnswerUpdating}=useCorrectAnswer(categoryId)
+	// const{updateCorrectAnswer,isCorectAnswerUpdating}=useCorrectAnswer(categoryId)
 
-	const{updateWrongAnswer,isWrongAnswerUpdating}=useWrongAnswer(categoryId)
+	// const{updateWrongAnswer,isWrongAnswerUpdating}=useWrongAnswer(categoryId)
 	
 
 	function handleWrongAnswer() {
-		updateWrongAnswer({categoryId,questionId,attempts})
+		// updateWrongAnswer({categoryId,questionId,attempts})
 		setIsOpenAnswer(false)
 		setWrongAnswerEvent(!wrongAnswerEvent)
 	}
 
 	function handleCorrectAnswer(){
-		updateCorrectAnswer({categoryId,questionId,numTestQuestions,attempts})
+		// updateCorrectAnswer({categoryId,questionId,numTestQuestions,attempts})
 	}
 	return (
 		<div className='flex flex-col justify-center items-center'>
