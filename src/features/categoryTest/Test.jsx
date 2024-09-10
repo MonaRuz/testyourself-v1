@@ -5,7 +5,7 @@ import TestQuestion from "./TestQuestion"
 import { useCategory } from "../categories/useCategory"
 import Spinner from "../../components/Spinner"
 
-
+import { getRandomQuestion } from "../../utilities/helpers"
 import { useEffect, useState } from "react"
 import { useQuestions } from "../questions/useQuestions"
 
@@ -42,14 +42,9 @@ export default function Test() {
 		setTestQuestions(initialValue)
   }
 
-
-  
-
-	// const { isLoadingTestQuestions, testQuestions } = useTestQuestions(categoryId)
-
 	const numTestQuestions = testQuestions?.length-questions?.length
 
-	// const randomIndex = getRandomQuestion(testQuestions?.length)
+	const randomIndex = getRandomQuestion(testQuestions?.length)
   useEffect(function(){
     getTestQuestions()
   },[])
@@ -65,8 +60,8 @@ export default function Test() {
 				numTestQuestions={numTestQuestions}
 			/>
 			<TestQuestion
-			// question={testQuestions[randomIndex]?.question}
-			// answer={testQuestions[randomIndex]?.answer}
+			question={testQuestions[randomIndex]?.question}
+			answer={testQuestions[randomIndex]?.answer}
 			isOpenAnswer={isOpenAnswer}
 			/>
 			<TestButtons
@@ -75,7 +70,7 @@ export default function Test() {
 			setIsOpenAnswer={setIsOpenAnswer}
 			wrongAnswerEvent={wrongAnswerEvent}
 			setWrongAnswerEvent={setWrongAnswerEvent}
-			// questionId={testQuestions[randomIndex]?.id}
+			questionId={testQuestions[randomIndex]?.id}
 			numTestQuestions={numTestQuestions}
 			attempts={attempts}
 			/>
