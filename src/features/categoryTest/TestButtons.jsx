@@ -1,19 +1,27 @@
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import Button from "../../components/Button"
 // import {useCorrectAnswer} from "../categoryTest/useCorrectAnswer"
 // import {useWrongAnswer} from "../categoryTest/useWrongAnswer"
 
 
 export default function TestButtons({
-	selectedCategory,
+	// selectedCategory,
 	isOpenAnswer,
 	setIsOpenAnswer,
 	testQuestions,
 	attempts,
-	setAttempts
+	setAttempts,
+	questionId,
+	setCurrentQuestion,
+	randomIndex,
+	setTestQuestions
 }) {
+	const category=useParams().category
 	const navigate = useNavigate()
-	const category = selectedCategory?.category
+	// const category = selectedCategory?.category
+
+	
+	
 
 	function updateAttempts() {
 		localStorage.setItem(
@@ -22,15 +30,26 @@ export default function TestButtons({
 		)
 		setAttempts((attempts)=>Number(attempts)+1)
 	}
+	
+	
 
 	function handleWrongAnswer() {
 		updateAttempts()
 		setIsOpenAnswer(false)
+		setCurrentQuestion(testQuestions[randomIndex])
 	}
 
 	function handleCorrectAnswer() {
 		updateAttempts()
 		setIsOpenAnswer(false)
+		setCurrentQuestion(testQuestions[randomIndex])
+
+		const updatedTestQuestions=testQuestions?.filter((q)=>q.id!==questionId)
+		console.log(updatedTestQuestions);
+
+		localStorage.setItem(`${category}_testQuestions`,
+			JSON.stringify(updatedTestQuestions))
+		setTestQuestions(updatedTestQuestions)
 	}
 	return (
 		<div className='flex flex-col justify-center items-center'>

@@ -16,68 +16,62 @@ import { useQuestions } from "../questions/useQuestions"
 
 export default function Test() {
 	const [isOpenAnswer, setIsOpenAnswer] = useState(false)
-	
-	const [testQuestions, setTestQuestions] = useState([])
 
 	const params = useParams()
 	const category = params.category
 
-	const { isLoadingCategory, selectedCategory } = useCategory(category)
-
-	const [attempts,setAttempts] = useState(() => {
-		const saved = localStorage.getItem(`${category}_attempts`)
+	const [testQuestions, setTestQuestions] = useState(() => {
+		const saved = localStorage.getItem(`${category}_testQuestions`)
 		const initialValue = JSON.parse(saved)
-		return initialValue 
+		return initialValue || []
 	})
 
-	const { questions } = useQuestions(selectedCategory?.id)
+	const randomIndex = getRandomQuestion(testQuestions?.length)
+
+	const { isLoadingCategory, selectedCategory } = useCategory(category)
+
+  const { questions } = useQuestions(selectedCategory?.id)
+
+  const [currentQuestion, setCurrentQuestion] = useState(testQuestions[randomIndex])
+
+	const [attempts, setAttempts] = useState(() => {
+		const saved = localStorage.getItem(`${category}_attempts`)
+		const initialValue = JSON.parse(saved)
+		return initialValue
+	})
+
+
 
 	const allCategoryQuestions = questions?.length
 
-
-	// console.log(testQuestions);
-	console.log(attempts);
-
-	function getTestQuestions() {
-		const saved = localStorage.getItem(`${category}_testQuestions`)
-		const initialValue = JSON.parse(saved)
-		setTestQuestions(initialValue)
-    return initialValue || ""
-	}
-
 	const numTestQuestions = testQuestions?.length - questions?.length
-
-	const randomIndex = getRandomQuestion(testQuestions?.length)
-	useEffect(function () {
-		getTestQuestions()
-	}, [])
-
-  
-  
 
 	if (isLoadingCategory) return <Spinner>test</Spinner>
 
 	return (
 		<div>
 			<Progressbar
-        attempts={attempts}
+				attempts={attempts}
 				allCategoryQuestions={allCategoryQuestions}
 				category={category}
-        numTestQuestions={numTestQuestions}
+				numTestQuestions={numTestQuestions}
 			/>
 			<TestQuestion
-				question={testQuestions[randomIndex]?.question}
-				answer={testQuestions[randomIndex]?.answer}
+				question={currentQuestion?.question}
+				answer={currentQuestion?.answer}
 				isOpenAnswer={isOpenAnswer}
 			/>
 			<TestButtons
-				selectedCategory={selectedCategory}
+				questionId={currentQuestion?.id}
 				isOpenAnswer={isOpenAnswer}
 				setIsOpenAnswer={setIsOpenAnswer}
 				numTestQuestions={numTestQuestions}
 				attempts={attempts}
-        setAttempts={setAttempts}
-        testQuestions={testQuestions}
+				setAttempts={setAttempts}
+				testQuestions={testQuestions}
+        randomIndex={randomIndex}
+        setCurrentQuestion={setCurrentQuestion}
+        setTestQuestions={setTestQuestions}
 			/>
 		</div>
 	)
