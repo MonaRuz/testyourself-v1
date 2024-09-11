@@ -16,17 +16,33 @@ export default function TestInstructions() {
 		return initialValue || []
 	})
 
+	const [attempts, setAttempts] = useState(() => {
+		const saved = localStorage.getItem(`${category}_attempts`)
+		const initialValue = JSON.parse(saved)
+		return initialValue || 0
+	})
+
 	const { isLoadingCategory, selectedCategory } = useCategory(category)
 
 	const { isLoadingQuestions, questions } = useQuestions(selectedCategory?.id)
 
-	function resetTestQuestions(){
+	function resetTestQuestions() {
 		localStorage.setItem(`${category}_testQuestions`, JSON.stringify(questions))
 	}
 
-	useEffect(function () {
-		if(testQuestions.length<=0)resetTestQuestions()
-	}, [testQuestions.length])
+	function resetAttempts() {
+		localStorage.setItem(`${category}_attempts`, JSON.stringify(0))
+	}
+
+	useEffect(
+		function () {
+			if (testQuestions.length <= 0) {
+				resetTestQuestions()
+				resetAttempts()
+			}
+		},
+		[testQuestions.length]
+	)
 
 	return (
 		<div className='mt-3'>

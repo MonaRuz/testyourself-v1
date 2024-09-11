@@ -3,37 +3,34 @@ import Button from "../../components/Button"
 // import {useCorrectAnswer} from "../categoryTest/useCorrectAnswer"
 // import {useWrongAnswer} from "../categoryTest/useWrongAnswer"
 
+
 export default function TestButtons({
 	selectedCategory,
 	isOpenAnswer,
 	setIsOpenAnswer,
-	setWrongAnswerEvent,
-	wrongAnswerEvent,
-	// questionId,
-	// numTestQuestions,
-	// attempts
+	testQuestions,
+	attempts,
+	setAttempts
 }) {
-
-	
 	const navigate = useNavigate()
-	const categoryId=selectedCategory?.id
-	const categoryName=selectedCategory?.category
+	const category = selectedCategory?.category
 
-	
-	
-	// const{updateCorrectAnswer,isCorectAnswerUpdating}=useCorrectAnswer(categoryId)
-
-	// const{updateWrongAnswer,isWrongAnswerUpdating}=useWrongAnswer(categoryId)
-	
-
-	function handleWrongAnswer() {
-		// updateWrongAnswer({categoryId,questionId,attempts})
-		setIsOpenAnswer(false)
-		setWrongAnswerEvent(!wrongAnswerEvent)
+	function updateAttempts() {
+		localStorage.setItem(
+			`${category}_attempts`,
+			JSON.stringify(Number(attempts) + 1)
+		)
+		setAttempts((attempts)=>Number(attempts)+1)
 	}
 
-	function handleCorrectAnswer(){
-		// updateCorrectAnswer({categoryId,questionId,numTestQuestions,attempts})
+	function handleWrongAnswer() {
+		updateAttempts()
+		setIsOpenAnswer(false)
+	}
+
+	function handleCorrectAnswer() {
+		updateAttempts()
+		setIsOpenAnswer(false)
 	}
 	return (
 		<div className='flex flex-col justify-center items-center'>
@@ -47,7 +44,7 @@ export default function TestButtons({
 								width: "300px",
 								height: "40px",
 								fontFamily: "kanit",
-								marginBottom:"3px"
+								marginBottom: "3px",
 							}}
 						>
 							Display correct answer
@@ -67,7 +64,7 @@ export default function TestButtons({
 						Wrong
 					</Button>
 					<Button
-					onClick={handleCorrectAnswer}
+						onClick={handleCorrectAnswer}
 						style={{
 							backgroundColor: "#88FFB6",
 							width: "148px",
@@ -81,13 +78,13 @@ export default function TestButtons({
 			</div>
 			<div>
 				<Button
-					onClick={() => navigate(`/${categoryName}/test/instructions`)}
+					onClick={() => navigate(`/${category}/test/instructions`)}
 					style={{
 						backgroundColor: "rgb(254 240 138)",
 						width: "300px",
 						height: "40px",
 						fontFamily: "kanit",
-						marginTop:"3px"
+						marginTop: "3px",
 					}}
 				>
 					Back

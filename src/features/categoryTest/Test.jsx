@@ -9,70 +9,75 @@ import { getRandomQuestion } from "../../utilities/helpers"
 import { useEffect, useState } from "react"
 import { useQuestions } from "../questions/useQuestions"
 
-
 //todo:prevent functions run twice
 //missing questions in category styled components
 //useCallback to getTestQuestions
 //percentage
 
 export default function Test() {
- 
 	const [isOpenAnswer, setIsOpenAnswer] = useState(false)
-	const [wrongAnswerEvent, setWrongAnswerEvent] = useState(false)
-  const[testQuestions,setTestQuestions]=useState([])
+	
+	const [testQuestions, setTestQuestions] = useState([])
 
-  
 	const params = useParams()
 	const category = params.category
-  
-  const {isLoadingCategory,selectedCategory}=useCategory(category)
 
-  const{questions}=useQuestions(selectedCategory?.id)
+	const { isLoadingCategory, selectedCategory } = useCategory(category)
 
-  const allCategoryQuestions=questions?.length
-	const attempts = selectedCategory?.attempts
+	const [attempts,setAttempts] = useState(() => {
+		const saved = localStorage.getItem(`${category}_attempts`)
+		const initialValue = JSON.parse(saved)
+		return initialValue 
+	})
+
+	const { questions } = useQuestions(selectedCategory?.id)
+
+	const allCategoryQuestions = questions?.length
 
 
+	// console.log(testQuestions);
+	console.log(attempts);
 
-	console.log(testQuestions);
-
-	function getTestQuestions(){
-    const saved = localStorage.getItem(`${category}_testQuestions`)
+	function getTestQuestions() {
+		const saved = localStorage.getItem(`${category}_testQuestions`)
 		const initialValue = JSON.parse(saved)
 		setTestQuestions(initialValue)
-  }
+    return initialValue || ""
+	}
 
-	const numTestQuestions = testQuestions?.length-questions?.length
+	const numTestQuestions = testQuestions?.length - questions?.length
 
 	const randomIndex = getRandomQuestion(testQuestions?.length)
-  useEffect(function(){
-    getTestQuestions()
-  },[])
+	useEffect(function () {
+		getTestQuestions()
+	}, [])
+
+  
   
 
-	if (isLoadingCategory ) return <Spinner>test</Spinner>
+	if (isLoadingCategory) return <Spinner>test</Spinner>
 
 	return (
 		<div>
 			<Progressbar
-      allCategoryQuestions={allCategoryQuestions}
+        attempts={attempts}
+				allCategoryQuestions={allCategoryQuestions}
 				category={category}
-				numTestQuestions={numTestQuestions}
+        numTestQuestions={numTestQuestions}
 			/>
 			<TestQuestion
-			question={testQuestions[randomIndex]?.question}
-			answer={testQuestions[randomIndex]?.answer}
-			isOpenAnswer={isOpenAnswer}
+				question={testQuestions[randomIndex]?.question}
+				answer={testQuestions[randomIndex]?.answer}
+				isOpenAnswer={isOpenAnswer}
 			/>
 			<TestButtons
-			selectedCategory={selectedCategory}
-			isOpenAnswer={isOpenAnswer}
-			setIsOpenAnswer={setIsOpenAnswer}
-			wrongAnswerEvent={wrongAnswerEvent}
-			setWrongAnswerEvent={setWrongAnswerEvent}
-			questionId={testQuestions[randomIndex]?.id}
-			numTestQuestions={numTestQuestions}
-			attempts={attempts}
+				selectedCategory={selectedCategory}
+				isOpenAnswer={isOpenAnswer}
+				setIsOpenAnswer={setIsOpenAnswer}
+				numTestQuestions={numTestQuestions}
+				attempts={attempts}
+        setAttempts={setAttempts}
+        testQuestions={testQuestions}
 			/>
 		</div>
 	)
