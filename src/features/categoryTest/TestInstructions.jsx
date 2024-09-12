@@ -10,6 +10,7 @@ export default function TestInstructions() {
 	const params = useParams()
 	const category = params.category
 
+	const [savedTest, setSavedTest] = useState(false)
 	const [testQuestions, setTestQuestions] = useState(() => {
 		const saved = localStorage.getItem(`${category}_testQuestions`)
 		const initialValue = JSON.parse(saved)
@@ -26,22 +27,24 @@ export default function TestInstructions() {
 
 	const { isLoadingQuestions, questions } = useQuestions(selectedCategory?.id)
 
-	function resetTestQuestions() {
-		localStorage.setItem(`${category}_testQuestions`, JSON.stringify(questions))
-	}
-
 	function resetAttempts() {
 		localStorage.setItem(`${category}_attempts`, JSON.stringify(0))
 	}
 
+	function resetTestQuestions() {
+		localStorage.setItem(`${category}_testQuestions`, JSON.stringify(questions))
+		resetAttempts()
+		setSavedTest(false)
+	}
+	console.log(savedTest)
+
 	useEffect(
 		function () {
-			if (testQuestions.length <= 0) {
-				resetTestQuestions()
-				resetAttempts()
+			if (attempts > 0) {
+				setSavedTest(true)
 			}
 		},
-		[testQuestions.length]
+		[testQuestions.length, attempts]
 	)
 
 	return (
@@ -61,7 +64,7 @@ export default function TestInstructions() {
 				>
 					Run test
 				</Button>
-				{testQuestions?.length !== questions?.length && (
+				{savedTest && (
 					<Button
 						onClick={resetTestQuestions}
 						style={{
