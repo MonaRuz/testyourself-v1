@@ -76,9 +76,9 @@ export default function Test() {
 
 	const allCategoryQuestions = questions?.length
 
-	const finishedQuestions = testQuestions?.length - questions?.length
+	const finishedQuestions = questions?.length-testQuestions?.length  
 
-	
+	console.log(testQuestions?.length)
 
 	if (isLoadingCategory) return <Spinner>test</Spinner>
 
