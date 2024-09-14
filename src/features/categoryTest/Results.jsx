@@ -1,8 +1,10 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Button from "../../components/Button";
 
 export default function Results() {
+	const {category}=useParams()
   const navigate=useNavigate()
+  
 	return (
 		<div>
 			<h3 className='text-purple-200 border-y border-purple-200 text-lg pb-1 text-center mt-5'>
@@ -14,14 +16,14 @@ export default function Results() {
 				</div>
 			</div>
       <div className="flex justify-center items-center mt-16 gap-2">
-        <Button onClick={() => navigate("/category/overview")}
+        <Button onClick={() => navigate(`/${category}/overview`)}
 						style={{
 							backgroundColor: "rgb(254 240 138)",
 							width: "133px",
 							height: "40px",
 							fontFamily: "kanit",
 						}}>Back</Button>
-        <Button onClick={() => navigate("/category/new-question")}
+        <Button onClick={() => navigate(`/${category}/test/instructions`)}
 						style={{
 							backgroundColor: "#88FFB6",
 							width: "133px",

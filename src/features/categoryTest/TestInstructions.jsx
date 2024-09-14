@@ -22,6 +22,11 @@ export default function TestInstructions() {
 		const initialValue = JSON.parse(saved)
 		return initialValue || 0
 	})
+	const [correctAttempts, setCorrectAttempts] = useState(() => {
+		const saved = localStorage.getItem(`${category}_correctAttempts`)
+		const initialValue = JSON.parse(saved)
+		return initialValue || 0
+	})
 
 	const { isLoadingCategory, selectedCategory } = useCategory(category)
 
@@ -30,21 +35,28 @@ export default function TestInstructions() {
 	function resetAttempts() {
 		localStorage.setItem(`${category}_attempts`, JSON.stringify(0))
 	}
+	function resetCorrectAttempts() {
+		localStorage.setItem(`${category}_correctAttempts`, JSON.stringify(0))
+	}
 
 	function resetTestQuestions() {
 		localStorage.setItem(`${category}_testQuestions`, JSON.stringify(questions))
 		resetAttempts()
+		resetCorrectAttempts()
 		setSavedTest(false)
 	}
-	console.log(savedTest)
+
 
 	useEffect(
 		function () {
 			if (attempts > 0) {
 				setSavedTest(true)
 			}
+			if(testQuestions?.length<=0){
+				localStorage.setItem(`${category}_testQuestions`, JSON.stringify(questions))
+			}
 		},
-		[testQuestions.length, attempts]
+		[attempts,questions,category,testQuestions]
 	)
 
 	return (

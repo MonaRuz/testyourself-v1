@@ -10,8 +10,8 @@ import {
 } from "firebase/firestore/lite"
 import db from "../firebase/config"
 
-export async function getQuestions(categoryId) {
-	const q = query(collection(db, "categories", categoryId, "questions"))
+export async function getQuestions(selectedCategoryId) {
+	const q = query(collection(db, "categories", selectedCategoryId, "questions"))
 	let questions = []
 	try {
 		const querySnapshot = await getDocs(q)
@@ -27,8 +27,8 @@ export async function getQuestions(categoryId) {
 	return questions
 }
 
-export async function getQuestion(categoryId, questionId) {
-	const qRef = doc(db, "categories", categoryId, "questions", questionId)
+export async function getQuestion(selectedCategoryId, questionId) {
+	const qRef = doc(db, "categories", selectedCategoryId, "questions", questionId)
 
 	try {
 		const qSnap = await getDoc(qRef)
@@ -57,8 +57,8 @@ export async function createQuestion({ selectedCategoryId, newQuestion }) {
 	return newQuestion
 }
 
-export async function deleteQuestion(categoryId, questionId) {
-	const qRef = doc(db, "categories", categoryId, "questions", questionId)
+export async function deleteQuestion(selectedCategoryId, questionId) {
+	const qRef = doc(db, "categories", selectedCategoryId, "questions", questionId)
 	try {
 		await deleteDoc(qRef)
 	} catch (err) {
@@ -67,8 +67,8 @@ export async function deleteQuestion(categoryId, questionId) {
 	}
 }
 
-export async function editQuestion({ categoryId, questionId, editedQuestion }) {
-	const qRef = doc(db, "categories", categoryId, "questions", questionId)
+export async function editQuestion({ selectedCategoryId, questionId, editedQuestion }) {
+	const qRef = doc(db, "categories", selectedCategoryId, "questions", questionId)
 	try {
 		await setDoc(qRef, editedQuestion)
 		return editedQuestion

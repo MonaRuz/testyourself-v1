@@ -3,24 +3,36 @@ import Progressbar from "./Progressbar"
 import TestQuestion from "./TestQuestion"
 import { useCategory } from "../categories/useCategory"
 import Spinner from "../../components/Spinner"
-
 import { getRandomQuestion } from "../../utilities/helpers"
 import { useState } from "react"
 import { useQuestions } from "../questions/useQuestions"
 import Button from "../../components/Button"
+import Results from "../categoryTest/Results"
 
 //todo:prevent functions run twice
 //missing questions in category styled components
 //percentage
+//sort imports
 
 export default function Test() {
 	const navigate = useNavigate()
 	const [isOpenAnswer, setIsOpenAnswer] = useState(false)
 
-	const params = useParams()
-	const category = params.category
+	const { category } = useParams()
 
-	const [testQuestions,setTestQuestions] = useState(() => {
+	const [attempts, setAttempts] = useState(() => {
+		const saved = localStorage.getItem(`${category}_attempts`)
+		const initialValue = JSON.parse(saved)
+		return initialValue || 0
+	})
+
+	const [correctAttempts, setCorrectAttempts] = useState(() => {
+		const saved = localStorage.getItem(`${category}_correctAttempts`)
+		const initialValue = JSON.parse(saved)
+		return initialValue || 0
+	})
+
+	const [testQuestions, setTestQuestions] = useState(() => {
 		const saved = localStorage.getItem(`${category}_testQuestions`)
 		const initialValue = JSON.parse(saved)
 		return initialValue || []
@@ -36,58 +48,63 @@ export default function Test() {
 		testQuestions[randomIndex]
 	)
 
-
-
-	const [attempts, setAttempts] = useState(() => {
-		const saved = localStorage.getItem(`${category}_attempts`)
-		const initialValue = JSON.parse(saved)
-		return initialValue
-	})
-
 	function updateAttempts() {
+		setAttempts((attempts) => attempts + 1)
 		localStorage.setItem(
 			`${category}_attempts`,
 			JSON.stringify(Number(attempts) + 1)
 		)
-		setAttempts((attempts) => Number(attempts) + 1)
 	}
 
-	function updateTestQuestions(){
-		const updatedTestQuestions= testQuestions.filter((q)=>{
-			return q.id!==currentQuestion.id
+	function updateCorrectAttempts() {
+		setCorrectAttempts((correctAttempts) => correctAttempts + 1)
+		localStorage.setItem(
+			`${category}_correctAttempts`,
+			JSON.stringify(Number(attempts) + 1)
+		)
+	}
+
+	function updateTestQuestions() {
+		updateAttempts()
+		const updatedTestQuestions = testQuestions.filter((q) => {
+			return q.id !== currentQuestion?.id
 		})
-		setTestQuestions(updatedTestQuestions)	
-		localStorage.setItem(`${category}_testQuestions`,
-			JSON.stringify(testQuestions))				
+		setTestQuestions(updatedTestQuestions)
+		localStorage.setItem(
+			`${category}_testQuestions`,
+			JSON.stringify(testQuestions)
+		)
 	}
 
 	function handleWrongAnswer() {
+		setIsOpenAnswer(false)
+		setCurrentQuestion(testQuestions[randomIndex])
 		updateAttempts()
+	}
+
+	function handleCorrectAnswer() {
+		updateCorrectAttempts()
+		updateTestQuestions()
 		setIsOpenAnswer(false)
 		setCurrentQuestion(testQuestions[randomIndex])
 	}
 
-	function handleCorrectAnswer() {
-		updateAttempts()
-		setIsOpenAnswer(false)
-		setCurrentQuestion(testQuestions[randomIndex])		
-		updateTestQuestions()	
-	}
-
 	const allCategoryQuestions = questions?.length
 
-	const finishedQuestions = questions?.length-testQuestions?.length  
+	// const finishedQuestions = questions?.length-testQuestions?.length
 
-	console.log(testQuestions?.length)
+	// console.log(questions?.length/attempts)
+	// console.log(attempts);
 
 	if (isLoadingCategory) return <Spinner>test</Spinner>
+
+	if(correctAttempts===questions?.length) return <Results/>
 
 	return (
 		<div>
 			<Progressbar
-				attempts={attempts}
 				allCategoryQuestions={allCategoryQuestions}
-				numTestQuestions={finishedQuestions}
+				numTestQuestions={correctAttempts}
 			/>
 			<TestQuestion
 				question={currentQuestion?.question}
@@ -112,7 +129,7 @@ export default function Test() {
 							</Button>
 						</div>
 					)}
-					<div className='flex justify-center items-center gap-1'>
+					{isOpenAnswer&&<div className='flex justify-center items-center gap-1'>
 						<Button
 							onClick={handleWrongAnswer}
 							style={{
@@ -135,7 +152,7 @@ export default function Test() {
 						>
 							Correct
 						</Button>
-					</div>
+					</div>}
 				</div>
 				<div>
 					<Button
