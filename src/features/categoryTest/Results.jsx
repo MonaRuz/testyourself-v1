@@ -4,19 +4,23 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { setHighscore } from "../../services/apiTest";
 import toast from "react-hot-toast";
 
-export default function Results({percentage,selectedCategoryId}) {
-	console.log(percentage,selectedCategoryId);
+export default function Results({percentage,selectedCategory}) {
+	
 	
 	const {category}=useParams()
   const navigate=useNavigate()
   const queryClient=useQueryClient()
+	const selectedCategoryId=selectedCategory?.id
+	const savedHighscore=selectedCategory?.highscore
+	console.log(savedHighscore);
+	
 //to custom hook:
   const {isLoading,mutate}=useMutation({
 	mutationFn:({selectedCategoryId,percentage})=>setHighscore(selectedCategoryId,percentage),
 	onSuccess:()=>{
 		toast.success("Your highscore was saved")
 		queryClient.invalidateQueries({
-			queryKey:["categories",selectedCategoryId]
+			queryKey:["category",category]
 		})
 	},
 	onError:(err)=>toast.error(err.message)

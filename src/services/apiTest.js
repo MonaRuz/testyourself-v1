@@ -11,15 +11,7 @@ import {
 } from "firebase/firestore/lite"
 import db from "../firebase/config"
 
-// export async function getHighScore(categoryId) {
-	
-
-	
-// }
-
-export async function setHighscore(categoryId,percentage) {
-	console.log(percentage);
-	
+export async function setHighscore(categoryId, percentage) {
 	const categoryRef = doc(db, "categories", categoryId)
 	try {
 		await updateDoc(categoryRef, {
@@ -31,5 +23,3 @@ export async function setHighscore(categoryId,percentage) {
 	}
 	return percentage
 }
-
-

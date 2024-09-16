@@ -69,7 +69,7 @@ export default function Test() {
 		setCorrectAttempts((correctAttempts) => correctAttempts + 1)
 		localStorage.setItem(
 			`${category}_correctAttempts`,
-			JSON.stringify(Number(attempts) + 1)
+			JSON.stringify(Number(correctAttempts) + 1)
 		)
 	}
 
@@ -115,7 +115,7 @@ export default function Test() {
 	if (isLoadingCategory) return <Spinner>test</Spinner>
 
 	if (correctAttempts >= questions?.length)
-		return <Results percentage={percentage} selectedCategoryId={selectedCategory?.id}/>
+		return <Results percentage={percentage} selectedCategory={selectedCategory}/>
 
 	return (
 		<div>

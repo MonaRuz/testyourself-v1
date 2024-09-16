@@ -14,12 +14,12 @@ export default function CategoryStats({selectedCategory}) {
 	const questionsAmount=questions?.length
 
 	useEffect(function(){
-		const savedPercentage=localStorage.getItem(`${category}_percentage`)
-		const percentage=JSON.parse(savedPercentage)
-		setCurrentScore(percentage)
-
+		const savedAttempts=localStorage.getItem(`${category}_attempts`)
+		const attempts=JSON.parse(savedAttempts)
+		
 		const savedCorrectAttempts=localStorage.getItem(`${category}_correctAttempts`)
 		const correctAttempts=JSON.parse(savedCorrectAttempts)
+		setCurrentScore(Math.floor((correctAttempts / attempts) * 100))
 		setProgress(correctAttempts)
 	},[category])
 
