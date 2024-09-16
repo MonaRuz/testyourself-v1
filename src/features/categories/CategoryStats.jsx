@@ -1,12 +1,28 @@
 import {useQuestions} from "../questions/useQuestions"
 import Spinner from "../../components/Spinner"
+import { useEffect, useState } from "react"
 
 export default function CategoryStats({selectedCategory}) {
-	const{id,highscore,currentScore,progress}=selectedCategory
+	const[currentScore,setCurrentScore]=useState(0)
+	const[progress,setProgress]=useState(0)
+	const{id,highscore,category}=selectedCategory
+
+	
 
 	const { isLoadingQuestions, questions } = useQuestions(id)
 
 	const questionsAmount=questions?.length
+
+	useEffect(function(){
+		const savedPercentage=localStorage.getItem(`${category}_percentage`)
+		const percentage=JSON.parse(savedPercentage)
+		setCurrentScore(percentage)
+
+		const savedCorrectAttempts=localStorage.getItem(`${category}_correctAttempts`)
+		const correctAttempts=JSON.parse(savedCorrectAttempts)
+		setProgress(correctAttempts)
+	},[category])
+
 	
 	if(isLoadingQuestions)return<Spinner>category statistics</Spinner>
 	

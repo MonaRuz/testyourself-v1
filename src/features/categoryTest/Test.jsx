@@ -4,33 +4,22 @@ import TestQuestion from "./TestQuestion"
 import { useCategory } from "../categories/useCategory"
 import Spinner from "../../components/Spinner"
 import { getRandomQuestion } from "../../utilities/helpers"
-import { useState } from "react"
+import {useState } from "react"
 import { useQuestions } from "../questions/useQuestions"
 import Button from "../../components/Button"
 import Results from "../categoryTest/Results"
+
 
 //todo:prevent functions run twice
 //missing questions in category styled components
 //percentage
 //sort imports
+//refactoring
 
 export default function Test() {
+
 	const navigate = useNavigate()
-	const [isOpenAnswer, setIsOpenAnswer] = useState(false)
-
 	const { category } = useParams()
-
-	const [attempts, setAttempts] = useState(() => {
-		const saved = localStorage.getItem(`${category}_attempts`)
-		const initialValue = JSON.parse(saved)
-		return initialValue || 0
-	})
-
-	const [correctAttempts, setCorrectAttempts] = useState(() => {
-		const saved = localStorage.getItem(`${category}_correctAttempts`)
-		const initialValue = JSON.parse(saved)
-		return initialValue || 0
-	})
 
 	const [testQuestions, setTestQuestions] = useState(() => {
 		const saved = localStorage.getItem(`${category}_testQuestions`)
@@ -44,10 +33,30 @@ export default function Test() {
 
 	const { questions } = useQuestions(selectedCategory?.id)
 
+
+	const [isOpenAnswer, setIsOpenAnswer] = useState(false)
+
+	const [attempts, setAttempts] = useState(() => {
+		const saved = localStorage.getItem(`${category}_attempts`)
+		const initialValue = JSON.parse(saved)
+		return initialValue || 0
+	})
+
+	const [correctAttempts, setCorrectAttempts] = useState(() => {
+		const saved = localStorage.getItem(`${category}_correctAttempts`)
+		const initialValue = JSON.parse(saved)
+		return initialValue || 0
+	})
+
 	const [currentQuestion, setCurrentQuestion] = useState(
 		testQuestions[randomIndex]
 	)
 
+	
+
+	const percentage = Math.floor((correctAttempts / attempts) * 100)
+
+	//updates to custom hooks
 	function updateAttempts() {
 		setAttempts((attempts) => attempts + 1)
 		localStorage.setItem(
@@ -76,35 +85,44 @@ export default function Test() {
 		)
 	}
 
+
+
 	function handleWrongAnswer() {
+		
 		setIsOpenAnswer(false)
 		setCurrentQuestion(testQuestions[randomIndex])
 		updateAttempts()
 	}
 
 	function handleCorrectAnswer() {
+		
 		updateCorrectAttempts()
 		updateTestQuestions()
 		setIsOpenAnswer(false)
 		setCurrentQuestion(testQuestions[randomIndex])
 	}
 
+	function handleBackButton(){
+		localStorage.setItem(
+			`${category}_percentage`,
+			JSON.stringify(percentage)
+		)
+		navigate(`/${category}/test/instructions`)
+	}	
+
 	const allCategoryQuestions = questions?.length
-
-	// const finishedQuestions = questions?.length-testQuestions?.length
-
-	// console.log(questions?.length/attempts)
-	// console.log(attempts);
 
 	if (isLoadingCategory) return <Spinner>test</Spinner>
 
-	if(correctAttempts===questions?.length) return <Results/>
+	if (correctAttempts >= questions?.length)
+		return <Results percentage={percentage} selectedCategoryId={selectedCategory?.id}/>
 
 	return (
 		<div>
 			<Progressbar
 				allCategoryQuestions={allCategoryQuestions}
 				numTestQuestions={correctAttempts}
+				percentage={percentage}
 			/>
 			<TestQuestion
 				question={currentQuestion?.question}
@@ -129,34 +147,36 @@ export default function Test() {
 							</Button>
 						</div>
 					)}
-					{isOpenAnswer&&<div className='flex justify-center items-center gap-1'>
-						<Button
-							onClick={handleWrongAnswer}
-							style={{
-								backgroundColor: "rgb(252 165 165)",
-								width: "148px",
-								height: "40px",
-								fontFamily: "kanit",
-							}}
-						>
-							Wrong
-						</Button>
-						<Button
-							onClick={handleCorrectAnswer}
-							style={{
-								backgroundColor: "#88FFB6",
-								width: "148px",
-								height: "40px",
-								fontFamily: "kanit",
-							}}
-						>
-							Correct
-						</Button>
-					</div>}
+					{isOpenAnswer && (
+						<div className='flex justify-center items-center gap-1'>
+							<Button
+								onClick={handleWrongAnswer}
+								style={{
+									backgroundColor: "rgb(252 165 165)",
+									width: "148px",
+									height: "40px",
+									fontFamily: "kanit",
+								}}
+							>
+								Wrong
+							</Button>
+							<Button
+								onClick={handleCorrectAnswer}
+								style={{
+									backgroundColor: "#88FFB6",
+									width: "148px",
+									height: "40px",
+									fontFamily: "kanit",
+								}}
+							>
+								Correct
+							</Button>
+						</div>
+					)}
 				</div>
 				<div>
 					<Button
-						onClick={() => navigate(`/${category}/test/instructions`)}
+						onClick={handleBackButton}
 						style={{
 							backgroundColor: "rgb(254 240 138)",
 							width: "300px",

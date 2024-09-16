@@ -39,11 +39,19 @@ export default function TestInstructions() {
 		localStorage.setItem(`${category}_correctAttempts`, JSON.stringify(0))
 	}
 
+	function resetPercentage(){
+		localStorage.setItem(
+			`${category}_percentage`,
+			JSON.stringify(0)
+		)
+	}
+
 	function resetTestQuestions() {
 		localStorage.setItem(`${category}_testQuestions`, JSON.stringify(questions))
 		resetAttempts()
 		resetCorrectAttempts()
 		setSavedTest(false)
+		resetPercentage()
 	}
 
 
