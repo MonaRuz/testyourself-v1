@@ -4,11 +4,10 @@ import TestQuestion from "./TestQuestion"
 import { useCategory } from "../categories/useCategory"
 import Spinner from "../../components/Spinner"
 import { getRandomQuestion } from "../../utilities/helpers"
-import {useState } from "react"
+import { useState } from "react"
 import { useQuestions } from "../questions/useQuestions"
 import Button from "../../components/Button"
 import Results from "../categoryTest/Results"
-
 
 //todo:prevent functions run twice
 //missing questions in category styled components
@@ -17,7 +16,6 @@ import Results from "../categoryTest/Results"
 //refactoring
 
 export default function Test() {
-
 	const navigate = useNavigate()
 	const { category } = useParams()
 
@@ -32,7 +30,6 @@ export default function Test() {
 	const { isLoadingCategory, selectedCategory } = useCategory(category)
 
 	const { questions } = useQuestions(selectedCategory?.id)
-
 
 	const [isOpenAnswer, setIsOpenAnswer] = useState(false)
 
@@ -51,8 +48,6 @@ export default function Test() {
 	const [currentQuestion, setCurrentQuestion] = useState(
 		testQuestions[randomIndex]
 	)
-
-	
 
 	const percentage = Math.floor((correctAttempts / attempts) * 100)
 
@@ -85,37 +80,36 @@ export default function Test() {
 		)
 	}
 
-
-
 	function handleWrongAnswer() {
-		
 		setIsOpenAnswer(false)
 		setCurrentQuestion(testQuestions[randomIndex])
 		updateAttempts()
 	}
 
 	function handleCorrectAnswer() {
-		
 		updateCorrectAttempts()
 		updateTestQuestions()
 		setIsOpenAnswer(false)
 		setCurrentQuestion(testQuestions[randomIndex])
 	}
 
-	function handleBackButton(){
-		localStorage.setItem(
-			`${category}_percentage`,
-			JSON.stringify(percentage)
-		)
+	function handleBackButton() {
+		localStorage.setItem(`${category}_attempts`, JSON.stringify(attempts))
+		localStorage.setItem(`${category}_testQuestions`, JSON.stringify(testQuestions))
 		navigate(`/${category}/test/instructions`)
-	}	
+	}
 
 	const allCategoryQuestions = questions?.length
-
+	
 	if (isLoadingCategory) return <Spinner>test</Spinner>
 
-	if (correctAttempts >= questions?.length)
-		return <Results percentage={percentage} selectedCategory={selectedCategory}/>
+	if (testQuestions?.length === 0)
+		return (
+			<Results
+				percentage={percentage}
+				selectedCategory={selectedCategory}
+			/>
+		)
 
 	return (
 		<div>

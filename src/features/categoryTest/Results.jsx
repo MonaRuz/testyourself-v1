@@ -12,7 +12,6 @@ export default function Results({percentage,selectedCategory}) {
   const queryClient=useQueryClient()
 	const selectedCategoryId=selectedCategory?.id
 	const savedHighscore=selectedCategory?.highscore
-	console.log(savedHighscore);
 	
 //to custom hook:
   const {isLoading,mutate}=useMutation({
@@ -27,6 +26,9 @@ export default function Results({percentage,selectedCategory}) {
   })
   
 //resets to custom hooks
+function resetQuestions() {
+	localStorage.setItem(`${category}_testQuestions`, JSON.stringify([]))}
+
   function resetAttempts() {
 	localStorage.setItem(`${category}_attempts`, JSON.stringify(0))
 }
@@ -35,21 +37,21 @@ function resetCorrectAttempts() {
 }
 
 function resetTestQuestions() {
+	resetQuestions()
 	resetAttempts()
 	resetCorrectAttempts()
 }
 
-function handleBackButton(){
-	
+function handleBackButton(){	
 	resetTestQuestions()
 	navigate(`/${category}/overview`)
-	mutate({selectedCategoryId,percentage})
+	if(savedHighscore<percentage)mutate({selectedCategoryId,percentage})
 }
 
 function handleResetButton(){
 	resetTestQuestions()
 	navigate(`/${category}/test/instructions`)
-	mutate()
+	if(savedHighscore<percentage)mutate({selectedCategoryId,percentage})
 }
   
 	return (

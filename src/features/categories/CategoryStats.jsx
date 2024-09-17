@@ -21,6 +21,8 @@ export default function CategoryStats({selectedCategory}) {
 		const correctAttempts=JSON.parse(savedCorrectAttempts)
 		setCurrentScore(Math.floor((correctAttempts / attempts) * 100))
 		setProgress(correctAttempts)
+		console.log(currentScore,progress);
+		
 	},[category])
 
 	
@@ -43,7 +45,7 @@ export default function CategoryStats({selectedCategory}) {
 					</tr>
 					<tr>
 						<th className='text-blue-200 font-normal'>Current score:</th>
-						<th className='text-yellow-200 font-normal'>{currentScore} %</th>
+						<th className='text-yellow-200 font-normal'>{isNaN(currentScore)?0:currentScore} %</th>
 					</tr>
 					<tr>
 						<th className='text-blue-200 font-normal'>Highscore:</th>
