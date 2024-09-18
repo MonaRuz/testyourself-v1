@@ -9,7 +9,7 @@ import { useQuestion } from "./useQuestion"
 
 export default function EditQuestion() {
 	const navigate = useNavigate()
-	const param = useParams()
+	const {param} = useParams()
 
 	const { isLoading: isLoadingCategory, selectedCategory } = useCategory(
 		param.category

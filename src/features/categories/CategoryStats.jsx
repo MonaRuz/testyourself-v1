@@ -1,33 +1,33 @@
-import {useQuestions} from "../questions/useQuestions"
-import Spinner from "../../components/Spinner"
+import { useQuestions } from "../questions/useQuestions"
 import { useEffect, useState } from "react"
+import Spinner from "../../components/Spinner"
 
-export default function CategoryStats({selectedCategory}) {
-	const[currentScore,setCurrentScore]=useState(0)
-	const[progress,setProgress]=useState(0)
-	const{id,highscore,category}=selectedCategory
-
-	
+export default function CategoryStats({ selectedCategory }) {
+	const [currentScore, setCurrentScore] = useState(0)
+	const [progress, setProgress] = useState(0)
+	const { id, highscore, category } = selectedCategory
 
 	const { isLoadingQuestions, questions } = useQuestions(id)
 
-	const questionsAmount=questions?.length
+	const questionsAmount = questions?.length
 
-	useEffect(function(){
-		const savedAttempts=localStorage.getItem(`${category}_attempts`)
-		const attempts=JSON.parse(savedAttempts)
-		
-		const savedCorrectAttempts=localStorage.getItem(`${category}_correctAttempts`)
-		const correctAttempts=JSON.parse(savedCorrectAttempts)
-		setCurrentScore(Math.floor((correctAttempts / attempts) * 100))
-		setProgress(correctAttempts)
-		console.log(currentScore,progress);
-		
-	},[category])
+	useEffect(
+		function () {
+			const savedAttempts = localStorage.getItem(`${category}_attempts`)
+			const attempts = JSON.parse(savedAttempts)
 
-	
-	if(isLoadingQuestions)return<Spinner>category statistics</Spinner>
-	
+			const savedCorrectAttempts = localStorage.getItem(
+				`${category}_correctAttempts`
+			)
+			const correctAttempts = JSON.parse(savedCorrectAttempts)
+			setCurrentScore(Math.floor((correctAttempts / attempts) * 100))
+			setProgress(correctAttempts)
+		},
+		[category]
+	)
+
+	if (isLoadingQuestions) return <Spinner>category statistics</Spinner>
+
 	return (
 		<div className='mt-[13px] px-2'>
 			<h3 className='text-purple-300 border-y border-purple-300 pb-1 mb-5 text-center'>
@@ -41,11 +41,15 @@ export default function CategoryStats({selectedCategory}) {
 					</tr>
 					<tr>
 						<th className='text-blue-200 font-normal'>Progress:</th>
-						<th className='text-yellow-200 font-normal'>{progress} / {questionsAmount}</th>
+						<th className='text-yellow-200 font-normal'>
+							{progress} / {questionsAmount}
+						</th>
 					</tr>
 					<tr>
 						<th className='text-blue-200 font-normal'>Current score:</th>
-						<th className='text-yellow-200 font-normal'>{isNaN(currentScore)?0:currentScore} %</th>
+						<th className='text-yellow-200 font-normal'>
+							{isNaN(currentScore) ? 0 : currentScore} %
+						</th>
 					</tr>
 					<tr>
 						<th className='text-blue-200 font-normal'>Highscore:</th>

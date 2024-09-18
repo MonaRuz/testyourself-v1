@@ -1,8 +1,7 @@
 import { useNavigate } from "react-router-dom"
-import Button from "../../components/Button"
 import { useForm } from "react-hook-form"
 import { useNewCategory } from "./useNewCategory"
-
+import Button from "../../components/Button"
 
 //todo: debug: error with undefined sent value first (after this data was successfully submited)
 

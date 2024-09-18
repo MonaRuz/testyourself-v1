@@ -8,7 +8,7 @@ import {
 	where,
 } from "firebase/firestore/lite"
 import db from "../firebase/config"
-//todo: handling errors
+
 export async function getCategories() {
 	const categories = []
 	try {
@@ -43,6 +43,8 @@ export async function getCategory(category) {
 	return selectedCategory
 }
 
+
+//debug:
 export async function createCategory(newCategory){
 
 	
@@ -55,11 +57,12 @@ export async function createCategory(newCategory){
 			progress:0,
 			questionsAmount:0
 		})
-		return newCategory
+		
 	}catch(err){
 		console.error(err)
 		throw new Error("New category was not created")
 	}
+	return newCategory
 }
 
 export async function deleteCategory(categoryId) {

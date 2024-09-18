@@ -13,6 +13,7 @@ export function useNewCategory(){
 			})
 			
 		},
+		//debug:
 		onError: (err) => toast.error(err.message),
 	})
     return{createCategory}

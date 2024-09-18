@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom"
+import { MdOutlineSchool } from "react-icons/md"
 import Button from "../components/Button"
 import Logo from "../components/Logo"
-import { MdOutlineSchool } from "react-icons/md"
 
 export default function Home() {
 	const navigate = useNavigate()

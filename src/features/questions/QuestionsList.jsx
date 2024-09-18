@@ -1,7 +1,8 @@
+import { useState } from "react"
+import { useQuestions } from "./useQuestions"
 import Question from "./Question"
 import Spinner from "../../components/Spinner"
-import { useQuestions } from "./useQuestions"
-import { useState } from "react"
+import Error from "../../components/Error"
 
 export default function QuestionsList({ selectedCategory }) {
 	const [searchedExpression, setSearchedExpression] = useState()
@@ -18,11 +19,12 @@ export default function QuestionsList({ selectedCategory }) {
 			: questions
 
 	if (isLoadingQuestions) return <Spinner>Category overview</Spinner>
-	if (questions?.length <= 0)
+	if (questions?.length === 0)
 		return (
-			<h2 className='text-red-300 mt-3'>
-				This category has not any questions yet.
-			</h2>
+			<Error
+				className='text-red-300 mt-3'
+				errorMessage={"There are no questions to display"}
+			/>
 		)
 	return (
 		<div className='w-full lg:max-w-xl'>

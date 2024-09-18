@@ -1,15 +1,17 @@
 import { useNavigate } from "react-router-dom"
-import Spinner from "../../components/Spinner"
 import useCategories from "./useCategories"
-
-//todo: error handling
+import Spinner from "../../components/Spinner"
+import Error from "../../components/Error"
 
 export default function CategoriesList() {
 	const navigate = useNavigate()
 
-	const { isLoading, categories} = useCategories()
+	const { isLoading, categories } = useCategories()
 
 	if (isLoading) return <Spinner>Categories</Spinner>
+
+	if (categories?.length === 0)
+		return <Error errorMessage={"There are no categories to display"} />
 
 	return (
 		<div>

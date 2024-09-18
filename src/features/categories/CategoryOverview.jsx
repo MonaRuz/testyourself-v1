@@ -1,17 +1,15 @@
+import { useCategory } from "../categories/useCategory"
+import { useNavigate, useParams } from "react-router-dom"
 import Button from "../../components/Button"
 import CategoryStats from "./CategoryStats"
 import QuestionsList from "../questions/QuestionsList"
-import { useNavigate, useParams } from "react-router-dom"
-import {useCategory} from "../categories/useCategory"
 import Spinner from "../../components/Spinner"
 
 export default function CategoryOverview() {
 	const navigate = useNavigate()
 	const { category } = useParams()
 
-	
-	const { isLoadingCategory, selectedCategory} = useCategory(category)
-
+	const { isLoadingCategory, selectedCategory } = useCategory(category)
 
 	if (isLoadingCategory) return <Spinner>Category overview</Spinner>
 

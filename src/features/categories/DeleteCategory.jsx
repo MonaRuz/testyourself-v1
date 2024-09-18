@@ -1,15 +1,15 @@
+import {useCategory} from "./useCategory"
+import { useDeleteCategory } from "./useDeleteCategory"
 import { useNavigate, useParams } from "react-router-dom"
 import Button from "../../components/Button"
-import {useCategory} from "./useCategory"
 import Spinner from "../../components/Spinner"
-import { useDeleteCategory } from "./useDeleteCategory"
 
 export default function DeleteCategory() {
 	
-	const param = useParams()
+	const {category} = useParams()
     const navigate=useNavigate()
 
-	const { isLoadingCategory, selectedCategory } = useCategory(param.category)
+	const { isLoadingCategory, selectedCategory } = useCategory(category)
 
     const{deleteCategory}=useDeleteCategory()
 

@@ -3,7 +3,7 @@ import Button from "../../components/Button"
 import { useEffect, useState } from "react"
 import { useQuestions } from "../questions/useQuestions"
 import { useCategory } from "../categories/useCategory"
-//edit instructions
+
 //useCallback to resetTestQuestions
 export default function TestInstructions() {
 	const navigate = useNavigate()
@@ -106,7 +106,7 @@ export default function TestInstructions() {
 					</li>
 
 					<li className='text-blue-200  text-sm sm:text-base'>
-						Rate the correctness of your answer yourself.
+						Rate the correctness of your answer.
 					</li>
 
 					<li className='text-blue-200  text-sm sm:text-base'>
@@ -116,7 +116,10 @@ export default function TestInstructions() {
 
 					<li className='text-blue-200  text-sm sm:text-base'>
 						Your progress will be saved. If you interrupt the test, you can
-						return to it later. You can also restart the test at any time.
+						return to it later. You can also restart the test at any time. 
+					</li>
+					<li className='text-blue-200  text-sm sm:text-base'>
+						Do not delete history of your browser, if you want save test in progress! Test is saved in your browser localstorage.
 					</li>
 
 					<li className='text-blue-200  text-sm sm:text-base'>
