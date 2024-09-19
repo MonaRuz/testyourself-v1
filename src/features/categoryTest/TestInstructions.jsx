@@ -1,17 +1,18 @@
 import { useNavigate, useParams } from "react-router-dom"
 import Button from "../../components/Button"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useQuestions } from "../questions/useQuestions"
 import { useCategory } from "../categories/useCategory"
 import {
 	resetAttempts,
 	resetCorrectAttempts,
+	setTestQuestions,
 } from "../../utilities/localStorageFunctions"
 import Spinner from "../../components/Spinner"
 
 export default function TestInstructions() {
 	const navigate = useNavigate()
-	const {category} = useParams()
+	const { category } = useParams()
 	const [savedTest, setSavedTest] = useState(false)
 	const [testQuestions] = useState(() => {
 		const saved = localStorage.getItem(`${category}_testQuestions`)
@@ -23,29 +24,27 @@ export default function TestInstructions() {
 
 	const { isLoadingQuestions, questions } = useQuestions(selectedCategory?.id)
 
-	function resetTestQuestions() {
-		localStorage.setItem(`${category}_testQuestions`, JSON.stringify(questions))
+	const resetTest = useCallback(function resetTest() {
+		setTestQuestions(category, questions)
 		resetAttempts(category)
 		resetCorrectAttempts(category)
 		setSavedTest(false)
-	}
+	}, [category,questions])
 
-	//function in dependency array
 	useEffect(
 		function () {
 			if (testQuestions?.length !== 0) {
 				setSavedTest(true)
 			}
 			if (testQuestions?.length === 0) {
-				resetTestQuestions()
+				resetTest()
 			}
 		},
-		[testQuestions]
+		[testQuestions,resetTest]
 	)
 
-	if(isLoadingCategory||isLoadingQuestions)
-		
-	return<Spinner>instructions</Spinner>
+	if (isLoadingCategory || isLoadingQuestions)
+		return <Spinner>instructions</Spinner>
 
 	return (
 		<div className='mt-3'>
@@ -66,7 +65,7 @@ export default function TestInstructions() {
 				</Button>
 				{savedTest && (
 					<Button
-						onClick={resetTestQuestions}
+						onClick={resetTest}
 						style={{
 							backgroundColor: "rgb(252 165 165)",
 							width: "250px",
