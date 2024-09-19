@@ -3,15 +3,17 @@ import Button from "../../components/Button"
 import { useEffect, useState } from "react"
 import { useQuestions } from "../questions/useQuestions"
 import { useCategory } from "../categories/useCategory"
+import {
+	resetAttempts,
+	resetCorrectAttempts,
+} from "../../utilities/localStorageFunctions"
+import Spinner from "../../components/Spinner"
 
-//useCallback to resetTestQuestions
 export default function TestInstructions() {
 	const navigate = useNavigate()
-	const params = useParams()
-	const category = params.category
-
+	const {category} = useParams()
 	const [savedTest, setSavedTest] = useState(false)
-	const [testQuestions, setTestQuestions] = useState(() => {
+	const [testQuestions] = useState(() => {
 		const saved = localStorage.getItem(`${category}_testQuestions`)
 		const initialValue = JSON.parse(saved)
 		return initialValue || []
@@ -21,32 +23,29 @@ export default function TestInstructions() {
 
 	const { isLoadingQuestions, questions } = useQuestions(selectedCategory?.id)
 
-	function resetAttempts() {
-		localStorage.setItem(`${category}_attempts`, JSON.stringify(0))
-	}
-	function resetCorrectAttempts() {
-		localStorage.setItem(`${category}_correctAttempts`, JSON.stringify(0))
-	}
-
-
 	function resetTestQuestions() {
 		localStorage.setItem(`${category}_testQuestions`, JSON.stringify(questions))
-		resetAttempts()
-		resetCorrectAttempts()
+		resetAttempts(category)
+		resetCorrectAttempts(category)
 		setSavedTest(false)
 	}
 
+	//function in dependency array
 	useEffect(
 		function () {
 			if (testQuestions?.length !== 0) {
 				setSavedTest(true)
 			}
-			if(testQuestions?.length===0){
+			if (testQuestions?.length === 0) {
 				resetTestQuestions()
 			}
 		},
 		[testQuestions]
 	)
+
+	if(isLoadingCategory||isLoadingQuestions)
+		
+	return<Spinner>instructions</Spinner>
 
 	return (
 		<div className='mt-3'>
@@ -116,10 +115,11 @@ export default function TestInstructions() {
 
 					<li className='text-blue-200  text-sm sm:text-base'>
 						Your progress will be saved. If you interrupt the test, you can
-						return to it later. You can also restart the test at any time. 
+						return to it later. You can also restart the test at any time.
 					</li>
 					<li className='text-blue-200  text-sm sm:text-base'>
-						Do not delete history of your browser, if you want save test in progress! Test is saved in your browser localstorage.
+						Do not delete history of your browser, if you want save test in
+						progress! Test is saved in your browser localstorage.
 					</li>
 
 					<li className='text-blue-200  text-sm sm:text-base'>

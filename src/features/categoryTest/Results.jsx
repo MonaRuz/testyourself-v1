@@ -9,7 +9,6 @@ export default function Results({ percentage, selectedCategory }) {
 	const selectedCategoryId = selectedCategory?.id
 	const savedHighscore = selectedCategory?.highscore
 
-	//to custom hook:
 	const { setHighscore } = useHighscore(category)
 
 	//resets to custom hooks
