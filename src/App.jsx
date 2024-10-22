@@ -94,7 +94,7 @@ export default function App() {
 			<Toaster position="top-center" gutter={12} containerStyle={{margin:"18px"}} toastOptions={{
 				success:{
 					duration:3000,
-				},style:{fontSize:"16px",maxWidth:"500px",padding:"16px 24px",backgroundColor:"black",color:"green"}
+				},style:{fontSize:"16px",maxWidth:"500px",padding:"16px 24px",backgroundColor:"black",color:"#88FFB6"}
 			}}/>
 		</QueryClientProvider>
 	)

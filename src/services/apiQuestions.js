@@ -67,8 +67,9 @@ export async function deleteQuestion(selectedCategoryId, questionId) {
 	}
 }
 
-export async function editQuestion({ selectedCategoryId, questionId, editedQuestion }) {
-	const qRef = doc(db, "categories", selectedCategoryId, "questions", questionId)
+export async function editQuestion({ categoryId, questionId, editedQuestion }) {
+	
+	const qRef = doc(db, "categories", categoryId, "questions", questionId)
 	try {
 		await setDoc(qRef, editedQuestion)
 		return editedQuestion

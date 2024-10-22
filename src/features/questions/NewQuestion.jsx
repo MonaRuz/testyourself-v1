@@ -16,8 +16,6 @@ export default function NewQuestion() {
 
 	const { errors } = formState
 
-	console.log(errors)
-
 	const { createQuestion, isCreating } = useNewQuestion()
 
 	function onSubmit(newQuestion) {

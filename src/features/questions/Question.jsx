@@ -16,6 +16,7 @@ export default function Question({ question, selectedCategory }) {
 	function handleDeleteQuestion(id) {
 		deleteQuestion({categoryId:selectedCategory.id,questionId: id})
 	}
+	
 
 	return (
 		<div

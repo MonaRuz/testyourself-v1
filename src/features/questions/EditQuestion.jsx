@@ -9,11 +9,14 @@ import { useQuestion } from "./useQuestion"
 
 export default function EditQuestion() {
 	const navigate = useNavigate()
-	const {param} = useParams()
+	const param = useParams()
+
+	
 
 	const { isLoading: isLoadingCategory, selectedCategory } = useCategory(
 		param.category
 	)
+
 
 	const categoryId = selectedCategory?.id
 	const questionId = param.questionID
@@ -28,6 +31,7 @@ export default function EditQuestion() {
 			answer: question?.answer,
 		},
 	})
+
 
 	function handleEditQuestion(editedQuestion) {
 		editQuestion({ categoryId, questionId, editedQuestion },{onSuccess:()=>{
@@ -44,6 +48,9 @@ export default function EditQuestion() {
 		},
 		[question?.question, question?.answer, reset]
 	)
+
+	
+
 	if (isLoadingCategory || isLoadingQuestion)
 		return <Spinner>Question editor</Spinner>
 	return (
