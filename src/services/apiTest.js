@@ -1,4 +1,5 @@
 import {
+	arrayUnion,
 	collection,
 	addDoc,
 	getDocs,
@@ -47,4 +48,19 @@ export async function updateCorrectAnswers(categoryId, correctAnswers) {
 		throw new Error("Your answer could not be saved")
 	}
 	return correctAnswers
+}
+
+export async function updateCorrectAnsweredIds(categoryId,correctAnsweredIds){
+	const categoryRef = doc(db, "categories", categoryId)
+	console.log(correctAnsweredIds);
+	
+	try {
+		await updateDoc(categoryRef, {
+			correctAnsweredIds: arrayUnion(correctAnsweredIds),
+		})
+	} catch (err) {
+		console.error(err)
+		throw new Error("Your answer could not be saved")
+	}
+	return correctAnsweredIds
 }

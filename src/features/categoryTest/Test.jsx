@@ -10,9 +10,9 @@ import Button from "../../components/Button"
 import Results from "../categoryTest/Results"
 import { useWrongAnswers } from "../categoryTest/useWrongAnswers"
 import { useCorrectAnswers } from "../categoryTest/useCorrectAnswer"
+import {useCorrectAnsweredIds} from "../categoryTest/useCorrectAnsweredIds"
 
-//todo:prevent functions run twice
-//missing questions in category styled components
+
 //percentage
 //sort imports
 //refactoring
@@ -21,16 +21,6 @@ export default function Test() {
 	const navigate = useNavigate()
 	const { category } = useParams()
 
-	const [testQuestions, setTestQuestions] = useState(() => {
-		const saved = localStorage.getItem(`${category}_testQuestions`)
-		const initialValue = JSON.parse(saved)
-		return initialValue || []
-	})
-
-	
-
-	const randomIndex = getRandomQuestion(testQuestions?.length)
-
 	const { isLoadingCategory, selectedCategory } = useCategory(category)
 
 	const [correctAttempts, setCorrectAttempts] = useState(selectedCategory?.correctAnswers)
@@ -38,54 +28,44 @@ export default function Test() {
 
 	const { questions } = useQuestions(selectedCategory?.id)
 
-	const {updateWrongAnswers,isWrongAnswerUpdating}=useWrongAnswers(selectedCategory?.id,wrongAttempts)
-	const {updateCorrectAnswers,isCorrectAnswerUpdating}=useCorrectAnswers(selectedCategory?.id,wrongAttempts)
+	
+
+	const idsSet=new Set(selectedCategory?.correctAnsweredIds)
+	const currentQuestions=questions.filter((obj)=>!idsSet.has(obj.id))
+
+	const randomIndex = getRandomQuestion(currentQuestions?.length)
+
+	const {updateWrongAnswers,isWrongAnswerUpdating}=useWrongAnswers(selectedCategory?.id)
+	const {updateCorrectAnswers,isCorrectAnswerUpdating}=useCorrectAnswers(selectedCategory?.id)
 
 	const [isOpenAnswer, setIsOpenAnswer] = useState(false)
 
-	
+	const{updateCorrectAnsweredIds,isCorrectAsweredIdsUpdating}=useCorrectAnsweredIds(selectedCategory?.id)
 
 	const [currentQuestion, setCurrentQuestion] = useState(
-		testQuestions[randomIndex]
+		currentQuestions[randomIndex]
 	)
 
-	const percentage = Math.floor((correctAttempts / selectedCategory?.attempts) * 100)
+	const percentage = Math.floor((correctAttempts / selectedCategory?.correctAttempts+selectedCategory.wrongAnswers) * 100)
 
 	//updates to custom hooks
-
-
-	function updateTestQuestions() {
-		const updatedTestQuestions = testQuestions.filter((q) => {
-			return q.id !== currentQuestion?.id
-		})
-		setTestQuestions(updatedTestQuestions)
-		localStorage.setItem(
-			`${category}_testQuestions`,
-			JSON.stringify(testQuestions)
-		)
-	}
 
 	function handleWrongAnswer() {
 		setWrongAttempts((wrongAttempts)=>wrongAttempts+1)
 		updateWrongAnswers()
 		setIsOpenAnswer(false)
-		setCurrentQuestion(testQuestions[randomIndex])
+		setCurrentQuestion(currentQuestions[randomIndex])
 	}
 
 	function handleCorrectAnswer() {
+		updateCorrectAnsweredIds(currentQuestion?.id)
 		setCorrectAttempts((correctAttempts)=>correctAttempts+1)
 		updateCorrectAnswers()
-		updateTestQuestions()
 		setIsOpenAnswer(false)
-		setCurrentQuestion(testQuestions[randomIndex])
+		setCurrentQuestion(currentQuestions[randomIndex])
 	}
 
 	function handleBackButton() {
-		// localStorage.setItem(`${category}_attempts`, JSON.stringify(attempts))
-		// localStorage.setItem(
-		// 	`${category}_testQuestions`,
-		// 	JSON.stringify(testQuestions)
-		// )
 		navigate(`/${category}/test/instructions`)
 	}
 
@@ -93,10 +73,9 @@ export default function Test() {
 
 	if (isLoadingCategory) return <Spinner>test</Spinner>
 
-	if (testQuestions?.length === 0)
+	if (currentQuestions?.length === 0)
 		return (
 			<Results
-				percentage={percentage}
 				selectedCategory={selectedCategory}
 			/>
 		)

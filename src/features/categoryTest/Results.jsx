@@ -6,7 +6,7 @@ import {
 	resetCorrectAttempts,
 } from "../../utilities/localStorageFunctions"
 
-export default function Results({ percentage, selectedCategory }) {
+export default function Results({ selectedCategory,percentage }) {
 	const { category } = useParams()
 	const navigate = useNavigate()
 
@@ -22,7 +22,6 @@ export default function Results({ percentage, selectedCategory }) {
 	}
 
 	function handleBackButton() {
-		resetTestQuestions()
 		navigate(`/${category}/overview`)
 		if (savedHighscore < percentage)
 			setHighscore({ selectedCategoryId, percentage })
