@@ -23,3 +23,28 @@ export async function setHighscore(categoryId, percentage) {
 	}
 	return percentage
 }
+export async function updateWrongAnswers(categoryId, wrongAnswers) {
+	const categoryRef = doc(db, "categories", categoryId)
+	try {
+		await updateDoc(categoryRef, {
+			wrongAnswers: wrongAnswers,
+		})
+	} catch (err) {
+		console.error(err)
+		throw new Error("Your answer could not be saved")
+	}
+	return wrongAnswers
+}
+
+export async function updateCorrectAnswers(categoryId, correctAnswers) {
+	const categoryRef = doc(db, "categories", categoryId)
+	try {
+		await updateDoc(categoryRef, {
+			correctAnswers: correctAnswers,
+		})
+	} catch (err) {
+		console.error(err)
+		throw new Error("Your answer could not be saved")
+	}
+	return correctAnswers
+}

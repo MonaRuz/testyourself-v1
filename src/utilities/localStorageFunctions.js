@@ -1,9 +1,12 @@
 export function resetAttempts(category) {
     localStorage.setItem(`${category}_attempts`, JSON.stringify(0))
+    console.log(category)
 }
 
 export function resetCorrectAttempts(category) {
     localStorage.setItem(`${category}_correctAttempts`, JSON.stringify(0))
+    console.log(category);
+    
 }
 
 export function setTestQuestions(category,questions){

@@ -46,8 +46,7 @@ export async function createQuestion({ selectedCategoryId, newQuestion }) {
 	try {
 		await addDoc(qRef, {
 			question: newQuestion.question,
-			answer: newQuestion.answer,
-			correctAnswer:false,
+			answer: newQuestion.answer
 		})
 	} catch (err) {
 		console.error(err)
