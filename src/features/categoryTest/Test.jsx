@@ -4,12 +4,12 @@ import TestQuestion from "./TestQuestion"
 import { useCategory } from "../categories/useCategory"
 import Spinner from "../../components/Spinner"
 import { getRandomQuestion } from "../../utilities/helpers"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useQuestions } from "../questions/useQuestions"
 import Button from "../../components/Button"
 import Results from "../categoryTest/Results"
 import { useWrongAnswers } from "../categoryTest/useWrongAnswers"
-import { useCorrectAnswers } from "../categoryTest/useCorrectAnswer"
+import { useCorrectAnswers } from "../categoryTest/useCorrectAnswers"
 import {useCorrectAnsweredIds} from "../categoryTest/useCorrectAnsweredIds"
 
 
@@ -25,6 +25,7 @@ export default function Test() {
 
 	const [correctAttempts, setCorrectAttempts] = useState(selectedCategory?.correctAnswers)
 	const [wrongAttempts, setWrongAttempts] = useState(selectedCategory?.wrongAnswers)
+console.log(wrongAttempts);
 
 	const { questions } = useQuestions(selectedCategory?.id)
 
@@ -34,6 +35,7 @@ export default function Test() {
 	const currentQuestions=questions.filter((obj)=>!idsSet.has(obj.id))
 
 	const randomIndex = getRandomQuestion(currentQuestions?.length)
+
 
 	const {updateWrongAnswers,isWrongAnswerUpdating}=useWrongAnswers(selectedCategory?.id)
 	const {updateCorrectAnswers,isCorrectAnswerUpdating}=useCorrectAnswers(selectedCategory?.id)
@@ -50,17 +52,23 @@ export default function Test() {
 
 	//updates to custom hooks
 
+
+
 	function handleWrongAnswer() {
-		setWrongAttempts((wrongAttempts)=>wrongAttempts+1)
-		updateWrongAnswers()
+		// console.log(wrongAttempts);
+		
+		setWrongAttempts(wrongAttempts+1)
+		updateWrongAnswers(wrongAttempts+1)
 		setIsOpenAnswer(false)
 		setCurrentQuestion(currentQuestions[randomIndex])
 	}
 
 	function handleCorrectAnswer() {
+		// console.log(correctAttempts);
+		
 		updateCorrectAnsweredIds(currentQuestion?.id)
-		setCorrectAttempts((correctAttempts)=>correctAttempts+1)
-		updateCorrectAnswers()
+		setCorrectAttempts(correctAttempts+1)
+		updateCorrectAnswers(correctAttempts+1)
 		setIsOpenAnswer(false)
 		setCurrentQuestion(currentQuestions[randomIndex])
 	}

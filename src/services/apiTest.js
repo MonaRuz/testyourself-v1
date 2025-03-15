@@ -25,6 +25,7 @@ export async function setHighscore(categoryId, percentage) {
 	return percentage
 }
 export async function updateWrongAnswers(categoryId, wrongAnswers) {
+	console.log(categoryId,wrongAnswers);
 	const categoryRef = doc(db, "categories", categoryId)
 	try {
 		await updateDoc(categoryRef, {
@@ -38,6 +39,8 @@ export async function updateWrongAnswers(categoryId, wrongAnswers) {
 }
 
 export async function updateCorrectAnswers(categoryId, correctAnswers) {
+	// console.log(categoryId,correctAttempts);
+
 	const categoryRef = doc(db, "categories", categoryId)
 	try {
 		await updateDoc(categoryRef, {
@@ -50,10 +53,10 @@ export async function updateCorrectAnswers(categoryId, correctAnswers) {
 	return correctAnswers
 }
 
-export async function updateCorrectAnsweredIds(categoryId,correctAnsweredIds){
+export async function updateCorrectAnsweredIds(categoryId, correctAnsweredIds) {
 	const categoryRef = doc(db, "categories", categoryId)
-	console.log(correctAnsweredIds);
-	
+	// console.log(categoryId,correctAnsweredIds);
+
 	try {
 		await updateDoc(categoryRef, {
 			correctAnsweredIds: arrayUnion(correctAnsweredIds),
