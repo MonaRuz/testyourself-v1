@@ -3,11 +3,6 @@ import Button from "../../components/Button"
 import { useCallback, useEffect, useState } from "react"
 import { useQuestions } from "../questions/useQuestions"
 import { useCategory } from "../categories/useCategory"
-import {
-	resetAttempts,
-	resetCorrectAttempts,
-	setTestQuestions,
-} from "../../utilities/localStorageFunctions"
 import Spinner from "../../components/Spinner"
 
 export default function TestInstructions() {
@@ -24,24 +19,24 @@ export default function TestInstructions() {
 
 	const { isLoadingQuestions, questions } = useQuestions(selectedCategory?.id)
 
-	const resetTest = useCallback(function resetTest() {
-		setTestQuestions(category, questions)
-		resetAttempts(category)
-		resetCorrectAttempts(category)
-		setSavedTest(false)
-	}, [category,questions])
+	// const resetTest = useCallback(function resetTest() {
+	// 	setTestQuestions(category, questions)
+	// 	resetAttempts(category)
+	// 	resetCorrectAttempts(category)
+	// 	setSavedTest(false)
+	// }, [category,questions])
 
-	useEffect(
-		function () {
-			if (testQuestions?.length !== 0) {
-				setSavedTest(true)
-			}
-			if (testQuestions?.length === 0) {
-				resetTest()
-			}
-		},
-		[testQuestions,resetTest]
-	)
+	// useEffect(
+	// 	function () {
+	// 		if (testQuestions?.length !== 0) {
+	// 			setSavedTest(true)
+	// 		}
+	// 		if (testQuestions?.length === 0) {
+	// 			// resetTest()
+	// 		}
+	// 	},
+	// 	[testQuestions,resetTest]
+	// )
 
 	if (isLoadingCategory || isLoadingQuestions)
 		return <Spinner>instructions</Spinner>
@@ -65,7 +60,7 @@ export default function TestInstructions() {
 				</Button>
 				{savedTest && (
 					<Button
-						onClick={resetTest}
+						// onClick={}
 						style={{
 							backgroundColor: "rgb(252 165 165)",
 							width: "250px",

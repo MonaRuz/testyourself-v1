@@ -12,10 +12,40 @@ import {
 } from "firebase/firestore/lite"
 import db from "../firebase/config"
 
-export async function setHighscore(categoryId, percentage) {
-	const categoryRef = doc(db, "categories", categoryId)
+export async function getCorrectAnsweredIds(categoryId) {
+	const qRef = doc(db, "categories", categoryId, "correctAnsweredIds")
+	
+	console.log("test");
+
 	try {
-		await updateDoc(categoryRef, {
+		const qSnap = await getDoc(qRef)
+		const correctAnsweredIds = qSnap.data()
+		return correctAnsweredIds
+	} catch (err) {
+		console.error(err)
+		throw new Error("Something went wrong with fetching correctAnsweredIds")
+	}
+}
+
+export async function updateCorrectAnsweredIds(categoryId, currentQuestionId) {
+	const qRef = doc(db, "categories", categoryId)
+	// console.log(categoryId,currentQuestionId);
+
+	try {
+		await updateDoc(qRef, {
+			correctAnsweredIds: arrayUnion(currentQuestionId),
+		})
+	} catch (err) {
+		console.error(err)
+		throw new Error("Your answer could not be saved")
+	}
+	return currentQuestionId
+}
+
+export async function updateHighscore(categoryId, percentage) {
+	const qRef = doc(db, "categories", categoryId)
+	try {
+		await updateDoc(qRef, {
 			highscore: percentage,
 		})
 	} catch (err) {
@@ -25,10 +55,10 @@ export async function setHighscore(categoryId, percentage) {
 	return percentage
 }
 export async function updateWrongAnswers(categoryId, wrongAnswers) {
-	console.log(categoryId,wrongAnswers);
-	const categoryRef = doc(db, "categories", categoryId)
+	// console.log(categoryId,wrongAnswers);
+	const qRef = doc(db, "categories", categoryId)
 	try {
-		await updateDoc(categoryRef, {
+		await updateDoc(qRef, {
 			wrongAnswers: wrongAnswers,
 		})
 	} catch (err) {
@@ -39,11 +69,11 @@ export async function updateWrongAnswers(categoryId, wrongAnswers) {
 }
 
 export async function updateCorrectAnswers(categoryId, correctAnswers) {
-	// console.log(categoryId,correctAttempts);
+	// console.log(categoryId,correctAnswers);
 
-	const categoryRef = doc(db, "categories", categoryId)
+	const qRef = doc(db, "categories", categoryId)
 	try {
-		await updateDoc(categoryRef, {
+		await updateDoc(qRef, {
 			correctAnswers: correctAnswers,
 		})
 	} catch (err) {
@@ -51,19 +81,4 @@ export async function updateCorrectAnswers(categoryId, correctAnswers) {
 		throw new Error("Your answer could not be saved")
 	}
 	return correctAnswers
-}
-
-export async function updateCorrectAnsweredIds(categoryId, correctAnsweredIds) {
-	const categoryRef = doc(db, "categories", categoryId)
-	// console.log(categoryId,correctAnsweredIds);
-
-	try {
-		await updateDoc(categoryRef, {
-			correctAnsweredIds: arrayUnion(correctAnsweredIds),
-		})
-	} catch (err) {
-		console.error(err)
-		throw new Error("Your answer could not be saved")
-	}
-	return correctAnsweredIds
 }

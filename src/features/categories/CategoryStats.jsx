@@ -11,20 +11,20 @@ export default function CategoryStats({ selectedCategory }) {
 
 	const questionsAmount = questions?.length
 
-	useEffect(
-		function () {
-			const savedAttempts = localStorage.getItem(`${category}_attempts`)
-			const attempts = JSON.parse(savedAttempts)
+	// useEffect(
+	// 	function () {
+	// 		const savedAttempts = localStorage.getItem(`${category}_attempts`)
+	// 		const attempts = JSON.parse(savedAttempts)
 
-			const savedCorrectAttempts = localStorage.getItem(
-				`${category}_correctAttempts`
-			)
-			const correctAttempts = JSON.parse(savedCorrectAttempts)
-			setCurrentScore(Math.floor((correctAttempts / attempts) * 100))
-			setProgress(correctAttempts)
-		},
-		[category]
-	)
+	// 		const savedCorrectAttempts = localStorage.getItem(
+	// 			`${category}_correctAttempts`
+	// 		)
+	// 		const correctAttempts = JSON.parse(savedCorrectAttempts)
+	// 		setCurrentScore(Math.floor((correctAttempts / attempts) * 100))
+	// 		setProgress(correctAttempts)
+	// 	},
+	// 	[category]
+	// )
 
 	if (isLoadingQuestions) return <Spinner>category statistics</Spinner>
 
