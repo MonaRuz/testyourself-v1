@@ -12,11 +12,11 @@ export default function Results({ selectedCategory,percentage }) {
 
 	const { setHighscore } = useHighscore(category)
 
-	function resetTestQuestions() {
-		// resetTestQuestions(category)
-		// resetAttempts(category)
-		// resetCorrectAttempts(category)
-	}
+	// function resetTestQuestions() {
+	// 	resetTestQuestions(category)
+	// 	resetAttempts(category)
+	// 	resetCorrectAttempts(category)
+	// }
 
 	function handleBackButton() {
 		navigate(`/${category}/overview`)

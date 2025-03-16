@@ -54,19 +54,6 @@ export async function updateHighscore(categoryId, percentage) {
 	}
 	return percentage
 }
-export async function updateWrongAnswers(categoryId, wrongAnswers) {
-	// console.log(categoryId,wrongAnswers);
-	const qRef = doc(db, "categories", categoryId)
-	try {
-		await updateDoc(qRef, {
-			wrongAnswers: wrongAnswers,
-		})
-	} catch (err) {
-		console.error(err)
-		throw new Error("Your answer could not be saved")
-	}
-	return wrongAnswers
-}
 
 export async function updateCorrectAnswers(categoryId, correctAnswers) {
 	// console.log(categoryId,correctAnswers);
@@ -82,3 +69,20 @@ export async function updateCorrectAnswers(categoryId, correctAnswers) {
 	}
 	return correctAnswers
 }
+
+export async function updateWrongAnswers(categoryId, wrongAnswers) {
+	// console.log(categoryId,wrongAnswers);
+
+	const qRef = doc(db, "categories", categoryId)
+	try {
+		await updateDoc(qRef, {
+			wrongAnswers: wrongAnswers,
+		})
+	} catch (err) {
+		console.error(err)
+		throw new Error("Your answer could not be saved")
+	}
+	return wrongAnswers
+}
+
+
