@@ -29,11 +29,11 @@ export default function Test() {
 	const localStorageData = getCurrentQuestions(category)
 	const data = JSON.parse(localStorageData)
 
-	// const arr = [questions[0], questions[1]]
-
+	const arr = [questions[0], questions[1]]
+	updateCurrentQuestions(arr,category)
 	const dataSet = new Set(data.map((obj) => obj.id))
 
-	const currentQuestions = questions.filter((obj) => !dataSet.has(obj.id))
+	const [currentQuestions,setCurrentQuestions] = useState(questions.filter((obj) => !dataSet.has(obj.id)))
 	// console.log(currentQuestions)
 
 	const { updateCorrectAnswers, isCorrectAnswerUpdating } =
@@ -63,8 +63,6 @@ export default function Test() {
 		selectedCategory?.wrongAnswers
 	)
 
-	const [correctAnswer, setCorrectAnswer] = useState({})
-
 	const allCategoryQuestions = questions?.length
 
 	const percentage = 0
@@ -74,7 +72,7 @@ export default function Test() {
 	function handleWrongAnswer() {
 		// setWrongAttempts((wrongAttempts) => wrongAttempts + 1)
 		// updateWrongAnswers(wrongAttempts + 1)
-		// setIsOpenAnswer(false)
+		setIsOpenAnswer(false)
 		// setCurrentQuestion(currentQuestion)
 		// setCurrentQuestion(currentQuestions[randomIndex])
 
@@ -84,14 +82,15 @@ export default function Test() {
 	function handleCorrectAnswer() {
 		// setCorrectAttempts(correctAttempts + 1)
 		// updateCorrectAnswers(correctAttempts + 1)
-		// setIsOpenAnswer(false)
-		// setCurrentQuestions()
-		// let data = []
-		// data.push(currentQuestion)
+		setIsOpenAnswer(false)
 		// updateCurrentQuestions(data, category)
 		// setCurrentQuestion(currentQuestions[randomIndex])
+		setCurrentQuestions(data.push(currentQuestion))
+		updateCurrentQuestions(currentQuestions,category)
 
-		console.log("correct")
+		// console.log(newData)
+		// console.log(data);
+		
 	}
 
 	function handleBackButton() {

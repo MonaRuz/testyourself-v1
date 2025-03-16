@@ -1,4 +1,6 @@
 export function updateCurrentQuestions( filterdeQuestions,category) {
+    console.log(filterdeQuestions);
+    
 	localStorage.setItem(`currentQuestions_${category}`, JSON.stringify(filterdeQuestions))
 }
 
