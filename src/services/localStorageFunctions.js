@@ -1,7 +1,8 @@
-export function updateCurrentQuestions(filterdeQuestions, categoryName) {
-	localStorage.setItem(`currentQuestions_${categoryName}`, filterdeQuestions)
+export function updateCurrentQuestions( filterdeQuestions,category) {
+	localStorage.setItem(`currentQuestions_${category}`, JSON.stringify(filterdeQuestions))
 }
 
 export function getCurrentQuestions(categoryName) {
-	localStorage.getItem(`currentQuestions_${categoryName}`)
+	const data=localStorage.getItem(`currentQuestions_${categoryName}`)
+    return data
 }
