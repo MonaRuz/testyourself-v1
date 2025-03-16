@@ -29,13 +29,12 @@ export default function Test() {
 	const localStorageData = getCurrentQuestions(category)
 	const data = JSON.parse(localStorageData)
 
-	const arr = [questions[0], questions[1]]
+	// const arr = [questions[0], questions[1]]
 
 	const dataSet = new Set(data.map((obj) => obj.id))
-	
 
-	const [currentQuestions, setCurrentQuestions] = useState(questions.filter(obj => !dataSet.has(obj.id)))
-	console.log(currentQuestions)
+	const currentQuestions = questions.filter((obj) => !dataSet.has(obj.id))
+	// console.log(currentQuestions)
 
 	const { updateCorrectAnswers, isCorrectAnswerUpdating } =
 		useUpdateCorrectAnswers(selectedCategory?.id)
@@ -46,12 +45,15 @@ export default function Test() {
 
 	const [isOpenAnswer, setIsOpenAnswer] = useState(false)
 
-	// const randomIndex = getRandomQuestion(currentQuestions?.length)
+	const randomIndex = getRandomQuestion(currentQuestions?.length)
 
 	const [currentQuestion, setCurrentQuestion] = useState([
-		// currentQuestions[randomIndex],
-		{},
+		currentQuestions[randomIndex]
+		
 	])
+
+	// console.log(currentQuestion);
+	
 
 	const [correctAttempts, setCorrectAttempts] = useState(
 		selectedCategory?.correctAnswers
