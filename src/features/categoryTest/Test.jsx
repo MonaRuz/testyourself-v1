@@ -4,7 +4,7 @@ import TestQuestion from "./TestQuestion"
 import { useCategory } from "../categories/useCategory"
 import Spinner from "../../components/Spinner"
 import { getRandomQuestion } from "../../utilities/helpers"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useQuestions } from "../questions/useQuestions"
 import Button from "../../components/Button"
 import Results from "../categoryTest/Results"
@@ -29,14 +29,13 @@ export default function Test() {
 	const localStorageData = getCurrentQuestions(category)
 	const data = JSON.parse(localStorageData)
 
-	// const arr = [questions[0], questions[1]]
-	// updateCurrentQuestions(arr,category)
+	const [testQuestions, setTestQuestions] = useState(data)
+	console.log(testQuestions)
 
-	
-	const dataSet = new Set(data.map((obj) => obj.id))
-
-	const [currentQuestions,setCurrentQuestions] = useState(questions.filter((obj) => !dataSet.has(obj.id)))
-	console.log(currentQuestions)
+	if (!data || data.length===0) {
+		setTestQuestions(questions)
+		updateCurrentQuestions(questions, category)
+	} 
 
 	const { updateCorrectAnswers, isCorrectAnswerUpdating } =
 		useUpdateCorrectAnswers(selectedCategory?.id)
@@ -47,17 +46,11 @@ export default function Test() {
 
 	const [isOpenAnswer, setIsOpenAnswer] = useState(false)
 
-	const randomIndex = getRandomQuestion(currentQuestions?.length)
+	const randomIndex = getRandomQuestion(testQuestions?.length)
 
-	
-
-	const [currentQuestion, setCurrentQuestion] = useState([
-		currentQuestions[randomIndex]
-		
-	])
-
-	// console.log(data);
-	
+	const [currentQuestion, setCurrentQuestion] = useState(
+		testQuestions[randomIndex],
+	)
 
 	const [correctAttempts, setCorrectAttempts] = useState(
 		selectedCategory?.correctAnswers
@@ -71,6 +64,7 @@ export default function Test() {
 
 	const percentage = 0
 
+
 	//updates to custom hooks
 
 	function handleWrongAnswer() {
@@ -82,21 +76,24 @@ export default function Test() {
 
 		console.log("wrong")
 	}
+console.log(currentQuestion);
 
 	function handleCorrectAnswer() {
 		// setCorrectAttempts(correctAttempts + 1)
 		// updateCorrectAnswers(correctAttempts + 1)
+		
+
+		setTestQuestions(
+			testQuestions.filter((question) => currentQuestion.id !== question.id)
+		)
+		updateCurrentQuestions(testQuestions, category)
+		setCurrentQuestion(testQuestions[randomIndex])
 		setIsOpenAnswer(false)
 		// updateCurrentQuestions(data, category)
 		// setCurrentQuestion(currentQuestions[randomIndex])
-		setCurrentQuestions([...data,currentQuestion])
-		updateCurrentQuestions(data,category)
+		// setTestQuestions(updatedData)
 
-
-		console.log(currentQuestions);
-	
-		
-		
+		console.log(testQuestions)
 	}
 
 	function handleBackButton() {
