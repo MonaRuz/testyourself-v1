@@ -3,16 +3,21 @@ import Progressbar from "./Progressbar"
 import TestQuestion from "./TestQuestion"
 import { useCategory } from "../categories/useCategory"
 import Spinner from "../../components/Spinner"
-import { getRandomQuestion } from "../../utilities/helpers"
-import { useEffect, useState } from "react"
+import { getRandomIndex } from "../../utilities/helpers"
+import { useState } from "react"
 import { useQuestions } from "../questions/useQuestions"
 import Button from "../../components/Button"
 import Results from "../categoryTest/Results"
-// import { useUpdateCorrectAnsweredIds } from "../categoryTest/useUpdateCorrectAnsweredIds"
 import { useUpdateCorrectAnswers } from "./useUpdateCorrectAnswers"
 import { useUpdateWrongAnswers } from "./useUpdateWrongAnswers"
-import { getCurrentQuestions } from "../../services/localStorageFunctions"
-import { updateCurrentQuestions } from "../../services/localStorageFunctions"
+import {
+	getCorrectAttempts,
+	getTestQuestions,
+	getWrongAttempts,
+	updateCorrectAttempts,
+	updateWrongAttempts,
+} from "../../services/localStorageFunctions"
+import { updateTestQuestions } from "../../services/localStorageFunctions"
 
 //percentage
 //sort imports
@@ -26,74 +31,82 @@ export default function Test() {
 
 	const { isLoadingQuestions, questions } = useQuestions(selectedCategory?.id)
 
-	const localStorageData = getCurrentQuestions(category)
-	const data = JSON.parse(localStorageData)
+	//getting data from local storage
+	//testQuestions
 
-	const [testQuestions, setTestQuestions] = useState(data)
-	console.log(testQuestions)
+	const questionsData = JSON.parse(getTestQuestions(category))
 
-	if (!data || data.length===0) {
+	const [testQuestions, setTestQuestions] = useState(questionsData)
+
+	if (!questionsData || questionsData.length === 0) {
 		setTestQuestions(questions)
-		updateCurrentQuestions(questions, category)
-	} 
+		updateTestQuestions(questions, category)
+	}
 
-	const { updateCorrectAnswers, isCorrectAnswerUpdating } =
-		useUpdateCorrectAnswers(selectedCategory?.id)
+	//correctAttemps
 
-	const { isUpdatingWrongAnswers, updateWrongAnswers } = useUpdateWrongAnswers(
-		selectedCategory?.id
-	)
+	const correctAttemptsData = JSON.parse(getCorrectAttempts(category))
+
+	const [correctAttempts, setCorrectAttempts] = useState(correctAttemptsData)
+
+	if (correctAttemptsData === null || questionsData.length === 0) {
+		setCorrectAttempts(0)
+		updateCorrectAttempts(correctAttempts, category)
+	}
+
+	
+
+	//wrongAttempts
+
+	const wrongAttemptsData = JSON.parse(getWrongAttempts(category))
+
+	const [wrongAttempts, setWrongAttempts] = useState(wrongAttemptsData)
+
+	if (wrongAttemptsData === null || questionsData.length === 0) {
+		setWrongAttempts(0)
+		updateWrongAttempts(wrongAttempts, category)
+	}
+console.log(correctAttempts);
+
+	//states
 
 	const [isOpenAnswer, setIsOpenAnswer] = useState(false)
 
-	const randomIndex = getRandomQuestion(testQuestions?.length)
+	const randomIndex = getRandomIndex(testQuestions?.length)
 
 	const [currentQuestion, setCurrentQuestion] = useState(
-		testQuestions[randomIndex],
+		testQuestions[randomIndex]
 	)
 
-	const [correctAttempts, setCorrectAttempts] = useState(
-		selectedCategory?.correctAnswers
-	)
-
-	const [wrongAttempts, setWrongAttempts] = useState(
-		selectedCategory?.wrongAnswers
-	)
+	
 
 	const allCategoryQuestions = questions?.length
 
 	const percentage = 0
 
-
-	//updates to custom hooks
+	//handlers
 
 	function handleWrongAnswer() {
-		// setWrongAttempts((wrongAttempts) => wrongAttempts + 1)
-		// updateWrongAnswers(wrongAttempts + 1)
+		setWrongAttempts((wrongAttempts) => wrongAttempts + 1)
+		updateWrongAttempts(wrongAttempts + 1,category)
 		setIsOpenAnswer(false)
 		// setCurrentQuestion(currentQuestion)
 		// setCurrentQuestion(currentQuestions[randomIndex])
-
-		console.log("wrong")
 	}
-console.log(currentQuestion);
 
 	function handleCorrectAnswer() {
-		// setCorrectAttempts(correctAttempts + 1)
-		// updateCorrectAnswers(correctAttempts + 1)
-		
+		setCorrectAttempts(correctAttempts + 1)
+		updateCorrectAttempts(correctAttempts + 1,category)
 
 		setTestQuestions(
 			testQuestions.filter((question) => currentQuestion.id !== question.id)
 		)
-		updateCurrentQuestions(testQuestions, category)
+		updateTestQuestions(testQuestions, category)
 		setCurrentQuestion(testQuestions[randomIndex])
 		setIsOpenAnswer(false)
 		// updateCurrentQuestions(data, category)
 		// setCurrentQuestion(currentQuestions[randomIndex])
 		// setTestQuestions(updatedData)
-
-		console.log(testQuestions)
 	}
 
 	function handleBackButton() {
@@ -102,8 +115,8 @@ console.log(currentQuestion);
 
 	if (isLoadingCategory) return <Spinner>test</Spinner>
 
-	// if (selectedCategory?.correctAnswers === questions.length)
-	// 	return <Results selectedCategory={selectedCategory} />
+	if (correctAttempts === questions.length)
+		return <Results selectedCategory={selectedCategory} />
 
 	return (
 		<div>
