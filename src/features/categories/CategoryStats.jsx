@@ -1,11 +1,13 @@
 import { useQuestions } from "../questions/useQuestions"
-import { useEffect, useState } from "react"
+// import {  useState } from "react"
 import Spinner from "../../components/Spinner"
+import { getCorrectAttempts } from "../../services/localStorageFunctions"
 
 export default function CategoryStats({ selectedCategory }) {
-	const [currentScore, setCurrentScore] = useState(0)
-	const [progress, setProgress] = useState(0)
 	const { id, highscore, category } = selectedCategory
+	const currentScore=0
+	const rightAnswers=JSON.parse(getCorrectAttempts(category))
+	
 
 	const { isLoadingQuestions, questions } = useQuestions(id)
 
@@ -42,7 +44,7 @@ export default function CategoryStats({ selectedCategory }) {
 					<tr>
 						<th className='text-blue-200 font-normal'>Progress:</th>
 						<th className='text-yellow-200 font-normal'>
-							{progress} / {questionsAmount}
+							{rightAnswers?rightAnswers:0} / {questionsAmount}
 						</th>
 					</tr>
 					<tr>

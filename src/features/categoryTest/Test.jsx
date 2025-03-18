@@ -1,27 +1,26 @@
-import { useNavigate, useParams } from "react-router-dom"
-import Progressbar from "./Progressbar"
-import TestQuestion from "./TestQuestion"
-import { useCategory } from "../categories/useCategory"
-import Spinner from "../../components/Spinner"
-import { getRandomIndex } from "../../utilities/helpers"
 import { useState } from "react"
+import { useNavigate, useParams } from "react-router-dom"
+import { useCategory } from "../categories/useCategory"
 import { useQuestions } from "../questions/useQuestions"
-import Button from "../../components/Button"
-import Results from "../categoryTest/Results"
-import { useUpdateCorrectAnswers } from "./useUpdateCorrectAnswers"
-import { useUpdateWrongAnswers } from "./useUpdateWrongAnswers"
 import {
 	getCorrectAttempts,
 	getTestQuestions,
 	getWrongAttempts,
 	updateCorrectAttempts,
 	updateWrongAttempts,
+	updateTestQuestions
 } from "../../services/localStorageFunctions"
-import { updateTestQuestions } from "../../services/localStorageFunctions"
+import { getRandomIndex } from "../../utilities/helpers"
+import Progressbar from "./Progressbar"
+import TestQuestion from "./TestQuestion"
+import Spinner from "../../components/Spinner"
+import Button from "../../components/Button"
+import Results from "../categoryTest/Results"
 
-//percentage
-//sort imports
-//refactoring
+
+
+
+//??refactoring
 
 export default function Test() {
 	const navigate = useNavigate()
@@ -54,8 +53,6 @@ export default function Test() {
 		updateCorrectAttempts(correctAttempts, category)
 	}
 
-	
-
 	//wrongAttempts
 
 	const wrongAttemptsData = JSON.parse(getWrongAttempts(category))
@@ -66,7 +63,6 @@ export default function Test() {
 		setWrongAttempts(0)
 		updateWrongAttempts(wrongAttempts, category)
 	}
-console.log(correctAttempts);
 
 	//states
 
@@ -78,25 +74,24 @@ console.log(correctAttempts);
 		testQuestions[randomIndex]
 	)
 
-	
-
 	const allCategoryQuestions = questions?.length
 
-	const percentage = 0
+	const percentage =
+		(correctAttempts / allCategoryQuestions) * 100 -
+		(wrongAttempts / allCategoryQuestions) * 100
+	console.log(`${percentage} %`)
 
 	//handlers
 
 	function handleWrongAnswer() {
 		setWrongAttempts((wrongAttempts) => wrongAttempts + 1)
-		updateWrongAttempts(wrongAttempts + 1,category)
+		updateWrongAttempts(wrongAttempts + 1, category)
 		setIsOpenAnswer(false)
-		// setCurrentQuestion(currentQuestion)
-		// setCurrentQuestion(currentQuestions[randomIndex])
 	}
 
 	function handleCorrectAnswer() {
 		setCorrectAttempts(correctAttempts + 1)
-		updateCorrectAttempts(correctAttempts + 1,category)
+		updateCorrectAttempts(correctAttempts + 1, category)
 
 		setTestQuestions(
 			testQuestions.filter((question) => currentQuestion.id !== question.id)
@@ -104,16 +99,13 @@ console.log(correctAttempts);
 		updateTestQuestions(testQuestions, category)
 		setCurrentQuestion(testQuestions[randomIndex])
 		setIsOpenAnswer(false)
-		// updateCurrentQuestions(data, category)
-		// setCurrentQuestion(currentQuestions[randomIndex])
-		// setTestQuestions(updatedData)
 	}
 
 	function handleBackButton() {
 		navigate(`/${category}/test/instructions`)
 	}
 
-	if (isLoadingCategory) return <Spinner>test</Spinner>
+	if (isLoadingCategory || isLoadingQuestions) return <Spinner>test</Spinner>
 
 	if (correctAttempts === questions.length)
 		return <Results selectedCategory={selectedCategory} />
