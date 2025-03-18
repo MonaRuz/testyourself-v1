@@ -1,17 +1,27 @@
 import { useQuestions } from "../questions/useQuestions"
 // import {  useState } from "react"
 import Spinner from "../../components/Spinner"
-import { getCorrectAttempts } from "../../services/localStorageFunctions"
+import {
+	getCorrectAttempts,
+	getWrongAttempts,
+} from "../../services/localStorageFunctions"
 
 export default function CategoryStats({ selectedCategory }) {
 	const { id, highscore, category } = selectedCategory
-	const currentScore=0
-	const rightAnswers=JSON.parse(getCorrectAttempts(category))
+	const { isLoadingQuestions, questions } = useQuestions(id)
+	const allCategoryQuestions = questions?.length
+	const correctAttempts = JSON.parse(getCorrectAttempts(category))
+	const wrongAttempts = JSON.parse(getWrongAttempts(category))
+	const percentage = Math.floor((correctAttempts / allCategoryQuestions) * 100 -
+	(wrongAttempts / allCategoryQuestions) * 100)
+		
+	console.log(`${percentage} %`)
+
+
+
 	
 
-	const { isLoadingQuestions, questions } = useQuestions(id)
-
-	const questionsAmount = questions?.length
+	//---------------------------------------------------------
 
 	// useEffect(
 	// 	function () {
@@ -39,19 +49,19 @@ export default function CategoryStats({ selectedCategory }) {
 				<tbody>
 					<tr>
 						<th className='text-blue-200 font-normal'>Questions:</th>
-						<th className='text-yellow-200 font-normal'>{questionsAmount}</th>
+						<th className='text-yellow-200 font-normal'>
+							{allCategoryQuestions}
+						</th>
 					</tr>
 					<tr>
 						<th className='text-blue-200 font-normal'>Progress:</th>
 						<th className='text-yellow-200 font-normal'>
-							{rightAnswers?rightAnswers:0} / {questionsAmount}
+							{correctAttempts ? correctAttempts : 0} / {allCategoryQuestions}
 						</th>
 					</tr>
 					<tr>
 						<th className='text-blue-200 font-normal'>Current score:</th>
-						<th className='text-yellow-200 font-normal'>
-							{isNaN(currentScore) ? 0 : currentScore} %
-						</th>
+						<th className='text-yellow-200 font-normal'>{percentage} %</th>
 					</tr>
 					<tr>
 						<th className='text-blue-200 font-normal'>Highscore:</th>

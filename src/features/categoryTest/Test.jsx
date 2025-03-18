@@ -8,7 +8,7 @@ import {
 	getWrongAttempts,
 	updateCorrectAttempts,
 	updateWrongAttempts,
-	updateTestQuestions
+	updateTestQuestions,
 } from "../../services/localStorageFunctions"
 import { getRandomIndex } from "../../utilities/helpers"
 import Progressbar from "./Progressbar"
@@ -16,9 +16,6 @@ import TestQuestion from "./TestQuestion"
 import Spinner from "../../components/Spinner"
 import Button from "../../components/Button"
 import Results from "../categoryTest/Results"
-
-
-
 
 //??refactoring
 
@@ -92,7 +89,6 @@ export default function Test() {
 	function handleCorrectAnswer() {
 		setCorrectAttempts(correctAttempts + 1)
 		updateCorrectAttempts(correctAttempts + 1, category)
-
 		setTestQuestions(
 			testQuestions.filter((question) => currentQuestion.id !== question.id)
 		)
