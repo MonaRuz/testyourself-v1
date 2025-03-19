@@ -12,31 +12,12 @@ export default function CategoryStats({ selectedCategory }) {
 	const allCategoryQuestions = questions?.length
 	const correctAttempts = JSON.parse(getCorrectAttempts(category))
 	const wrongAttempts = JSON.parse(getWrongAttempts(category))
-	const percentage = Math.floor((correctAttempts / allCategoryQuestions) * 100 -
-	(wrongAttempts / allCategoryQuestions) * 100)
-		
+	const percentage = Math.floor(
+		(correctAttempts / allCategoryQuestions) * 100 -
+			(wrongAttempts / allCategoryQuestions) * 100
+	)
+
 	console.log(`${percentage} %`)
-
-
-
-	
-
-	//---------------------------------------------------------
-
-	// useEffect(
-	// 	function () {
-	// 		const savedAttempts = localStorage.getItem(`${category}_attempts`)
-	// 		const attempts = JSON.parse(savedAttempts)
-
-	// 		const savedCorrectAttempts = localStorage.getItem(
-	// 			`${category}_correctAttempts`
-	// 		)
-	// 		const correctAttempts = JSON.parse(savedCorrectAttempts)
-	// 		setCurrentScore(Math.floor((correctAttempts / attempts) * 100))
-	// 		setProgress(correctAttempts)
-	// 	},
-	// 	[category]
-	// )
 
 	if (isLoadingQuestions) return <Spinner>category statistics</Spinner>
 
@@ -61,7 +42,9 @@ export default function CategoryStats({ selectedCategory }) {
 					</tr>
 					<tr>
 						<th className='text-blue-200 font-normal'>Current score:</th>
-						<th className='text-yellow-200 font-normal'>{percentage} %</th>
+						<th className='text-yellow-200 font-normal'>
+							{percentage ? percentage : 0} %
+						</th>
 					</tr>
 					<tr>
 						<th className='text-blue-200 font-normal'>Highscore:</th>
