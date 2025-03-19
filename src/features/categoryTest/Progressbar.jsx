@@ -16,7 +16,7 @@ export default function Progressbar({
 			</h3>
 			<div className='text-green-200 flex items-center justify-between'>
 				<p>
-					Right answers: {progress} / {allCategoryQuestions}
+					Progress: {progress} / {allCategoryQuestions}
 				</p>
 				<p>Current score: {percentage} %</p>
 			</div>
