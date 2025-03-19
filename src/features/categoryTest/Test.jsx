@@ -164,7 +164,6 @@ export default function Test() {
 							</Button>
 
 							<Button
-								// disabled={isLoadingCategory}
 								onClick={handleCorrectAnswer}
 								style={{
 									backgroundColor: "#88FFB6",

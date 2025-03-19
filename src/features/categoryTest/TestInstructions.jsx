@@ -4,39 +4,29 @@ import { useCallback, useEffect, useState } from "react"
 import { useQuestions } from "../questions/useQuestions"
 import { useCategory } from "../categories/useCategory"
 import Spinner from "../../components/Spinner"
+import {
+	getTestQuestions,
+	resetTest,
+} from "../../services/localStorageFunctions"
 
 export default function TestInstructions() {
 	const navigate = useNavigate()
 	const { category } = useParams()
-	const [savedTest, setSavedTest] = useState(false)
-	const [testQuestions] = useState(() => {
-		const saved = localStorage.getItem(`${category}_testQuestions`)
-		const initialValue = JSON.parse(saved)
-		return initialValue || []
-	})
+	const testQuestions = getTestQuestions(category)
+	const [isTesteQuestions, setIsTestQuestions] = useState(false)
 
 	const { isLoadingCategory, selectedCategory } = useCategory(category)
 
 	const { isLoadingQuestions, questions } = useQuestions(selectedCategory?.id)
 
-	// const resetTest = useCallback(function resetTest() {
-	// 	setTestQuestions(category, questions)
-	// 	resetAttempts(category)
-	// 	resetCorrectAttempts(category)
-	// 	setSavedTest(false)
-	// }, [category,questions])
+	function handleResetTest() {
+		resetTest(category)
+		setIsTestQuestions(false)
+	}
 
-	// useEffect(
-	// 	function () {
-	// 		if (testQuestions?.length !== 0) {
-	// 			setSavedTest(true)
-	// 		}
-	// 		if (testQuestions?.length === 0) {
-	// 			// resetTest()
-	// 		}
-	// 	},
-	// 	[testQuestions,resetTest]
-	// )
+	useEffect(function(){
+		if(testQuestions===null)setIsTestQuestions(true)
+	},[testQuestions])
 
 	if (isLoadingCategory || isLoadingQuestions)
 		return <Spinner>instructions</Spinner>
@@ -44,7 +34,8 @@ export default function TestInstructions() {
 	return (
 		<div className='mt-3'>
 			<h3 className='text-center text-purple-300 border-b border-purple-300 mb-3 pb-1'>
-				Test in category <span className='text-green-200'>{category}</span>
+				Test in category <span className='text-green-200'>{category}</span>{" "}
+				<span className='text-purple-100'>- {questions.length} questions</span>
 			</h3>
 			<div className='flex flex-col gap-1 items-center'>
 				<Button
@@ -58,9 +49,9 @@ export default function TestInstructions() {
 				>
 					Run test
 				</Button>
-				{savedTest && (
+				{isTesteQuestions && (
 					<Button
-						// onClick={}
+						onClick={handleResetTest}
 						style={{
 							backgroundColor: "rgb(252 165 165)",
 							width: "250px",
