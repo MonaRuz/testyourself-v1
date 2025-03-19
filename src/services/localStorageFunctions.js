@@ -1,4 +1,4 @@
-//testQuestions
+//getting testQuestions
 
 export function updateTestQuestions(filterdeQuestions, category) {
 	localStorage.setItem(
@@ -7,36 +7,43 @@ export function updateTestQuestions(filterdeQuestions, category) {
 	)
 }
 
-export function getTestQuestions(categoryName) {
-	const data = localStorage.getItem(`currentQuestions_${categoryName}`)
+export function getTestQuestions(category) {
+	const data = localStorage.getItem(`currentQuestions_${category}`)
 	return data
 }
 
 //correctAttempts
 
-export function updateCorrectAttempts(correctAttempts,category){
-    localStorage.setItem(
+export function updateCorrectAttempts(correctAttempts, category) {
+	localStorage.setItem(
 		`correctAttempts_${category}`,
 		JSON.stringify(correctAttempts)
 	)
 }
 
-export function getCorrectAttempts(categoryName) {
-	const data = localStorage.getItem(`correctAttempts_${categoryName}`)
+export function getCorrectAttempts(category) {
+	const data = localStorage.getItem(`correctAttempts_${category}`)
 	return data
 }
 
 //wrongAttempts
 
-export function updateWrongAttempts(wrongAttempts,category){
-    localStorage.setItem(
+export function updateWrongAttempts(wrongAttempts, category) {
+	localStorage.setItem(
 		`wrongAttempts_${category}`,
 		JSON.stringify(wrongAttempts)
 	)
 }
 
-export function getWrongAttempts(categoryName) {
-	const data = localStorage.getItem(`wrongAttempts_${categoryName}`)
+export function getWrongAttempts(category) {
+	const data = localStorage.getItem(`wrongAttempts_${category}`)
 	return data
 }
 
+//reset test
+
+export function resetTest(category) {
+	updateTestQuestions(null, category)
+	updateCorrectAttempts(null, category)
+	updateWrongAttempts(null,category)
+}
