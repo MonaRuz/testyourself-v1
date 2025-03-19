@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { useCategory } from "../categories/useCategory"
 import { useQuestions } from "../questions/useQuestions"
@@ -67,16 +67,22 @@ export default function Test() {
 
 	const randomIndex = getRandomIndex(testQuestions?.length)
 
+
+	//in first render this is NaN and filtering is not functioning
 	const [currentQuestion, setCurrentQuestion] = useState(
-		testQuestions[randomIndex]
+		questions[randomIndex]
 	)
+
+
+
+
 
 	const allCategoryQuestions = questions?.length
 
-	const percentage =
-		(correctAttempts / allCategoryQuestions) * 100 -
-		(wrongAttempts / allCategoryQuestions) * 100
-	console.log(`${percentage} %`)
+	const percentage = Math.floor((correctAttempts / allCategoryQuestions) * 100 -
+	(wrongAttempts / allCategoryQuestions) * 100)
+		
+
 
 	//handlers
 
@@ -87,30 +93,37 @@ export default function Test() {
 	}
 
 	function handleCorrectAnswer() {
-		setCorrectAttempts(correctAttempts + 1)
-		updateCorrectAttempts(correctAttempts + 1, category)
 		setTestQuestions(
 			testQuestions.filter((question) => currentQuestion.id !== question.id)
 		)
-		updateTestQuestions(testQuestions, category)
+		setCorrectAttempts(correctAttempts + 1)
 		setCurrentQuestion(testQuestions[randomIndex])
+		updateCorrectAttempts(correctAttempts + 1, category)
+		
 		setIsOpenAnswer(false)
+		
 	}
 
 	function handleBackButton() {
 		navigate(`/${category}/test/instructions`)
 	}
 
+	useEffect(function(){
+		updateTestQuestions(testQuestions, category)
+		setCurrentQuestion(testQuestions[randomIndex])
+	},[testQuestions, category])
+	
+
 	if (isLoadingCategory || isLoadingQuestions) return <Spinner>test</Spinner>
 
-	if (correctAttempts === questions.length)
-		return <Results selectedCategory={selectedCategory} />
+	if (correctAttempts  === questions.length)
+		return <Results selectedCategory={selectedCategory} percentage={percentage}/>
 
 	return (
 		<div>
 			<Progressbar
 				allCategoryQuestions={allCategoryQuestions}
-				numTestQuestions={correctAttempts}
+				progress={correctAttempts + 1}
 				percentage={percentage}
 			/>
 			<TestQuestion

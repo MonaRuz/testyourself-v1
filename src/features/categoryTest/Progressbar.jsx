@@ -2,11 +2,11 @@ import { useParams } from "react-router-dom"
 
 export default function Progressbar({
 	allCategoryQuestions,
-	numTestQuestions,
+	progress,
 	percentage,
 }) {
 	const { category } = useParams()
-	if (isNaN(numTestQuestions)) numTestQuestions = 0
+	if (isNaN(progress)) progress = 0
 	if (isNaN(percentage)) percentage = 0
 
 	return (
@@ -16,7 +16,7 @@ export default function Progressbar({
 			</h3>
 			<div className='text-green-200 flex items-center justify-between'>
 				<p>
-					Right answers: {numTestQuestions} / {allCategoryQuestions}
+					Right answers: {progress} / {allCategoryQuestions}
 				</p>
 				<p>Current score: {percentage} %</p>
 			</div>
