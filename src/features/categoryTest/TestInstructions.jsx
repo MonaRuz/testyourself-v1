@@ -12,6 +12,8 @@ import {
 export default function TestInstructions() {
 	const navigate = useNavigate()
 	const { category } = useParams()
+	console.log(category);
+	
 		
 	const { isLoadingCategory, selectedCategory } = useCategory(category)
 

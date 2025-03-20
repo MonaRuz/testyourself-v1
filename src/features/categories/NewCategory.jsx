@@ -15,7 +15,8 @@ export default function NewCategory() {
 	const { createCategory } = useNewCategory()
 
 	function handleNewCategory(data) {
-		const newCategory = data.categoryName?.split(" ").join("")
+		// const newCategory = data.categoryName?.split(" ").join("")
+		const newCategory = data.categoryName
 		createCategory(newCategory, {
 			onSuccess: () => {
 				navigate(`/${newCategory}/overview`)

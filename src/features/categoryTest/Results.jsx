@@ -2,8 +2,6 @@ import { useNavigate, useParams } from "react-router-dom"
 import Button from "../../components/Button"
 import useHighscore from "./useHighscore"
 import { resetTest } from "../../services/localStorageFunctions"
-import { useState } from "react"
-
 
 export default function Results({ selectedCategory,percentage }) {
 	const { category } = useParams()

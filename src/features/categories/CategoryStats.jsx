@@ -17,7 +17,6 @@ export default function CategoryStats({ selectedCategory }) {
 			(wrongAttempts / allCategoryQuestions) * 100
 	)
 
-
 	if (isLoadingQuestions) return <Spinner>category statistics</Spinner>
 
 	return (
