@@ -2,6 +2,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import Button from "../../components/Button"
 import useHighscore from "./useHighscore"
 import { resetTest } from "../../services/localStorageFunctions"
+import { useState } from "react"
 
 
 export default function Results({ selectedCategory,percentage }) {
@@ -11,19 +12,23 @@ export default function Results({ selectedCategory,percentage }) {
 	const selectedCategoryId = selectedCategory?.id
 	const savedHighscore = selectedCategory?.highscore
 
-	const { setHighscore } = useHighscore(category)
+	const { updateHighscore } = useHighscore(category)
+
+	console.log(savedHighscore,percentage);
+	
 
 	function handleBackButton() {
 		navigate(`/${category}/overview`)
 		if (savedHighscore < percentage)
-			setHighscore({ selectedCategoryId, percentage })
+			updateHighscore({ selectedCategoryId, percentage })
 	}
 
 	function handleResetButton() {
 		resetTest(category)
-		navigate(`/${category}/test/instructions`)
 		if (savedHighscore < percentage)
-			setHighscore({ selectedCategoryId, percentage })
+			updateHighscore({ selectedCategoryId, percentage })
+		navigate(`/${category}/test/instructions`)
+		
 	}
 
 	return (

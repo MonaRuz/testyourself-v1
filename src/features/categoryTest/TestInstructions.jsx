@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom"
 import Button from "../../components/Button"
-import { useCallback, useEffect, useState } from "react"
+import { useState } from "react"
 import { useQuestions } from "../questions/useQuestions"
 import { useCategory } from "../categories/useCategory"
 import Spinner from "../../components/Spinner"
@@ -19,16 +19,12 @@ export default function TestInstructions() {
 
 	const [testQuestions,setTestQuestions] = useState(JSON.parse(getTestQuestions(category)))
 
-
-	if(!testQuestions)setTestQuestions([])
-
 	function handleResetTest() {
 		resetTest(category)
 		setTestQuestions([])
 	}
 
-	if (isLoadingCategory || isLoadingQuestions)
-		return <Spinner>instructions</Spinner>
+	if (isLoadingCategory || isLoadingQuestions)return <Spinner>instructions</Spinner>
 
 	return (
 		<div className='mt-3'>
@@ -48,7 +44,7 @@ export default function TestInstructions() {
 				>
 					Run test
 				</Button>
-				{testQuestions.length>0 && (
+				{testQuestions?.length>0 && (
 					<Button
 						onClick={handleResetTest}
 						style={{
