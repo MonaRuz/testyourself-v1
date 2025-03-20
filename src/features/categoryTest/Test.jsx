@@ -34,21 +34,11 @@ export default function Test() {
 
 	const [testQuestions, setTestQuestions] = useState(questionsData)
 
-	if (!questionsData || questionsData.length === 0) {
-		setTestQuestions(questions)
-		updateTestQuestions(questions, category)
-	}
-
 	//correctAttemps
 
 	const correctAttemptsData = JSON.parse(getCorrectAttempts(category))
 
 	const [correctAttempts, setCorrectAttempts] = useState(correctAttemptsData)
-
-	if (correctAttemptsData === null || questionsData.length === 0) {
-		setCorrectAttempts(0)
-		updateCorrectAttempts(correctAttempts, category)
-	}
 
 	//wrongAttempts
 
@@ -56,7 +46,13 @@ export default function Test() {
 
 	const [wrongAttempts, setWrongAttempts] = useState(wrongAttemptsData)
 
-	if (wrongAttemptsData === null || questionsData.length === 0) {
+	//setting new test in localstorage
+
+	if (questionsData === null) {
+		setTestQuestions(questions)
+		updateTestQuestions(questions, category)
+		setCorrectAttempts(0)
+		updateCorrectAttempts(correctAttempts, category)
 		setWrongAttempts(0)
 		updateWrongAttempts(wrongAttempts, category)
 	}
@@ -67,22 +63,15 @@ export default function Test() {
 
 	const randomIndex = getRandomIndex(testQuestions?.length)
 
-
 	//in first render this is NaN and filtering is not functioning
-	const [currentQuestion, setCurrentQuestion] = useState(
-		questions[randomIndex]
-	)
-
-
-
-
+	const [currentQuestion, setCurrentQuestion] = useState(questions[randomIndex])
 
 	const allCategoryQuestions = questions?.length
 
-	const percentage = Math.floor((correctAttempts / allCategoryQuestions) * 100 -
-	(wrongAttempts / allCategoryQuestions) * 100)
-		
-
+	const percentage = Math.floor(
+		(correctAttempts / allCategoryQuestions) * 100 -
+			(wrongAttempts / allCategoryQuestions) * 100
+	)
 
 	//handlers
 
@@ -99,25 +88,31 @@ export default function Test() {
 		setCorrectAttempts(correctAttempts + 1)
 		setCurrentQuestion(testQuestions[randomIndex])
 		updateCorrectAttempts(correctAttempts + 1, category)
-		
+
 		setIsOpenAnswer(false)
-		
 	}
 
 	function handleBackButton() {
 		navigate(`/${category}/test/instructions`)
 	}
 
-	useEffect(function(){
-		updateTestQuestions(testQuestions, category)
-		setCurrentQuestion(testQuestions[randomIndex])
-	},[testQuestions, category])
-	
+	useEffect(
+		function () {
+			updateTestQuestions(testQuestions, category)
+			setCurrentQuestion(testQuestions[randomIndex])
+		},
+		[testQuestions, category]
+	)
 
 	if (isLoadingCategory || isLoadingQuestions) return <Spinner>test</Spinner>
 
-	if (correctAttempts  === questions.length)
-		return <Results selectedCategory={selectedCategory} percentage={percentage}/>
+	if (correctAttempts === questions.length)
+		return (
+			<Results
+				selectedCategory={selectedCategory}
+				percentage={percentage}
+			/>
+		)
 
 	return (
 		<div>
