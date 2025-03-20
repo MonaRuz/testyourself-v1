@@ -1,24 +1,23 @@
-import Spinner from "../../components/Spinner"
 import { useQuestions } from "../questions/useQuestions"
 import {
 	getCorrectAttempts,
 	getWrongAttempts,
 } from "../../services/localStorageFunctions"
 import PropTypes from "prop-types"
+import Spinner from "../../components/Spinner"
 
 export default function CategoryStats({ selectedCategory }) {
 	const { id, highscore, category } = selectedCategory
 	const { isLoadingQuestions, questions } = useQuestions(id)
 	const allCategoryQuestions = questions?.length
+
 	const correctAttempts = JSON.parse(getCorrectAttempts(category))
 	const wrongAttempts = JSON.parse(getWrongAttempts(category))
+	
 	const percentage = Math.floor(
 		(correctAttempts / allCategoryQuestions) * 100 -
 			(wrongAttempts / allCategoryQuestions) * 100
 	)
-
-	console.log(typeof(category));
-	
 
 	if (isLoadingQuestions) return <Spinner>category statistics</Spinner>
 
