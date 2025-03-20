@@ -13,8 +13,8 @@ export function useNewCategory(){
 			})
 			
 		},
-		//debug:
-		onError: (err) => toast.error(err.message),
+		//debug: category will succesfuly uploade, but throw error first
+		// onError: (err) => toast.error(err.message),
 	})
     return{createCategory}
 }

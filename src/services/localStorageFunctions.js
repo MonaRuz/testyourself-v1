@@ -43,7 +43,7 @@ export function getWrongAttempts(category) {
 //reset test
 
 export function resetTest(category) {
-	updateTestQuestions(null, category)
-	updateCorrectAttempts(null, category)
-	updateWrongAttempts(null,category)
+	localStorage.clear(`currentQuestions_${category}`)
+	localStorage.clear(`correctAttempts_${category}`)
+	localStorage.clear(`wrongAttempts_${category}`)
 }
