@@ -1,7 +1,7 @@
-import { useNavigate } from "react-router-dom"
 import useCategories from "./useCategories"
 import Spinner from "../../components/Spinner"
 import Error from "../../components/Error"
+import { useNavigate } from "react-router-dom"
 
 export default function CategoriesList() {
 	const navigate = useNavigate()

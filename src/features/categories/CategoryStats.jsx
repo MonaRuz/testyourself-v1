@@ -1,10 +1,10 @@
-import { useQuestions } from "../questions/useQuestions"
-// import {  useState } from "react"
 import Spinner from "../../components/Spinner"
+import { useQuestions } from "../questions/useQuestions"
 import {
 	getCorrectAttempts,
 	getWrongAttempts,
 } from "../../services/localStorageFunctions"
+import PropTypes from "prop-types"
 
 export default function CategoryStats({ selectedCategory }) {
 	const { id, highscore, category } = selectedCategory
@@ -16,6 +16,9 @@ export default function CategoryStats({ selectedCategory }) {
 		(correctAttempts / allCategoryQuestions) * 100 -
 			(wrongAttempts / allCategoryQuestions) * 100
 	)
+
+	console.log(typeof(category));
+	
 
 	if (isLoadingQuestions) return <Spinner>category statistics</Spinner>
 
@@ -52,4 +55,11 @@ export default function CategoryStats({ selectedCategory }) {
 			</table>
 		</div>
 	)
+}
+
+CategoryStats.propTypes={
+	selectedCategory:PropTypes.object,
+	id:PropTypes.string,
+	highscore:PropTypes.number,
+	category:PropTypes.string
 }

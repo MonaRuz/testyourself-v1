@@ -7,7 +7,7 @@ export default function Login() {
 	function handleLogin(e) {
 		e.preventDefault()
 		navigate("/dashboard")
-		//code for logging in and redirect to dashboard
+		//code for logging in and redirect to dashboard 
 	}
 	//write some message for unsuccessful logging
 	return (
