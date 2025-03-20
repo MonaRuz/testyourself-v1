@@ -53,17 +53,7 @@ export default function Test() {
 		updateWrongAttempts(wrongAttempts, category)
 	}
 
-
-
-	
-
-	// export default function ProductPage({ productId, referrer, theme }) {
-	// 	const handleSubmit = useCallback((orderDetails) => {
-	// 	  post('/product/' + productId + '/buy', {
-	// 		referrer,
-	// 		orderDetails,
-	// 	  });
-	// 	}, [productId, referrer]);
+	//getting random question
 
 	const getRandomIndex = useCallback((max) => {
 		const min = Math.ceil(0)
@@ -71,16 +61,15 @@ export default function Test() {
 		return Math.floor(Math.random() * (max - min) + min)
 	}, [])
 
-	const randomIndex = getRandomIndex(testQuestions?.length)
+	const randomIndex = getRandomIndex(testQuestions.length)
 
-	//in first render this is NaN and filtering is not functioning
 	const [currentQuestion, setCurrentQuestion] = useState(questions[randomIndex])
 
-	const allCategoryQuestions = questions?.length
+
 
 	const percentage = Math.floor(
-		(correctAttempts / allCategoryQuestions) * 100 -
-			(wrongAttempts / allCategoryQuestions) * 100
+		(correctAttempts / questions.length) * 100 -
+			(wrongAttempts / questions.length) * 100
 	)
 
 	//handlers
@@ -127,7 +116,7 @@ export default function Test() {
 	return (
 		<div>
 			<Progressbar
-				allCategoryQuestions={allCategoryQuestions}
+				allCategoryQuestions={questions.length}
 				progress={correctAttempts + 1}
 				percentage={percentage}
 			/>
