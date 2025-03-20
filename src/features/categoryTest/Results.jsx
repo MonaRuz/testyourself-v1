@@ -1,9 +1,10 @@
 import { useNavigate, useParams } from "react-router-dom"
-import Button from "../../components/Button"
-import useHighscore from "./useHighscore"
 import { resetTest } from "../../services/localStorageFunctions"
+import PropTypes from "prop-types"
+import useHighscore from "./useHighscore"
+import Button from "../../components/Button"
 
-export default function Results({ selectedCategory,percentage }) {
+export default function Results({ selectedCategory, percentage }) {
 	const { category } = useParams()
 	const navigate = useNavigate()
 
@@ -11,9 +12,6 @@ export default function Results({ selectedCategory,percentage }) {
 	const savedHighscore = selectedCategory?.highscore
 
 	const { updateHighscore } = useHighscore(category)
-
-	console.log(savedHighscore,percentage);
-	
 
 	function handleBackButton() {
 		navigate(`/${category}/overview`)
@@ -26,7 +24,6 @@ export default function Results({ selectedCategory,percentage }) {
 		if (savedHighscore < percentage)
 			updateHighscore({ selectedCategoryId, percentage })
 		navigate(`/${category}/test/instructions`)
-		
 	}
 
 	return (
@@ -63,4 +60,9 @@ export default function Results({ selectedCategory,percentage }) {
 			</div>
 		</div>
 	)
+}
+
+Results.propTypes = {
+	selectedCategory: PropTypes.object,
+	percentage: PropTypes.number,
 }
