@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 
 export default function Error({errorMessage}) {
   return (
@@ -7,4 +8,8 @@ export default function Error({errorMessage}) {
         </p>
     </div>
   )
+}
+
+Error.propTypes={
+  errorMessage:PropTypes.string
 }
