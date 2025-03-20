@@ -12,21 +12,22 @@ import {
 export default function TestInstructions() {
 	const navigate = useNavigate()
 	const { category } = useParams()
-	console.log(category);
-	
-		
+
 	const { isLoadingCategory, selectedCategory } = useCategory(category)
 
 	const { isLoadingQuestions, questions } = useQuestions(selectedCategory?.id)
 
-	const [testQuestions,setTestQuestions] = useState(JSON.parse(getTestQuestions(category)))
+	const [testQuestions, setTestQuestions] = useState(
+		JSON.parse(getTestQuestions(category))
+	)
 
 	function handleResetTest() {
 		resetTest(category)
 		setTestQuestions([])
 	}
 
-	if (isLoadingCategory || isLoadingQuestions)return <Spinner>instructions</Spinner>
+	if (isLoadingCategory || isLoadingQuestions)
+		return <Spinner>instructions</Spinner>
 
 	return (
 		<div className='mt-3'>
@@ -46,7 +47,7 @@ export default function TestInstructions() {
 				>
 					Run test
 				</Button>
-				{testQuestions?.length>0 && (
+				{testQuestions?.length > 0 && (
 					<Button
 						onClick={handleResetTest}
 						style={{

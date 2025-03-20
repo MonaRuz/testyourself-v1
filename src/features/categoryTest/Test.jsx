@@ -10,7 +10,6 @@ import {
 	updateWrongAttempts,
 	updateTestQuestions,
 } from "../../services/localStorageFunctions"
-import { getRandomIndex } from "../../utilities/helpers"
 import Progressbar from "./Progressbar"
 import TestQuestion from "./TestQuestion"
 import Spinner from "../../components/Spinner"
