@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { useCategory } from "../categories/useCategory"
 import { useQuestions } from "../questions/useQuestions"
@@ -61,6 +61,20 @@ export default function Test() {
 
 	const [isOpenAnswer, setIsOpenAnswer] = useState(false)
 
+	// export default function ProductPage({ productId, referrer, theme }) {
+	// 	const handleSubmit = useCallback((orderDetails) => {
+	// 	  post('/product/' + productId + '/buy', {
+	// 		referrer,
+	// 		orderDetails,
+	// 	  });
+	// 	}, [productId, referrer]);
+
+	const getRandomIndex = useCallback((max) => {
+		const min = Math.ceil(0)
+		max = Math.floor(max)
+		return Math.floor(Math.random() * (max - min) + min)
+	}, [])
+
 	const randomIndex = getRandomIndex(testQuestions?.length)
 
 	//in first render this is NaN and filtering is not functioning
@@ -100,8 +114,9 @@ export default function Test() {
 		function () {
 			updateTestQuestions(testQuestions, category)
 			setCurrentQuestion(testQuestions[randomIndex])
+			
 		},
-		[testQuestions, category]
+		[testQuestions, category,randomIndex]
 	)
 
 	if (isLoadingCategory || isLoadingQuestions) return <Spinner>test</Spinner>
