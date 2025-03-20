@@ -26,28 +26,25 @@ export default function Test() {
 
 	const { isLoadingQuestions, questions } = useQuestions(selectedCategory?.id)
 
-	//getting data from local storage
-	//testQuestions
+	//states
 
-	const questionsData = JSON.parse(getTestQuestions(category))
+	const [isOpenAnswer, setIsOpenAnswer] = useState(false)
 
-	const [testQuestions, setTestQuestions] = useState(questionsData)
+	const [testQuestions, setTestQuestions] = useState(
+		JSON.parse(getTestQuestions(category))
+	)
 
-	//correctAttemps
+	const [correctAttempts, setCorrectAttempts] = useState(
+		JSON.parse(getCorrectAttempts(category))
+	)
 
-	const correctAttemptsData = JSON.parse(getCorrectAttempts(category))
-
-	const [correctAttempts, setCorrectAttempts] = useState(correctAttemptsData)
-
-	//wrongAttempts
-
-	const wrongAttemptsData = JSON.parse(getWrongAttempts(category))
-
-	const [wrongAttempts, setWrongAttempts] = useState(wrongAttemptsData)
+	const [wrongAttempts, setWrongAttempts] = useState(
+		JSON.parse(getWrongAttempts(category))
+	)
 
 	//setting new test in localstorage
 
-	if (questionsData === null) {
+	if (testQuestions === null) {
 		setTestQuestions(questions)
 		updateTestQuestions(questions, category)
 		setCorrectAttempts(0)
@@ -56,9 +53,9 @@ export default function Test() {
 		updateWrongAttempts(wrongAttempts, category)
 	}
 
-	//states
 
-	const [isOpenAnswer, setIsOpenAnswer] = useState(false)
+
+	
 
 	// export default function ProductPage({ productId, referrer, theme }) {
 	// 	const handleSubmit = useCallback((orderDetails) => {
@@ -113,9 +110,8 @@ export default function Test() {
 		function () {
 			updateTestQuestions(testQuestions, category)
 			setCurrentQuestion(testQuestions[randomIndex])
-			
 		},
-		[testQuestions, category,randomIndex]
+		[testQuestions, category, randomIndex]
 	)
 
 	if (isLoadingCategory || isLoadingQuestions) return <Spinner>test</Spinner>
