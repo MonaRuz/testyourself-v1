@@ -20,7 +20,6 @@ export default function Results({ selectedCategory,percentage }) {
 	}
 
 	function handleResetButton() {
-		// resetTestQuestions()
 		resetTest(category)
 		navigate(`/${category}/test/instructions`)
 		if (savedHighscore < percentage)

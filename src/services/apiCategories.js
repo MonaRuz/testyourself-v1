@@ -43,22 +43,14 @@ export async function getCategory(category) {
 	return selectedCategory
 }
 
-
 //debug:
-export async function createCategory(newCategory){
-
-	
-	try{
-		await addDoc(collection(db,"categories"),{
-			attempts:0,
-			category:newCategory,
-			currentScore:0,
-			highscore:0,
-			progress:0,
-			questionsAmount:0
+export async function createCategory(newCategory) {
+	try {
+		await addDoc(collection(db, "categories"), {
+			category: newCategory,
+			highscore: 0
 		})
-		
-	}catch(err){
+	} catch (err) {
 		console.error(err)
 		throw new Error("New category was not created")
 	}
@@ -66,13 +58,11 @@ export async function createCategory(newCategory){
 }
 
 export async function deleteCategory(categoryId) {
-	try{
+	try {
 		await deleteDoc(doc(db, "categories", categoryId))
 		return categoryId
-	}catch(err){
+	} catch (err) {
 		console.error(err)
 		throw new Error("Category was not deleted")
 	}
-	
 }
-
