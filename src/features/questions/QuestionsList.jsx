@@ -17,7 +17,7 @@ export default function QuestionsList({ selectedCategory }) {
 						.includes(searchedExpression.toLowerCase())
 			  )
 			: questions
-
+//add sorting
 	if (isLoadingQuestions) return <Spinner>Category overview</Spinner>
 	if (questions?.length === 0)
 		return (

@@ -1,29 +1,25 @@
-import { useNavigate, useParams } from "react-router-dom"
-import Button from "../../components/Button"
-import {useCategory} from "../categories/useCategory"
-import { useForm } from "react-hook-form"
 import { useEffect } from "react"
-import { useEditQuestion } from "./useEditQuestion"
-import Spinner from "../../components/Spinner"
+import { useNavigate, useParams } from "react-router-dom"
+import { useForm } from "react-hook-form"
+import { useCategory } from "../categories/useCategory"
 import { useQuestion } from "./useQuestion"
+import { useEditQuestion } from "./useEditQuestion"
+import Button from "../../components/Button"
+import Spinner from "../../components/Spinner"
 
 export default function EditQuestion() {
 	const navigate = useNavigate()
 	const param = useParams()
 
-	
-
 	const { isLoading: isLoadingCategory, selectedCategory } = useCategory(
 		param.category
 	)
-
-
-	const categoryId = selectedCategory?.id
-	const questionId = param.questionID
-
 	const { isEditing, editQuestion } = useEditQuestion()
 
-	const{isLoadingQuestion,question}=useQuestion(categoryId,questionId)
+	const categoryId = selectedCategory.id
+	const questionId = param.questionID
+
+	const { isLoadingQuestion, question } = useQuestion(categoryId, questionId)
 
 	const { register, handleSubmit, reset } = useForm({
 		defaultValues: {
@@ -32,11 +28,15 @@ export default function EditQuestion() {
 		},
 	})
 
-
 	function handleEditQuestion(editedQuestion) {
-		editQuestion({ categoryId, questionId, editedQuestion },{onSuccess:()=>{
-			navigate(`/${selectedCategory?.category}/overview`)
-		}})
+		editQuestion(
+			{ categoryId, questionId, editedQuestion },
+			{
+				onSuccess: () => {
+					navigate(`/${selectedCategory?.category}/overview`)
+				},
+			}
+		)
 	}
 
 	useEffect(
@@ -48,8 +48,6 @@ export default function EditQuestion() {
 		},
 		[question?.question, question?.answer, reset]
 	)
-
-	
 
 	if (isLoadingCategory || isLoadingQuestion)
 		return <Spinner>Question editor</Spinner>
@@ -85,9 +83,7 @@ export default function EditQuestion() {
 						<Button
 							type='submit'
 							disabled={isEditing}
-							onClick={() =>
-								navigate(`/${selectedCategory?.category}/overview`)
-							}
+							onClick={() => navigate(`/${selectedCategory.category}/overview`)}
 							style={{
 								backgroundColor: "rgb(254 240 138)",
 								width: "250px",
