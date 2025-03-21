@@ -1,6 +1,6 @@
+import { useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import Button from "../../components/Button"
-import { useState } from "react"
 import { useQuestions } from "../questions/useQuestions"
 import { useCategory } from "../categories/useCategory"
 import Spinner from "../../components/Spinner"

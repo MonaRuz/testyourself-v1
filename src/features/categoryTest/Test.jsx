@@ -61,7 +61,7 @@ export default function Test() {
 		return Math.floor(Math.random() * (max - min) + min)
 	}, [])
 
-	const randomIndex = getRandomIndex(testQuestions.length)
+	const randomIndex = getRandomIndex(testQuestions?.length)
 
 	const [currentQuestion, setCurrentQuestion] = useState(questions[randomIndex])
 
@@ -123,8 +123,8 @@ export default function Test() {
 				percentage={percentage}
 			/>
 			<TestQuestion
-				question={currentQuestion.question}
-				answer={currentQuestion.answer}
+				question={currentQuestion?.question}
+				answer={currentQuestion?.answer}
 				isOpenAnswer={isOpenAnswer}
 			/>
 			<div className='flex flex-col justify-center items-center'>

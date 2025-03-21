@@ -1,4 +1,7 @@
+import PropTypes from "prop-types"
+
 export default function TestQuestion({ question, answer, isOpenAnswer }) {
+	
 	return (
 		<div className='max-w-3xl m-auto'>
 			<div>
@@ -17,4 +20,10 @@ export default function TestQuestion({ question, answer, isOpenAnswer }) {
 			)}
 		</div>
 	)
+}
+
+TestQuestion.propTypes={
+	question:PropTypes.string,
+	answer:PropTypes.string,
+	isOpenAnswer:PropTypes.bool
 }
