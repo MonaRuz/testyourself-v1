@@ -1,10 +1,12 @@
 import { useState } from "react"
 import { useQuestions } from "./useQuestions"
-import Question from "./Question"
+import PropTypes from "prop-types"
 import Spinner from "../../components/Spinner"
 import Error from "../../components/Error"
+import Question from "./Question"
 
 export default function QuestionsList({ selectedCategory }) {
+	
 	const [searchedExpression, setSearchedExpression] = useState()
 
 	const { isLoadingQuestions, questions } = useQuestions(selectedCategory?.id)
@@ -52,4 +54,8 @@ export default function QuestionsList({ selectedCategory }) {
 			</ul>
 		</div>
 	)
+}
+
+QuestionsList.propTypes={
+	selectedCategory:PropTypes.object
 }
