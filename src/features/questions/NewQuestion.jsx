@@ -1,16 +1,16 @@
 import { useNavigate, useParams } from "react-router-dom"
-import Button from "../../components/Button"
 import { useForm } from "react-hook-form"
-import Spinner from "../../components/Spinner"
 import { useCategory } from "../categories/useCategory"
 import { useNewQuestion } from "./useNewQuestion"
+import Button from "../../components/Button"
+import Spinner from "../../components/Spinner"
 
 export default function NewQuestion() {
 	const navigate = useNavigate()
 	const { category } = useParams()
 
 	const { isLoadingCategory, selectedCategory } = useCategory(category)
-	const selectedCategoryId = selectedCategory?.id
+	const selectedCategoryId = selectedCategory.id
 
 	const { register, handleSubmit, reset, formState } = useForm()
 
