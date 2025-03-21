@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom"
 import Button from "../components/Button"
 import CategoriesList from "../features/categories/CategoriesList"
+
 export default function Dashboard() {
-	
-  const navigate=useNavigate()
+	const navigate = useNavigate()
 	return (
 		<div>
 			<p className='text-blue-200 text-center pt-4 text-sm md:text-lg'>
@@ -11,7 +11,7 @@ export default function Dashboard() {
 			</p>
 			<div className='flex my-5 md:my-10'>
 				<Button
-        onClick={()=>navigate("/new-category")}
+					onClick={() => navigate("/new-category")}
 					style={{
 						backgroundColor: "#88FFB6",
 						width: "250px",
@@ -23,9 +23,7 @@ export default function Dashboard() {
 					New category
 				</Button>
 			</div>
-        <CategoriesList/>
+			<CategoriesList />
 		</div>
 	)
 }
-
-

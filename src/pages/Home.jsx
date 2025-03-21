@@ -1,9 +1,11 @@
+/* eslint-disable react/no-unescaped-entities */
 import { useNavigate } from "react-router-dom"
 import { MdOutlineSchool } from "react-icons/md"
 import Button from "../components/Button"
 import Logo from "../components/Logo"
 
 export default function Home() {
+	
 	const navigate = useNavigate()
 
 	return (
