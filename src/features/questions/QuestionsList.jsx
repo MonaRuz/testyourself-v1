@@ -9,19 +9,19 @@ export default function QuestionsList({ selectedCategory }) {
 	
 	const [searchedExpression, setSearchedExpression] = useState()
 
-	const { isLoadingQuestions, questions } = useQuestions(selectedCategory?.id)
+	const { isLoadingQuestions, questions } = useQuestions(selectedCategory.id)
 
 	const searchedQuestions =
 		searchedExpression?.length > 0
-			? questions?.filter((question) =>
+			? questions.filter((question) =>
 					`${question.question}`
 						.toLowerCase()
 						.includes(searchedExpression.toLowerCase())
-			  )
+			)
 			: questions
 //add sorting
 	if (isLoadingQuestions) return <Spinner>Category overview</Spinner>
-	if (questions?.length === 0)
+	if (questions.length === 0)
 		return (
 			<Error
 				className='text-red-300 mt-3'
