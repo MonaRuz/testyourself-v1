@@ -65,11 +65,9 @@ export default function Test() {
 
 	const [currentQuestion, setCurrentQuestion] = useState(questions[randomIndex])
 
-
-
 	const percentage = Math.floor(
 		(correctAttempts / questions.length) * 100 -
-			(wrongAttempts / questions.length) * 100
+		(wrongAttempts / questions.length) * 100
 	)
 
 	//handlers
@@ -95,6 +93,8 @@ export default function Test() {
 		navigate(`/${category}/test/instructions`)
 	}
 
+	//useEffect for getting random question at first render
+
 	useEffect(
 		function () {
 			updateTestQuestions(testQuestions, category)
@@ -102,6 +102,8 @@ export default function Test() {
 		},
 		[testQuestions, category, randomIndex]
 	)
+
+	//return
 
 	if (isLoadingCategory || isLoadingQuestions) return <Spinner>test</Spinner>
 
@@ -121,8 +123,8 @@ export default function Test() {
 				percentage={percentage}
 			/>
 			<TestQuestion
-				question={currentQuestion?.question}
-				answer={currentQuestion?.answer}
+				question={currentQuestion.question}
+				answer={currentQuestion.answer}
 				isOpenAnswer={isOpenAnswer}
 			/>
 			<div className='flex flex-col justify-center items-center'>
