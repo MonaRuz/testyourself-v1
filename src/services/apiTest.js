@@ -1,11 +1,5 @@
 import {
 	arrayUnion,
-	collection,
-	addDoc,
-	getDocs,
-	query,
-	setDoc,
-	where,
 	updateDoc,
 	doc,
 	getDoc,
@@ -29,7 +23,6 @@ export async function getCorrectAnsweredIds(categoryId) {
 
 export async function updateCorrectAnsweredIds(categoryId, currentQuestionId) {
 	const qRef = doc(db, "categories", categoryId)
-	// console.log(categoryId,currentQuestionId);
 
 	try {
 		await updateDoc(qRef, {
@@ -56,8 +49,6 @@ export async function updateHighscore(categoryId, percentage) {
 }
 
 export async function updateCorrectAnswers(categoryId, correctAnswers) {
-	// console.log(categoryId,correctAnswers);
-
 	const qRef = doc(db, "categories", categoryId)
 	try {
 		await updateDoc(qRef, {
@@ -71,8 +62,6 @@ export async function updateCorrectAnswers(categoryId, correctAnswers) {
 }
 
 export async function updateWrongAnswers(categoryId, wrongAnswers) {
-	// console.log(categoryId,wrongAnswers);
-
 	const qRef = doc(db, "categories", categoryId)
 	try {
 		await updateDoc(qRef, {

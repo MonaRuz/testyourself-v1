@@ -7,7 +7,7 @@ export default function CategoriesList() {
 	const navigate = useNavigate()
 
 	const { isLoading, categories } = useCategories()
-
+	
 	if (isLoading) return <Spinner>Categories</Spinner>
 
 	if (categories?.length === 0)

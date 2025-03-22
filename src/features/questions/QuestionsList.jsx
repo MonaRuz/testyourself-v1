@@ -6,10 +6,11 @@ import Error from "../../components/Error"
 import Question from "./Question"
 
 export default function QuestionsList({ selectedCategory }) {
-	
 	const [searchedExpression, setSearchedExpression] = useState()
 
 	const { isLoadingQuestions, questions } = useQuestions(selectedCategory.id)
+
+	//searching questions
 
 	const searchedQuestions =
 		searchedExpression?.length > 0
@@ -17,9 +18,24 @@ export default function QuestionsList({ selectedCategory }) {
 					`${question.question}`
 						.toLowerCase()
 						.includes(searchedExpression.toLowerCase())
-			)
+			  )
 			: questions
-//add sorting
+
+	//sorting questions
+
+	searchedQuestions?.sort((a, b) => {
+		const questionA = a.question?.toUpperCase()
+		const questionB = b.question?.toUpperCase()
+		if (questionA < questionB) {
+			return -1
+		}
+		if (questionA > questionB) {
+			return 1
+		}
+
+		return 0
+	})
+
 	if (isLoadingQuestions) return <Spinner>Category overview</Spinner>
 	if (questions.length === 0)
 		return (
@@ -56,6 +72,6 @@ export default function QuestionsList({ selectedCategory }) {
 	)
 }
 
-QuestionsList.propTypes={
-	selectedCategory:PropTypes.object
+QuestionsList.propTypes = {
+	selectedCategory: PropTypes.object,
 }
