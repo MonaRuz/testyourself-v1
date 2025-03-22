@@ -22,14 +22,28 @@ export default function Results({ selectedCategory, percentage }) {
 
 	return (
 		<div>
+			
 			<h3 className='text-purple-200 border-y border-purple-200 text-lg pb-1 text-center mt-5'>
 				Test success in category <br></br> React - beginner :
 			</h3>
-			<div className='flex justify-center items-center mt-10'>
+			<div>
+				{savedHighscore >= percentage && (
+					<h1 className="text-red-200 text-center text-lg mt-10">
+						Your highscore was <span>{savedHighscore} %</span>
+					</h1>
+				)}
+				{savedHighscore < percentage && (
+					<h1 className="text-green-200 text-center text-lg mt-10">
+						Your new highscore!
+					</h1>
+				)}
+			</div>
+			<div className='flex justify-center items-center'>
 				<h1 className='text-blue-200 text-6xl mt-14'>
 					{percentage >= 0 ? percentage : 0} %
 				</h1>
 			</div>
+			
 			<div className='flex justify-center items-center mt-16 gap-2'>
 				<Button
 					onClick={handleResetButton}
