@@ -13,12 +13,6 @@ export default function Results({ selectedCategory, percentage }) {
 
 	const { updateHighscore } = useHighscore(category)
 
-	function handleBackButton() {
-		navigate(`/${category}/overview`)
-		if (savedHighscore < percentage)
-			updateHighscore({ selectedCategoryId, percentage })
-	}
-
 	function handleResetButton() {
 		resetTest(category)
 		if (savedHighscore < percentage)
@@ -32,20 +26,11 @@ export default function Results({ selectedCategory, percentage }) {
 				Test success in category <br></br> React - beginner :
 			</h3>
 			<div className='flex justify-center items-center mt-10'>
-				<h1 className='text-blue-200 text-6xl mt-14 ml-10'>{percentage} %</h1>
+				<h1 className='text-blue-200 text-6xl mt-14'>
+					{percentage >= 0 ? percentage : 0} %
+				</h1>
 			</div>
 			<div className='flex justify-center items-center mt-16 gap-2'>
-				<Button
-					onClick={handleBackButton}
-					style={{
-						backgroundColor: "rgb(254 240 138)",
-						width: "133px",
-						height: "40px",
-						fontFamily: "kanit",
-					}}
-				>
-					Back
-				</Button>
 				<Button
 					onClick={handleResetButton}
 					style={{
@@ -55,7 +40,7 @@ export default function Results({ selectedCategory, percentage }) {
 						fontFamily: "kanit",
 					}}
 				>
-					Restart
+					Restart test
 				</Button>
 			</div>
 		</div>

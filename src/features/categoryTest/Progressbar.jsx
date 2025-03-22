@@ -19,7 +19,7 @@ export default function Progressbar({
 				<p>
 					Progress: {progress} / {allCategoryQuestions}
 				</p>
-				<p>Current score: {percentage} %</p>
+				<p>Current score: {percentage>=0?percentage:0} %</p>
 			</div>
 		</div>
 	)

@@ -13,6 +13,8 @@ export default function CategoryStats({ selectedCategory }) {
 
 	const correctAttempts = JSON.parse(getCorrectAttempts(category))
 	const wrongAttempts = JSON.parse(getWrongAttempts(category))
+
+
 	
 	const percentage = Math.floor(
 		(correctAttempts / allCategoryQuestions) * 100 -
@@ -43,7 +45,7 @@ export default function CategoryStats({ selectedCategory }) {
 					<tr>
 						<th className='text-blue-200 font-normal'>Current score:</th>
 						<th className='text-yellow-200 font-normal'>
-							{percentage ? percentage : 0} %
+							{percentage && percentage>=0 ? percentage : 0 } %
 						</th>
 					</tr>
 					<tr>
