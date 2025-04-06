@@ -1,43 +1,28 @@
-import { useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
+import { useState } from "react"
+import PropTypes, { bool } from "prop-types"
 import Button from "../../components/Button"
-import { useQuestions } from "../questions/useQuestions"
-import { useCategory } from "../categories/useCategory"
-import Spinner from "../../components/Spinner"
-import {
-	getTestQuestions,
-	resetTest,
-} from "../../services/localStorageFunctions"
 
-export default function TestInstructions() {
+export default function TestInstructions({ dispatch, questions, savedTest }) {
 	const navigate = useNavigate()
 	const { category } = useParams()
-
-	const { isLoadingCategory, selectedCategory } = useCategory(category)
-
-	const { isLoadingQuestions, questions } = useQuestions(selectedCategory?.id)
-
-	const [testQuestions, setTestQuestions] = useState(
-		JSON.parse(getTestQuestions(category))
-	)
+	const [isSavedTest, setIsSavedTest] = useState(savedTest)
 
 	function handleResetTest() {
-		resetTest(category)
-		setTestQuestions([])
+		localStorage.removeItem(`savedTest_${category}`)
+		dispatch({ type: "newQuestions", payload: questions })
+		setIsSavedTest(false)
 	}
-
-	if (isLoadingCategory || isLoadingQuestions)
-		return <Spinner>instructions</Spinner>
 
 	return (
 		<div className='mt-3'>
 			<h3 className='text-center text-purple-300 border-b border-purple-300 mb-3 pb-1'>
 				Test in category <span className='text-green-200'>{category}</span>{" "}
-				<span className='text-purple-100'>- {questions.length} questions</span>
+				<span className='text-purple-100'>- {questions.lenght} questions</span>
 			</h3>
 			<div className='flex flex-col gap-1 items-center'>
 				<Button
-					onClick={() => navigate(`/${category}/test/running-test`)}
+					onClick={() => dispatch({ type: "startTest" })}
 					style={{
 						backgroundColor: "#88FFB6",
 						width: "250px",
@@ -47,7 +32,7 @@ export default function TestInstructions() {
 				>
 					Run test
 				</Button>
-				{testQuestions?.length > 0 && (
+				{isSavedTest && (
 					<Button
 						onClick={handleResetTest}
 						style={{
@@ -74,35 +59,43 @@ export default function TestInstructions() {
 			</div>
 
 			<h3 className='text-center text-purple-300 border-y border-purple-300 m-3 pb-1'>
-				Instructions
+				Instructions:
 			</h3>
 			<div className='mx-4 px-4 bg-zinc-900 '>
 				<ol className='list-disc  pb-5 px-4 pt-3'>
 					<li className='text-blue-200 text-sm sm:text-base '>
-						Try to answer the question as accurately as possible
+						Try to answer the question as accurately as possible by your own
+						words or write it.
 					</li>
 
 					<li className='text-blue-200  text-sm sm:text-base'>
-						Reveal your preset correct answer and compare it to your current
-						answer.
+						Reveal your preset correct answer by click on SHOW ANSWER button and
+						compare it to your current answer.
 					</li>
 
 					<li className='text-blue-200  text-sm sm:text-base'>
-						Rate the correctness of your answer.
+						Rate the correctness of your answer by click on WRONG or CORRECT
+						button.
 					</li>
 
 					<li className='text-blue-200  text-sm sm:text-base'>
 						If you answer a question incorrectly, the test will repeat the
-						question until you answer it correctly.
+						question until your answer will be correct.
 					</li>
 
 					<li className='text-blue-200  text-sm sm:text-base'>
-						Your progress will be saved. If you interrupt the test, you can
-						return to it later. You can also restart the test at any time.
+						Output of this test will be percentual success based on the ratio of
+						correct and incorrect answers. Your best results will be saved.
+					</li>
+
+					<li className='text-blue-200  text-sm sm:text-base'>
+						Your progress could be saved. If you want interrupt the test, click
+						on SAVE TEST button. You can also restart the test at any time in
+						this page.
 					</li>
 					<li className='text-blue-200  text-sm sm:text-base'>
 						Do not delete history of your browser, if you want save test in
-						progress! Test is saved in your browser localstorage.
+						progress! Test will be saved in your browser localstorage.
 					</li>
 
 					<li className='text-blue-200  text-sm sm:text-base'>
@@ -112,4 +105,10 @@ export default function TestInstructions() {
 			</div>
 		</div>
 	)
+}
+
+TestInstructions.propTypes = {
+	dispatch: PropTypes.func,
+	questions: PropTypes.array,
+	savedTest: bool,
 }

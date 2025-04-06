@@ -24,7 +24,7 @@ export default function CategoryOverview() {
 			<div className='flex flex-col items-center lg:flex-row justify-center gap-2 lg:m-10'>
 				<div className='flex gap-2'>
 					<Button
-						onClick={() => navigate(`/${category}/test/instructions`)}
+						onClick={() => navigate(`/${category}/test`)}
 						style={{
 							backgroundColor: "#88FFB6",
 							width: "133px",

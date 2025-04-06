@@ -16,7 +16,7 @@ import NewQuestion from "./features/questions/NewQuestion"
 import Test from "./features/categoryTest/Test"
 import NewCategory from "./features/categories/NewCategory"
 import Results from "./features/categoryTest/Results"
-import TestInstructions from "./features/categoryTest/TestInstructions"
+// import TestInstructions from "./features/categoryTest/TestInstructions"
 import DeleteCategory from "./features/categories/DeleteCategory"
 
 export default function App() {
@@ -72,15 +72,11 @@ export default function App() {
 								path='new-question'
 								element={<NewQuestion />}
 							/>
-							<Route path='test'>
-								<Route
+							<Route path='test' element={<Test/>}>
+								{/* <Route
 									path='instructions'
 									element={<TestInstructions />}
-								/>
-								<Route
-									path='running-test'
-									element={<Test />}
-								/>
+								/> */}
 								<Route
 									path='results'
 									element={<Results />}

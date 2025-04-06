@@ -1,109 +1,144 @@
-import { useCallback, useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { useEffect, useReducer} from "react"
+import { useParams, useNavigate } from "react-router-dom"
 import { useCategory } from "../categories/useCategory"
 import { useQuestions } from "../questions/useQuestions"
-import {
-	getCorrectAttempts,
-	getTestQuestions,
-	getWrongAttempts,
-	updateCorrectAttempts,
-	updateWrongAttempts,
-	updateTestQuestions,
-} from "../../services/localStorageFunctions"
+import { getSavedTest } from "../../services/localStorageFunctions"
+import { saveTestQuestions } from "../../services/localStorageFunctions"
 import Progressbar from "./Progressbar"
 import TestQuestion from "./TestQuestion"
 import Spinner from "../../components/Spinner"
 import Button from "../../components/Button"
 import Results from "../categoryTest/Results"
+import TestInstructions from "./TestInstructions"
 
-//??refactoring
+const getRandomIndex = (max) => {
+	const min = Math.ceil(0)
+	max = Math.floor(max)
+	return Math.floor(Math.random() * (max - min) + min)
+}
+
+const initialState = {
+	isRunningTest: false,
+	isOpenAnswer: false,
+	testQuestions: [],
+	currentQuestion: {},
+	correctAttempts: 0,
+	wrongAttempts: 0,
+}
+
+function reducer(state, action) {
+	switch (action.type) {
+		case "startTest":
+			return { ...state, isRunningTest: true }
+		case "newQuestions":
+			return {
+				...state,
+				testQuestions: action.payload,
+				correctAttempts: 0,
+				wrongAttempts: 0,
+			}
+		case "continueSavedTest":
+			return {
+				...state,
+				testQuestions: action.questions,
+				correctAttempts: action.correctAttempts,
+				wrongAttempts: action.wrongAttempts,
+			}
+		case "randomQuestion":
+			return {
+				...state,
+				currentQuestion:
+					state.testQuestions[getRandomIndex(state.testQuestions.length)],
+			}
+		case "showAnswer":
+			return { ...state, isOpenAnswer: true }
+		case "correctAnswer":
+			return {
+				...state,
+				correctAttempts: state.correctAttempts + 1,
+				testQuestions: state.testQuestions.filter(
+					(question) => state.currentQuestion.id !== question.id
+				),
+				isOpenAnswer: false,
+			}
+		case "wrongAnswer":
+			return {
+				...state,
+				wrongAttempts: state.wrongAttempts + 1,
+				currentQuestion:
+					state.testQuestions[getRandomIndex(state.testQuestions.length)],
+				isOpenAnswer: false,
+			}
+		default:
+			throw new Error("Action is unknown")
+	}
+}
 
 export default function Test() {
 	const navigate = useNavigate()
 	const { category } = useParams()
 
+	const [
+		{
+			isRunningTest,
+			testQuestions,
+			currentQuestion,
+			isOpenAnswer,
+			correctAttempts,
+			wrongAttempts,
+		},
+		dispatch,
+	] = useReducer(reducer, initialState)
+
 	const { isLoadingCategory, selectedCategory } = useCategory(category)
 
 	const { isLoadingQuestions, questions } = useQuestions(selectedCategory?.id)
 
-	//states
-
-	const [isOpenAnswer, setIsOpenAnswer] = useState(false)
-
-	const [testQuestions, setTestQuestions] = useState(
-		JSON.parse(getTestQuestions(category))
-	)
-
-	const [correctAttempts, setCorrectAttempts] = useState(
-		JSON.parse(getCorrectAttempts(category))
-	)
-
-	const [wrongAttempts, setWrongAttempts] = useState(
-		JSON.parse(getWrongAttempts(category))
-	)
-
-	//setting new test in localstorage
-
-	if (testQuestions === null) {
-		setTestQuestions(questions)
-		updateTestQuestions(questions, category)
-		setCorrectAttempts(0)
-		updateCorrectAttempts(correctAttempts, category)
-		setWrongAttempts(0)
-		updateWrongAttempts(wrongAttempts, category)
-	}
-
-	//getting random question
-
-	const getRandomIndex = useCallback((max) => {
-		const min = Math.ceil(0)
-		max = Math.floor(max)
-		return Math.floor(Math.random() * (max - min) + min)
-	}, [])
-
-	const randomIndex = getRandomIndex(testQuestions?.length)
-
-	const [currentQuestion, setCurrentQuestion] = useState(questions[randomIndex])
+	const savedTest = JSON.parse(getSavedTest(category))
 
 	const percentage = Math.floor(
-		(correctAttempts / questions.length) * 100 -
-		(wrongAttempts / questions.length) * 100
+		(correctAttempts / questions?.length) * 100 -
+			(wrongAttempts / questions?.length) * 100
 	)
 
-	//handlers
-
 	function handleWrongAnswer() {
-		setWrongAttempts((wrongAttempts) => wrongAttempts + 1)
-		updateWrongAttempts(wrongAttempts + 1, category)
-		setIsOpenAnswer(false)
+		dispatch({ type: "wrongAnswer" })
+		dispatch({ type: "randomQuestion" })
 	}
 
 	function handleCorrectAnswer() {
-		setTestQuestions(
-			testQuestions.filter((question) => currentQuestion.id !== question.id)
+		dispatch({ type: "correctAnswer" })
+		dispatch({ type: "randomQuestion" })
+	}
+
+	function handleSaveTest() {
+		saveTestQuestions(testQuestions, correctAttempts, wrongAttempts, category)
+		navigate(`/${category}/overview`)
+	}
+
+	useEffect(function () {
+		if (savedTest) {
+			dispatch({
+				type: "continueSavedTest",
+				questions: savedTest.testQuestions,
+				correctAttempts: savedTest.correctAttempts,
+				wrongAttempts: savedTest.wrongAttempts,
+			})
+		} else {
+			dispatch({ type: "newQuestions", payload: questions })
+		}
+		dispatch({ type: "randomQuestion" })
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
+
+	if (!isRunningTest || isLoadingCategory || isLoadingQuestions)
+		return (
+			<TestInstructions
+				dispatch={dispatch}
+				questions={questions}
+				savedTest={savedTest}
+			/>
 		)
-		setCorrectAttempts(correctAttempts + 1)
-		setCurrentQuestion(testQuestions[randomIndex])
-		updateCorrectAttempts(correctAttempts + 1, category)
-
-		setIsOpenAnswer(false)
-	}
-
-	function handleBackButton() {
-		navigate(`/${category}/test/instructions`)
-	}
-
-	//useEffect for getting random question at first render
-
-	useEffect(
-		function () {
-			updateTestQuestions(testQuestions, category)
-			setCurrentQuestion(testQuestions[randomIndex])
-		},
-		[testQuestions, category, randomIndex]
-	)
-
-	//return
 
 	if (isLoadingCategory || isLoadingQuestions) return <Spinner>test</Spinner>
 
@@ -132,7 +167,7 @@ export default function Test() {
 					{!isOpenAnswer && (
 						<div className='flex flex-col justify-center gap-3'>
 							<Button
-								onClick={() => setIsOpenAnswer(!isOpenAnswer)}
+								onClick={() => dispatch({ type: "showAnswer" })}
 								style={{
 									backgroundColor: "rgb(254 240 138)",
 									width: "300px",
@@ -175,7 +210,7 @@ export default function Test() {
 				</div>
 				<div>
 					<Button
-						onClick={handleBackButton}
+						onClick={handleSaveTest}
 						style={{
 							backgroundColor: "rgb(254 240 138)",
 							width: "300px",
@@ -184,7 +219,7 @@ export default function Test() {
 							marginTop: "3px",
 						}}
 					>
-						Back
+						Save test
 					</Button>
 				</div>
 			</div>

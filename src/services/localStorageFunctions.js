@@ -1,49 +1,49 @@
 //getting testQuestions
 
-export function updateTestQuestions(filterdeQuestions, category) {
+export function saveTestQuestions(testQuestions,correctAttempts,wrongAttempts, category) {
 	localStorage.setItem(
-		`currentQuestions_${category}`,
-		JSON.stringify(filterdeQuestions)
+		`savedTest_${category}`,
+		JSON.stringify({testQuestions,correctAttempts,wrongAttempts})
 	)
 }
 
-export function getTestQuestions(category) {
-	const data = localStorage.getItem(`currentQuestions_${category}`)
+export function getSavedTest(category) {
+	const data = localStorage.getItem(`savedTest_${category}`)
 	return data
 }
 
 //correctAttempts
 
-export function updateCorrectAttempts(correctAttempts, category) {
-	localStorage.setItem(
-		`correctAttempts_${category}`,
-		JSON.stringify(correctAttempts)
-	)
-}
+// export function updateCorrectAttempts(correctAttempts, category) {
+// 	localStorage.setItem(
+// 		`correctAttempts_${category}`,
+// 		JSON.stringify(correctAttempts)
+// 	)
+// }
 
-export function getCorrectAttempts(category) {
-	const data = localStorage.getItem(`correctAttempts_${category}`)
-	return data
-}
+// export function getCorrectAttempts(category) {
+// 	const data = localStorage.getItem(`correctAttempts_${category}`)
+// 	return data
+// }
 
 //wrongAttempts
 
-export function updateWrongAttempts(wrongAttempts, category) {
-	localStorage.setItem(
-		`wrongAttempts_${category}`,
-		JSON.stringify(wrongAttempts)
-	)
-}
+// export function updateWrongAttempts(wrongAttempts, category) {
+// 	localStorage.setItem(
+// 		`wrongAttempts_${category}`,
+// 		JSON.stringify(wrongAttempts)
+// 	)
+// }
 
-export function getWrongAttempts(category) {
-	const data = localStorage.getItem(`wrongAttempts_${category}`)
-	return data
-}
+// export function getWrongAttempts(category) {
+// 	const data = localStorage.getItem(`wrongAttempts_${category}`)
+// 	return data
+// }
 
 //reset test
 
-export function resetTest(category) {
-	localStorage.clear(`currentQuestions_${category}`)
-	localStorage.clear(`correctAttempts_${category}`)
-	localStorage.clear(`wrongAttempts_${category}`)
-}
+// export function resetTest(category) {
+// 	localStorage.clear(`currentQuestions_${category}`)
+// 	localStorage.clear(`correctAttempts_${category}`)
+// 	localStorage.clear(`wrongAttempts_${category}`)
+// }

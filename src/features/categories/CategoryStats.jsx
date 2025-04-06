@@ -1,7 +1,6 @@
 import { useQuestions } from "../questions/useQuestions"
 import {
-	getCorrectAttempts,
-	getWrongAttempts,
+	getSavedTest
 } from "../../services/localStorageFunctions"
 import PropTypes from "prop-types"
 import Spinner from "../../components/Spinner"
@@ -11,9 +10,9 @@ export default function CategoryStats({ selectedCategory }) {
 	const { isLoadingQuestions, questions } = useQuestions(id)
 	const allCategoryQuestions = questions?.length
 
-	const correctAttempts = JSON.parse(getCorrectAttempts(category))
-	const wrongAttempts = JSON.parse(getWrongAttempts(category))
-
+	const savedTest = JSON.parse(getSavedTest(category))
+	const correctAttempts=savedTest?.correctAttempts
+	const wrongAttempts = savedTest?.wrongAttempts
 
 	
 	const percentage = Math.floor(
