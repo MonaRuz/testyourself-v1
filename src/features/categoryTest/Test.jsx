@@ -1,4 +1,4 @@
-import { useEffect, useReducer} from "react"
+import { useEffect, useReducer } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import { useCategory } from "../categories/useCategory"
 import { useQuestions } from "../questions/useQuestions"
@@ -77,6 +77,8 @@ function reducer(state, action) {
 export default function Test() {
 	const navigate = useNavigate()
 	const { category } = useParams()
+	const { isLoadingCategory, selectedCategory } = useCategory(category)
+	const { isLoadingQuestions, questions } = useQuestions(selectedCategory?.id)
 
 	const [
 		{
@@ -89,10 +91,6 @@ export default function Test() {
 		},
 		dispatch,
 	] = useReducer(reducer, initialState)
-
-	const { isLoadingCategory, selectedCategory } = useCategory(category)
-
-	const { isLoadingQuestions, questions } = useQuestions(selectedCategory?.id)
 
 	const savedTest = JSON.parse(getSavedTest(category))
 

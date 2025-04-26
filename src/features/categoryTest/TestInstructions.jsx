@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom"
 import { useState } from "react"
-import PropTypes, { bool } from "prop-types"
+import PropTypes from "prop-types"
 import Button from "../../components/Button"
 
 export default function TestInstructions({ dispatch, questions, savedTest }) {
@@ -89,13 +89,13 @@ export default function TestInstructions({ dispatch, questions, savedTest }) {
 					</li>
 
 					<li className='text-blue-200  text-sm sm:text-base'>
-						Your progress could be saved. If you want interrupt the test, click
+						Your progress could be saved when you click
 						on SAVE TEST button. You can also restart the test at any time in
 						this page.
 					</li>
 					<li className='text-blue-200  text-sm sm:text-base'>
 						Do not delete history of your browser, if you want save test in
-						progress! Test will be saved in your browser localstorage.
+						progress! Test will be saved in your browser.
 					</li>
 
 					<li className='text-blue-200  text-sm sm:text-base'>
@@ -110,5 +110,5 @@ export default function TestInstructions({ dispatch, questions, savedTest }) {
 TestInstructions.propTypes = {
 	dispatch: PropTypes.func,
 	questions: PropTypes.array,
-	savedTest: bool,
+	savedTest: PropTypes.object,
 }
