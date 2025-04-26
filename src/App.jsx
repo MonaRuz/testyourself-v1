@@ -104,20 +104,20 @@ export default function App() {
 							padding: "16px 24px",
 							backgroundColor: "black",
 							color: "#88FFB6",
-							border:"1px solid #88FFB6"
+							border: "1px solid #88FFB6",
 						},
 					},
-					error:{
-						duration:4000,
-						style:{
+					error: {
+						duration: 4000,
+						style: {
 							fontSize: "16px",
 							maxWidth: "500px",
 							padding: "16px 24px",
 							backgroundColor: "black",
 							color: "#F08080",
-							border:"1px solid #F08080"
+							border: "1px solid #F08080",
 						},
-					}
+					},
 				}}
 			/>
 		</QueryClientProvider>

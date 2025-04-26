@@ -2,25 +2,31 @@ import { useForm } from "react-hook-form"
 import { useAuth } from "../../contexts/AuthContext"
 import Logo from "../../components/Logo"
 import Button from "../../components/Button"
-import { useState } from "react"
+import Spinner from "../../components/Spinner"
+// import { useState } from "react"
 import toast from "react-hot-toast"
+import { useNavigate } from "react-router-dom"
+import { useState } from "react"
+
 
 export default function Register() {
 	const { register, handleSubmit, reset } = useForm()
 	const { signup,currentUser,error } = useAuth()
+	const navigate=useNavigate()
 
-	// const [error, setError] = useState("")
-	const [isLoading, setIsLoading] = useState(false)
+
+	const[isLoading,setIsLoading]=useState(false)
 
 	// function handleRegister(e) {
 	// 	e.preventDefault()
 
 	// 	//code for logging in and redirect to dashboard
 	// }
-console.log(currentUser);
+// console.log(currentUser);
 
 	async function onSubmit(data) {
-		console.log(data);
+		// console.log(isLoading);
+		setIsLoading(true)
 		
 		if (data.password !== data.passwordConfirm) {
 			reset()
@@ -33,16 +39,18 @@ console.log(currentUser);
 			// return setError("Failed to create an account")
 		}
 		try {
-			setIsLoading(true)
 			await signup(data.email, data.password)
 		} catch {
-			console.log(error)
+			console.error(error)
 			//debug toaster :
 			// toast.error(error)
 		}
+		if(!error)toast.success("Your account was succesfully created")
 		reset()
 		setIsLoading(false)
 	}
+
+	// if(isLoading)return<Spinner/>
 
 	return (
 		<div className='h-dvh bg-black px-3'>
@@ -123,6 +131,7 @@ console.log(currentUser);
 					</Button>
 				</div>
 			</form>
+			<p onClick={()=>navigate("/login")} className="text-blue-300 text-sm text-center mt-2 hover:underline cursor-pointer">Back to Login</p>
 		</div>
 	)
 }

@@ -1,6 +1,7 @@
-import { useNavigate } from "react-router-dom"
+import {  useNavigate } from "react-router-dom"
 import Logo from "../../components/Logo"
 import Button from "../../components/Button"
+
 
 export default function Login() {
 	const navigate=useNavigate()
@@ -10,6 +11,9 @@ export default function Login() {
 		//code for logging in and redirect to dashboard 
 	}
 	//write some message for unsuccessful logging
+
+
+
 	return (
 		<div className='h-dvh bg-black px-3'>
 			<Logo />
@@ -37,6 +41,7 @@ export default function Login() {
 					Login
 				</Button>
 			</div>
+			<p onClick={()=>navigate("/register")} className="text-blue-300 text-sm text-center mt-2 hover:underline cursor-pointer">Create new account</p>
 		</div>
 	)
 }
