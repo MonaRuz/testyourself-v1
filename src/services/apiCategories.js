@@ -1,3 +1,4 @@
+// import { updateDoc } from "firebase/firestore"
 import {
 	collection,
 	getDocs,
@@ -6,6 +7,7 @@ import {
 	doc,
 	query,
 	where,
+	updateDoc
 } from "firebase/firestore/lite"
 import db from "../firebase/config"
 
@@ -67,4 +69,21 @@ export async function deleteCategory(categoryId) {
 		console.error(err)
 		throw new Error("Category was not deleted")
 	}
+}
+
+export async function updateHighscore(categoryId, percentage) {
+	console.log(percentage);
+	console.log(categoryId);
+	
+	
+	const qRef = doc(db, "categories", categoryId)
+	try {
+		await updateDoc(qRef, {
+			highscore: percentage,
+		})
+	} catch (err) {
+		console.error(err)
+		throw new Error("Your highscore could not be set")
+	}
+	return percentage
 }

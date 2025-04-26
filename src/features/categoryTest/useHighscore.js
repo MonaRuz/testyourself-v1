@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { updateHighscore as updateHighscoreApi } from "../../services/apiTest"
+import { updateHighscore as updateHighscoreApi } from "../../services/apiCategories"
 import toast from "react-hot-toast"
 
 export default function useHighscore(category){

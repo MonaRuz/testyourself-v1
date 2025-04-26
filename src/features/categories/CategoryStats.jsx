@@ -1,24 +1,28 @@
 import { useQuestions } from "../questions/useQuestions"
-import {
-	getSavedTest
-} from "../../services/localStorageFunctions"
+import { getSavedTest } from "../../services/localStorageFunctions"
 import PropTypes from "prop-types"
 import Spinner from "../../components/Spinner"
-
+import Button from "../../components/Button"
+import useHighscore from "../categoryTest/useHighscore"
 export default function CategoryStats({ selectedCategory }) {
 	const { id, highscore, category } = selectedCategory
 	const { isLoadingQuestions, questions } = useQuestions(id)
+	const { updateHighscore } = useHighscore(category)
+
 	const allCategoryQuestions = questions?.length
 
 	const savedTest = JSON.parse(getSavedTest(category))
-	const correctAttempts=savedTest?.correctAttempts
+	const correctAttempts = savedTest?.correctAttempts
 	const wrongAttempts = savedTest?.wrongAttempts
 
-	
 	const percentage = Math.floor(
 		(correctAttempts / allCategoryQuestions) * 100 -
 			(wrongAttempts / allCategoryQuestions) * 100
 	)
+
+	function handleResetHighscore() {
+		updateHighscore({ selectedCategoryId: id, percentage: 0 })
+	}
 
 	if (isLoadingQuestions) return <Spinner>category statistics</Spinner>
 
@@ -44,7 +48,7 @@ export default function CategoryStats({ selectedCategory }) {
 					<tr>
 						<th className='text-blue-200 font-normal'>Current score:</th>
 						<th className='text-yellow-200 font-normal'>
-							{percentage && percentage>=0 ? percentage : 0 } %
+							{percentage && percentage >= 0 ? percentage : 0} %
 						</th>
 					</tr>
 					<tr>
@@ -53,13 +57,27 @@ export default function CategoryStats({ selectedCategory }) {
 					</tr>
 				</tbody>
 			</table>
+			<div className="py-1 px-16">
+				<Button
+					onClick={handleResetHighscore}
+					style={{
+						backgroundColor: "rgb(252 165 165)",
+						width: "133px",
+						height: "30px",
+						fontFamily: "kanit",
+						
+					}}
+				>
+					Reset highscore
+				</Button>
+			</div>
 		</div>
 	)
 }
 
-CategoryStats.propTypes={
-	selectedCategory:PropTypes.object,
-	id:PropTypes.string,
-	highscore:PropTypes.number,
-	category:PropTypes.string
+CategoryStats.propTypes = {
+	selectedCategory: PropTypes.object,
+	id: PropTypes.string,
+	highscore: PropTypes.number,
+	category: PropTypes.string,
 }
