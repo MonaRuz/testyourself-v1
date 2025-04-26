@@ -4,6 +4,7 @@ import CategoriesList from "../features/categories/CategoriesList"
 
 export default function Dashboard() {
 	const navigate = useNavigate()
+
 	return (
 		<div>
 			<p className='text-blue-200 text-center pt-4 text-sm md:text-lg'>

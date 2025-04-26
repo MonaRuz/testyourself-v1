@@ -19,7 +19,6 @@ export default function NewCategory() {
 				navigate(`/${newCategory}/overview`)
 			},
 		})
-		console.log(typeof(data.categoryName));
 	}
 
 	return (

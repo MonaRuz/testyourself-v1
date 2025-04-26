@@ -18,6 +18,7 @@ import NewCategory from "./features/categories/NewCategory"
 import Results from "./features/categoryTest/Results"
 // import TestInstructions from "./features/categoryTest/TestInstructions"
 import DeleteCategory from "./features/categories/DeleteCategory"
+import { AuthProvider } from "./contexts/AuthContext"
 
 export default function App() {
 	const queryClient = new QueryClient({
@@ -27,71 +28,98 @@ export default function App() {
 			},
 		},
 	})
-	
-
 
 	return (
 		<QueryClientProvider client={queryClient}>
 			<BrowserRouter>
-				<Routes>
-					<Route
-						path='/'
-						element={<Home />}
-					/>
-					<Route
-						path='login'
-						element={<Login />}
-					/>
-					<Route
-						path='register'
-						element={<Register />}
-					/>
-					<Route element={<AppLayout />}>
+				<AuthProvider>
+					<Routes>
 						<Route
-							path='dashboard'
-							element={<Dashboard />}
+							path='/'
+							element={<Home />}
 						/>
 						<Route
-							path='new-category'
-							element={<NewCategory />}
+							path='login'
+							element={<Login />}
 						/>
 						<Route
-							path=':category/delete'
-							element={<DeleteCategory />}
+							path='register'
+							element={<Register />}
 						/>
-						<Route path=':category'>
+						<Route element={<AppLayout />}>
 							<Route
-								path='overview'
-								element={<CategoryOverview />}
+								path='dashboard'
+								element={<Dashboard />}
 							/>
 							<Route
-								path=':questionID/edit'
-								element={<EditQuestion />}
+								path='new-category'
+								element={<NewCategory />}
 							/>
 							<Route
-								path='new-question'
-								element={<NewQuestion />}
+								path=':category/delete'
+								element={<DeleteCategory />}
 							/>
-							<Route path='test' element={<Test/>}>
-								{/* <Route
+							<Route path=':category'>
+								<Route
+									path='overview'
+									element={<CategoryOverview />}
+								/>
+								<Route
+									path=':questionID/edit'
+									element={<EditQuestion />}
+								/>
+								<Route
+									path='new-question'
+									element={<NewQuestion />}
+								/>
+								<Route
+									path='test'
+									element={<Test />}
+								>
+									{/* <Route
 									path='instructions'
 									element={<TestInstructions />}
 								/> */}
-								<Route
-									path='results'
-									element={<Results />}
-								/>
+									<Route
+										path='results'
+										element={<Results />}
+									/>
+								</Route>
 							</Route>
 						</Route>
-					</Route>
-				</Routes>
+					</Routes>
+				</AuthProvider>
 			</BrowserRouter>
 			<ReactQueryDevtools initialIsOpen={false} />
-			<Toaster position="top-center" gutter={12} containerStyle={{margin:"18px"}} toastOptions={{
-				success:{
-					duration:3000,
-				},style:{fontSize:"16px",maxWidth:"500px",padding:"16px 24px",backgroundColor:"black",color:"#88FFB6"}
-			}}/>
+			<Toaster
+				position='top-center'
+				gutter={12}
+				containerStyle={{ margin: "18px" }}
+				toastOptions={{
+					success: {
+						duration: 4000,
+						style: {
+							fontSize: "16px",
+							maxWidth: "500px",
+							padding: "16px 24px",
+							backgroundColor: "black",
+							color: "#88FFB6",
+							border:"1px solid #88FFB6"
+						},
+					},
+					error:{
+						duration:4000,
+						style:{
+							fontSize: "16px",
+							maxWidth: "500px",
+							padding: "16px 24px",
+							backgroundColor: "black",
+							color: "#F08080",
+							border:"1px solid #F08080"
+						},
+					}
+				}}
+			/>
 		</QueryClientProvider>
 	)
 }

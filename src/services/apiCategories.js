@@ -1,4 +1,3 @@
-// import { updateDoc } from "firebase/firestore"
 import {
 	collection,
 	getDocs,
@@ -7,7 +6,7 @@ import {
 	doc,
 	query,
 	where,
-	updateDoc
+	updateDoc,
 } from "firebase/firestore/lite"
 import db from "../firebase/config"
 
@@ -47,12 +46,12 @@ export async function getCategory(category) {
 
 //debug:
 export async function createCategory(newCategory) {
-	console.log(newCategory);
-	
+	console.log(newCategory)
+
 	try {
 		await addDoc(collection(db, "categories"), {
 			category: newCategory,
-			highscore: 0
+			highscore: 0,
 		})
 	} catch (err) {
 		console.error(err)
@@ -72,10 +71,9 @@ export async function deleteCategory(categoryId) {
 }
 
 export async function updateHighscore(categoryId, percentage) {
-	console.log(percentage);
-	console.log(categoryId);
-	
-	
+	console.log(percentage)
+	console.log(categoryId)
+
 	const qRef = doc(db, "categories", categoryId)
 	try {
 		await updateDoc(qRef, {
