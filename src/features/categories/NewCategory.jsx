@@ -1,22 +1,24 @@
 import { useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { useNewCategory } from "./useNewCategory"
+import { getAuth } from "firebase/auth"
 import Button from "../../components/Button"
 
 export default function NewCategory() {
 	const navigate = useNavigate()
+	const auth = getAuth()
+	const user = auth.currentUser
 
-	const { register, handleSubmit,formState } = useForm()
+	const { register, handleSubmit, formState } = useForm()
 	const { createCategory } = useNewCategory()
+	const { errors } = formState
 
-	const{errors}=formState
+	async function handleNewCategory(data) {
+		const newCategory = { categoryName: data.categoryName, uid: user.uid }
 
-
-	function handleNewCategory(data) {
-		const newCategory = data.categoryName
 		createCategory(newCategory, {
 			onSuccess: () => {
-				navigate(`/${newCategory}/overview`)
+				navigate(`/${data.categoryName}/overview`)
 			},
 		})
 	}
@@ -28,7 +30,11 @@ export default function NewCategory() {
 		>
 			<label className='text-yellow-200 text-center my-5'>
 				Name of new category:<br></br>
-				{errors?.categoryName?.message&&<p className="text-red-300 text-sm mt-1">{errors?.categoryName?.message}</p>}
+				{errors?.categoryName?.message && (
+					<p className='text-red-300 text-sm mt-1'>
+						{errors?.categoryName?.message}
+					</p>
+				)}
 				<input
 					id='categoryName'
 					{...register("categoryName", {
@@ -39,6 +45,7 @@ export default function NewCategory() {
 				/>
 			</label>
 			<Button
+				type='submit'
 				onClick={handleNewCategory}
 				style={{
 					backgroundColor: "#88FFB6",

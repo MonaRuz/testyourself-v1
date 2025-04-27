@@ -46,12 +46,11 @@ export async function getCategory(category) {
 
 //debug:
 export async function createCategory(newCategory) {
-	console.log(newCategory)
-
 	try {
 		await addDoc(collection(db, "categories"), {
-			category: newCategory,
+			category: newCategory.categoryName,
 			highscore: 0,
+			UId: newCategory.uid,
 		})
 	} catch (err) {
 		console.error(err)
