@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import { Toaster } from "react-hot-toast"
+import { AuthProvider } from "./features/authentication/contexts/AuthContext"
 import Home from "./pages/Home"
 import Dashboard from "./pages/Dashboard"
 import AppLayout from "./components/AppLayout"
@@ -17,8 +18,8 @@ import Test from "./features/categoryTest/Test"
 import NewCategory from "./features/categories/NewCategory"
 import Results from "./features/categoryTest/Results"
 import DeleteCategory from "./features/categories/DeleteCategory"
-import { AuthProvider } from "./features/authentication/contexts/AuthContext"
 import ProtectedRoute from "./pages/ProtectedRoute"
+import ErrorPage from "./pages/ErrorPage"
 
 export default function App() {
 	const queryClient = new QueryClient({
@@ -45,6 +46,10 @@ export default function App() {
 						<Route
 							path='register'
 							element={<Register />}
+						/>
+						<Route
+							path='*'
+							element={<ErrorPage />}
 						/>
 
 						<Route

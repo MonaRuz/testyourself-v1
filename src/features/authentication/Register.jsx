@@ -1,8 +1,8 @@
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"
 import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../authentication/contexts/AuthContext"
-import { useState } from "react"
 import toast from "react-hot-toast"
 import Logo from "../../components/Logo"
 import Button from "../../components/Button"
@@ -12,7 +12,6 @@ export default function Register() {
 	const {setIsAuthenticated}=useAuth()
 	const { register, handleSubmit, reset, formState } = useForm()
 	const { errors } = formState
-
 	const navigate = useNavigate()
 
 	const [isLoading, setIsLoading] = useState(false)
@@ -99,7 +98,6 @@ export default function Register() {
 						</p>
 					)}
 				</label>
-				{/* honeypot */}
 				<label className='hidden'>
 					age<br></br>
 					<input

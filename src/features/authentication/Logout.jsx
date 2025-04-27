@@ -1,14 +1,15 @@
+import { useState } from "react"
 import { IoMdLogOut } from "react-icons/io"
 import { useNavigate } from "react-router-dom"
 import { getAuth, signOut } from "firebase/auth"
 import toast from "react-hot-toast"
-import { useState } from "react"
 import Spinner from "../../components/Spinner"
 
 export default function Logout() {
-	const [isLoading, setIsLoading] = useState(false)
 	const navigate = useNavigate()
 	const auth = getAuth()
+  
+	const [isLoading, setIsLoading] = useState(false)
 
 	function handleSignOut() {
 		setIsLoading(true)

@@ -10,10 +10,11 @@ import Button from "../../components/Button"
 export default function Login() {
 	const { register, handleSubmit, reset, formState } = useForm()
 	const { errors } = formState
-	const [isLoading, setIsLoading] = useState(false)
-	const auth = getAuth()
 	const{setIsAuthenticated}=useAuth()
+	const auth = getAuth()
 	const navigate=useNavigate()
+	
+	const [isLoading, setIsLoading] = useState(false)
 
 	async function onSubmit(data) {
 		if(data.age){
