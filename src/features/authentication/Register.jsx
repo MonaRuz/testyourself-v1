@@ -1,42 +1,29 @@
 import { useForm } from "react-hook-form"
-import { useAuth } from "../../contexts/AuthContext"
+import { useAuth } from "./contexts/AuthContext"
+import { Link, useNavigate } from "react-router-dom"
+import { useState } from "react"
+import toast from "react-hot-toast"
 import Logo from "../../components/Logo"
 import Button from "../../components/Button"
-// import { useState } from "react"
-import toast from "react-hot-toast"
-import { useNavigate } from "react-router-dom"
-import { useState } from "react"
-
 
 export default function Register() {
-	const { register, handleSubmit, reset,formState } = useForm()
-	const {errors}=formState
-	const { signup,error } = useAuth()
-	const navigate=useNavigate()
+	const { register, handleSubmit, reset, formState } = useForm()
+	const { errors } = formState
+	const { signup, error } = useAuth()
+	const navigate = useNavigate()
 
-
-	const[isLoading,setIsLoading]=useState(false)
-
-	// function handleRegister(e) {
-	// 	e.preventDefault()
-
-	// 	//code for logging in and redirect to dashboard
-	// }
-// console.log(currentUser);
+	const [isLoading, setIsLoading] = useState(false)
 
 	async function onSubmit(data) {
-		// console.log(isLoading);
 		setIsLoading(true)
-		
+
 		if (data.password !== data.passwordConfirm) {
 			reset()
 			toast.error("Passwords do not match")
-			// return setError("Passwords do not match")
 		}
-		if(data.age===undefined){
+		if (data.age === undefined) {
 			reset()
 			toast.error("Failed to create an account")
-			// return setError("Failed to create an account")
 		}
 		try {
 			await signup(data.email, data.password)
@@ -45,18 +32,15 @@ export default function Register() {
 			//debug toaster :
 			// toast.error(error)
 		}
-		if(!error)toast.success("Your account was succesfully created")
 		reset()
 		setIsLoading(false)
 	}
-
-	// if(isLoading)return<Spinner/>
 
 	return (
 		<div className='h-dvh bg-black px-3'>
 			<Logo />
 			{/* toaster is not functioning, this line is instead of it */}
-			{error&&<p className="text-red-300 text-center mt-5">{error}</p>}
+			{error && <p className='text-red-300 text-center mt-5'>{error}</p>}
 			<form
 				onSubmit={handleSubmit(onSubmit)}
 				className='flex flex-col text-center mt-5'
@@ -82,7 +66,9 @@ export default function Register() {
 							required: "This field must be filled!",
 						})}
 					/>
-					{errors?.email?.message&&<p className="text-red-300 text-sm">{errors.email.message}</p>}
+					{errors?.email?.message && (
+						<p className='text-red-300 text-sm'>{errors.email.message}</p>
+					)}
 				</label>
 				<label className='text-blue-200 my-2'>
 					password<br></br>
@@ -94,7 +80,9 @@ export default function Register() {
 							required: "This field must be filled!",
 						})}
 					/>
-					{errors?.password?.message&&<p className="text-red-300 text-sm">{errors.password.message}</p>}
+					{errors?.password?.message && (
+						<p className='text-red-300 text-sm'>{errors.password.message}</p>
+					)}
 				</label>
 				<label className='text-blue-200 my-2'>
 					confirm password<br></br>
@@ -106,7 +94,11 @@ export default function Register() {
 							required: "This field must be filled!",
 						})}
 					/>
-					{errors?.passwordConfirm?.message&&<p className="text-red-300 text-sm">{errors.passwordConfirm.message}</p>}
+					{errors?.passwordConfirm?.message && (
+						<p className='text-red-300 text-sm'>
+							{errors.passwordConfirm.message}
+						</p>
+					)}
 				</label>
 				{/* honeypot */}
 				<label className='hidden'>
@@ -122,7 +114,7 @@ export default function Register() {
 				<div className='flex justify-center mt-10'>
 					<Button
 						disabled={isLoading}
-						type="submit"
+						type='submit'
 						style={{
 							backgroundColor: "#88FFB6",
 							width: "130px",
@@ -134,7 +126,9 @@ export default function Register() {
 					</Button>
 				</div>
 			</form>
-			<p onClick={()=>navigate("/login")} className="text-blue-300 text-sm text-center mt-2 hover:underline cursor-pointer">Back to Login</p>
+			<div className='text-blue-300 text-sm text-center mt-2 hover:underline cursor-pointer'>
+				<Link to='/login'>Back to Login</Link>
+			</div>
 		</div>
 	)
 }
