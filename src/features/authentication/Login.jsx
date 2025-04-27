@@ -1,10 +1,11 @@
 import { useNavigate } from "react-router-dom"
 import Logo from "../../components/Logo"
 import Button from "../../components/Button"
+import { useForm } from "react-hook-form"
 
 export default function Login() {
 	const navigate = useNavigate()
-	const {register,handleSubmit,formState,reset}
+	const {register,handleSubmit,formState,reset}=useForm()
 	function handleLogin(e) {
 		e.preventDefault()
 		navigate("/dashboard")
@@ -17,15 +18,28 @@ export default function Login() {
 				<label className='text-blue-200 my-3'>
 					email<br></br>
 					<input
+					id="email"
 						className='bg-black border border-blue-200 mt-3 h-10 w-72'
-						type='text'
+						type='email'
+						{...register("email",{required:"This field must be filled!"})}
 					/>
 				</label>
 				<label className='text-blue-200 my-3'>
 					password<br></br>
 					<input
+					id="password"
+						className='bg-black border border-blue-200 mt-3 h-10 w-72'
+						type='password'
+						{...register("password",{required:"This field must be filled!"})}
+					/>
+				</label>
+				<label className='hidden'>
+					password<br></br>
+					<input
+					id="age"
 						className='bg-black border border-blue-200 mt-3 h-10 w-72'
 						type='text'
+						{...register("age",{required:"This field must be filled!"})}
 					/>
 				</label>
 			</form>
