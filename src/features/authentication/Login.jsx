@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form"
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useState } from "react"
 import toast from "react-hot-toast"
 import Logo from "../../components/Logo"
@@ -11,6 +11,7 @@ export default function Login() {
 	const { errors } = formState
 	const [isLoading, setIsLoading] = useState(false)
 	const auth = getAuth()
+	const navigate=useNavigate()
 
 	async function onSubmit(data) {
 		if(data.age){
@@ -30,6 +31,7 @@ export default function Login() {
 				toast.error(errorMessage)
 			})
 		reset()
+		navigate("/dashboard")
 		setIsLoading(false)
 	}
 
