@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form"
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"
 import { Link, useNavigate } from "react-router-dom"
+import { useAuth } from "../authentication/contexts/AuthContext"
 import { useState } from "react"
 import toast from "react-hot-toast"
 import Logo from "../../components/Logo"
@@ -8,6 +9,7 @@ import Button from "../../components/Button"
 
 export default function Register() {
 	const auth = getAuth()
+	const {setIsAthenticated}=useAuth()
 	const { register, handleSubmit, reset, formState } = useForm()
 	const { errors } = formState
 
@@ -31,6 +33,7 @@ export default function Register() {
 		createUserWithEmailAndPassword(auth, data.email, data.password)
 			.then((userCredential) => {
 				const user = userCredential.user
+				setIsAthenticated(true)
 				const userName = user.email.substring(0, user.email.indexOf("@"))
 				toast.success(`Account ${userName} was successfully created`)
 				navigate("/dashboard")

@@ -1,34 +1,11 @@
 import { createContext, useContext, useState } from "react"
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"
-import toast from "react-hot-toast"
 
 const AuthContext = createContext()
 
 export function AuthProvider({ children }) {
+	const [isAuthenticated,setIsAthenticated]=useState(false)
 
-	const [isLoading, setIsLoading] = useState(false)
-
-    const auth = getAuth()
-
-	function signup(data) {
-		setIsLoading(true)
-		createUserWithEmailAndPassword(auth, data.email, data.password)
-			.then((userCredential) => {
-				const user = userCredential.user
-				const userName = user.email.substring(0, user.email.indexOf("@"))
-				toast.success(`Account ${userName} was successfully created`)
-			})
-			.catch((error) => {
-				const errorMessage = error.message
-				toast.error(errorMessage)
-			})
-
-		
-
-		setIsLoading(false)
-	}
-
-	const value = {signup,isLoading}
+	const value = { isAuthenticated,setIsAthenticated }
 
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
@@ -40,5 +17,3 @@ export function useAuth() {
 	}
 	return context
 }
-
-

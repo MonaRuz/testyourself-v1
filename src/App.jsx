@@ -31,62 +31,62 @@ export default function App() {
 	return (
 		<QueryClientProvider client={queryClient}>
 			<BrowserRouter>
-			<AuthProvider>
-				<Routes>
-					<Route
-						path='/'
-						element={<Home />}
-					/>
-					<Route
-						path='login'
-						element={<Login />}
-					/>
-					<Route
-						path='register'
-						element={<Register />}
-					/>
-					<Route element={<AppLayout />}>
+				<AuthProvider>
+					<Routes>
 						<Route
-							path='dashboard'
-							element={<Dashboard />}
+							path='/'
+							element={<Home />}
 						/>
 						<Route
-							path='new-category'
-							element={<NewCategory />}
+							path='login'
+							element={<Login />}
 						/>
 						<Route
-							path=':category/delete'
-							element={<DeleteCategory />}
+							path='register'
+							element={<Register />}
 						/>
-						<Route path=':category'>
+						<Route element={<AppLayout />}>
 							<Route
-								path='overview'
-								element={<CategoryOverview />}
+								path='dashboard'
+								element={<Dashboard />}
 							/>
 							<Route
-								path=':questionID/edit'
-								element={<EditQuestion />}
+								path='new-category'
+								element={<NewCategory />}
 							/>
 							<Route
-								path='new-question'
-								element={<NewQuestion />}
+								path=':category/delete'
+								element={<DeleteCategory />}
 							/>
-							<Route
-								path='test'
-								element={<Test />}
-							>
-								{/* <Route
+							<Route path=':category'>
+								<Route
+									path='overview'
+									element={<CategoryOverview />}
+								/>
+								<Route
+									path=':questionID/edit'
+									element={<EditQuestion />}
+								/>
+								<Route
+									path='new-question'
+									element={<NewQuestion />}
+								/>
+								<Route
+									path='test'
+									element={<Test />}
+								>
+									{/* <Route
 									path='instructions'
 									element={<TestInstructions />}
 								/> */}
-								<Route
-									path='results'
-									element={<Results />}
-								/>
+									<Route
+										path='results'
+										element={<Results />}
+									/>
+								</Route>
 							</Route>
 						</Route>
-					</Route>
-				</Routes>
+					</Routes>
 				</AuthProvider>
 			</BrowserRouter>
 			<ReactQueryDevtools initialIsOpen={false} />
