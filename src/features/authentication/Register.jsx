@@ -1,37 +1,41 @@
 import { useForm } from "react-hook-form"
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useState } from "react"
 import toast from "react-hot-toast"
 import Logo from "../../components/Logo"
 import Button from "../../components/Button"
 
 export default function Register() {
-	const [error, setError] = useState("")
 	const auth = getAuth()
 	const { register, handleSubmit, reset, formState } = useForm()
 	const { errors } = formState
-	// const { signup, error } = useAuth()
-	// const navigate = useNavigate()
+
+	const navigate = useNavigate()
 
 	const [isLoading, setIsLoading] = useState(false)
 
 	async function onSubmit(data) {
+		if(data.password!==data.passwordConfirm){
+			toast.error("Passwords do not match")
+			reset()
+			return
+		}
 		setIsLoading(true)
-		setError("")
+
 		createUserWithEmailAndPassword(auth, data.email, data.password)
 			.then((userCredential) => {
 				const user = userCredential.user
-				const userName=user.email.substring(0, user.email.indexOf("@"));
+				const userName = user.email.substring(0, user.email.indexOf("@"))
 				toast.success(`${userName} was successfully signed up`)
 			})
 			.catch((error) => {
 				const errorMessage = error.message
 				toast.error(errorMessage)
-				setError(errorMessage)
 			})
 
 		reset()
+		navigate("/dashboard")
 		setIsLoading(false)
 	}
 
