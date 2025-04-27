@@ -17,6 +17,7 @@ import Test from "./features/categoryTest/Test"
 import NewCategory from "./features/categories/NewCategory"
 import Results from "./features/categoryTest/Results"
 import DeleteCategory from "./features/categories/DeleteCategory"
+import { AuthProvider } from "./features/authentication/contexts/AuthContext"
 
 export default function App() {
 	const queryClient = new QueryClient({
@@ -30,6 +31,7 @@ export default function App() {
 	return (
 		<QueryClientProvider client={queryClient}>
 			<BrowserRouter>
+			<AuthProvider>
 				<Routes>
 					<Route
 						path='/'
@@ -85,6 +87,7 @@ export default function App() {
 						</Route>
 					</Route>
 				</Routes>
+				</AuthProvider>
 			</BrowserRouter>
 			<ReactQueryDevtools initialIsOpen={false} />
 			<Toaster

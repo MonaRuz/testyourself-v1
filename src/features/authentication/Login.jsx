@@ -13,7 +13,7 @@ export default function Login() {
 	const auth = getAuth()
 	const navigate=useNavigate()
 
-	async function onSubmit(data) {
+	function onSubmit(data) {
 		if(data.age){
 			toast.error("Access denied")
 			reset()

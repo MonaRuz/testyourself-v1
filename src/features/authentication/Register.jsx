@@ -33,6 +33,7 @@ export default function Register() {
 				const user = userCredential.user
 				const userName = user.email.substring(0, user.email.indexOf("@"))
 				toast.success(`Account ${userName} was successfully created`)
+				navigate("/dashboard")
 			})
 			.catch((error) => {
 				const errorMessage = error.message
@@ -40,7 +41,6 @@ export default function Register() {
 			})
 
 		reset()
-		navigate("/dashboard")
 		setIsLoading(false)
 	}
 
