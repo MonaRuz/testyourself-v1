@@ -13,8 +13,6 @@ export default function CategoryOverview() {
 	const { isLoadingCategory, selectedCategory } = useCategory(category)
 	const { isLoadingQuestions, questions } = useQuestions(selectedCategory?.id)
 
-	console.log(questions)
-
 	function handleStartTest() {
 		if ( questions?.length===0) {
 			toast.error("There are no questions. You must add at least 1 question.")

@@ -61,9 +61,10 @@ export default function CategoryStats({ selectedCategory }) {
 				<Button
 					onClick={handleResetHighscore}
 					style={{
-						backgroundColor: "rgb(252 165 165)",
-						width: "133px",
-						height: "30px",
+						backgroundColor: "#2e2e2e",
+						color:"#d3d3d3",
+						width: "140px",
+						height: "40px",
 						fontFamily: "kanit",
 						
 					}}
