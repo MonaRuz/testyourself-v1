@@ -3,7 +3,10 @@ import { useState } from "react"
 import PropTypes from "prop-types"
 import Button from "../../components/Button"
 
+
 export default function TestInstructions({ dispatch, questions, savedTest }) {
+	console.log(questions);
+	
 	const navigate = useNavigate()
 	const { category } = useParams()
 	const [isSavedTest, setIsSavedTest] = useState(savedTest)
@@ -13,12 +16,12 @@ export default function TestInstructions({ dispatch, questions, savedTest }) {
 		dispatch({ type: "newQuestions", payload: questions })
 		setIsSavedTest(false)
 	}
-	if(questions.lenght===0 || !questions)return
+	
 	return (
 		<div className='mt-3'>
 			<h3 className='text-center text-purple-300 border-b border-purple-300 mb-3 pb-1'>
 				Test in category <span className='text-green-200'>{category}</span>{" "}
-				<span className='text-purple-100'>- {questions.lenght} questions</span>
+				<span className='text-purple-100'>- {questions?.lenght} questions</span>
 			</h3>
 			<div className='flex flex-col gap-1 items-center'>
 				<Button

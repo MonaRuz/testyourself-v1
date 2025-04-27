@@ -4,13 +4,27 @@ import Button from "../../components/Button"
 import CategoryStats from "./CategoryStats"
 import QuestionsList from "../questions/QuestionsList"
 import Spinner from "../../components/Spinner"
+import toast from "react-hot-toast"
+import { useQuestions } from "../questions/useQuestions"
 
 export default function CategoryOverview() {
 	const navigate = useNavigate()
 	const { category } = useParams()
 	const { isLoadingCategory, selectedCategory } = useCategory(category)
+	const { isLoadingQuestions, questions } = useQuestions(selectedCategory?.id)
 
-	if (isLoadingCategory) return <Spinner>Category overview</Spinner>
+	console.log(questions)
+
+	function handleStartTest() {
+		if ( questions?.length===0) {
+			toast.error("There are no questions. You must add at least 1 question.")
+			return
+		} else {
+			navigate(`/${category}/test`)
+		}
+	}
+
+	if (isLoadingCategory || isLoadingQuestions) return <Spinner>Loading category overview...</Spinner>
 
 	return (
 		<div>
@@ -24,7 +38,7 @@ export default function CategoryOverview() {
 			<div className='flex flex-col items-center lg:flex-row justify-center gap-2 lg:m-10'>
 				<div className='flex gap-2'>
 					<Button
-						onClick={() => navigate(`/${category}/test`)}
+						onClick={handleStartTest}
 						style={{
 							backgroundColor: "#88FFB6",
 							width: "133px",
