@@ -18,6 +18,7 @@ import NewCategory from "./features/categories/NewCategory"
 import Results from "./features/categoryTest/Results"
 import DeleteCategory from "./features/categories/DeleteCategory"
 import { AuthProvider } from "./features/authentication/contexts/AuthContext"
+import ProtectedRoute from "./pages/ProtectedRoute"
 
 export default function App() {
 	const queryClient = new QueryClient({
@@ -45,7 +46,14 @@ export default function App() {
 							path='register'
 							element={<Register />}
 						/>
-						<Route element={<AppLayout />}>
+
+						<Route
+							element={
+								<ProtectedRoute>
+									<AppLayout />
+								</ProtectedRoute>
+							}
+						>
 							<Route
 								path='dashboard'
 								element={<Dashboard />}
@@ -75,10 +83,6 @@ export default function App() {
 									path='test'
 									element={<Test />}
 								>
-									{/* <Route
-									path='instructions'
-									element={<TestInstructions />}
-								/> */}
 									<Route
 										path='results'
 										element={<Results />}

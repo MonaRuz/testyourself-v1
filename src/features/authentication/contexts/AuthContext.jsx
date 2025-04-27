@@ -3,9 +3,9 @@ import { createContext, useContext, useState } from "react"
 const AuthContext = createContext()
 
 export function AuthProvider({ children }) {
-	const [isAuthenticated,setIsAthenticated]=useState(false)
+	const [isAuthenticated,setIsAuthenticated]=useState(false)
 
-	const value = { isAuthenticated,setIsAthenticated }
+	const value = { isAuthenticated,setIsAuthenticated }
 
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }

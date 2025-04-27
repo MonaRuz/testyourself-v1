@@ -9,7 +9,7 @@ import Button from "../../components/Button"
 
 export default function Register() {
 	const auth = getAuth()
-	const {setIsAthenticated}=useAuth()
+	const {setIsAuthenticated}=useAuth()
 	const { register, handleSubmit, reset, formState } = useForm()
 	const { errors } = formState
 
@@ -33,7 +33,7 @@ export default function Register() {
 		createUserWithEmailAndPassword(auth, data.email, data.password)
 			.then((userCredential) => {
 				const user = userCredential.user
-				setIsAthenticated(true)
+				setIsAuthenticated(true)
 				const userName = user.email.substring(0, user.email.indexOf("@"))
 				toast.success(`Account ${userName} was successfully created`)
 				navigate("/dashboard")

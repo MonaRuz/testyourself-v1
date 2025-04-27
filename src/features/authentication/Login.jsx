@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form"
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
 import { Link, useNavigate } from "react-router-dom"
 import { useState } from "react"
-import { useAuth } from "./contexts/AuthContext"
+import { useAuth } from "../authentication/contexts/AuthContext"
 import toast from "react-hot-toast"
 import Logo from "../../components/Logo"
 import Button from "../../components/Button"
@@ -15,7 +15,7 @@ export default function Login() {
 	const{setIsAuthenticated}=useAuth()
 	const navigate=useNavigate()
 
-	function onSubmit(data) {
+	async function onSubmit(data) {
 		if(data.age){
 			toast.error("Access denied")
 			reset()
@@ -28,13 +28,13 @@ export default function Login() {
 				setIsAuthenticated(true)
 				const userName = user.email.substring(0, user.email.indexOf("@"))
 				toast.success(`${userName} was successfully logged in`)
+				navigate("/dashboard")
 			})
 			.catch((error) => {
 				const errorMessage = error.message
 				toast.error(errorMessage)
 			})
 		reset()
-		navigate("/dashboard")
 		setIsLoading(false)
 	}
 
