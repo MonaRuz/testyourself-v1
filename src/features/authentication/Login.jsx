@@ -1,18 +1,14 @@
-import {  useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import Logo from "../../components/Logo"
 import Button from "../../components/Button"
 
-
 export default function Login() {
-	const navigate=useNavigate()
+	const navigate = useNavigate()
+	const {register,handleSubmit,formState,reset}
 	function handleLogin(e) {
 		e.preventDefault()
 		navigate("/dashboard")
-		//code for logging in and redirect to dashboard 
 	}
-	//write some message for unsuccessful logging
-
-
 
 	return (
 		<div className='h-dvh bg-black px-3'>
@@ -33,15 +29,25 @@ export default function Login() {
 					/>
 				</label>
 			</form>
-			<div className="flex justify-center mt-10">
+			<div className='flex justify-center mt-10'>
 				<Button
 					onClick={handleLogin}
-					style={{ backgroundColor: "#88FFB6", width: "130px", height: "40px",fontFamily:"kanit" }}
+					style={{
+						backgroundColor: "#88FFB6",
+						width: "130px",
+						height: "40px",
+						fontFamily: "kanit",
+					}}
 				>
 					Login
 				</Button>
 			</div>
-			<p onClick={()=>navigate("/register")} className="text-blue-300 text-sm text-center mt-2 hover:underline cursor-pointer">Create new account</p>
+			<p
+				onClick={() => navigate("/register")}
+				className='text-blue-300 text-sm text-center mt-2 hover:underline cursor-pointer'
+			>
+				Create new account
+			</p>
 		</div>
 	)
 }

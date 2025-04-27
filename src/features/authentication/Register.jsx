@@ -10,8 +10,9 @@ import { useState } from "react"
 
 
 export default function Register() {
-	const { register, handleSubmit, reset } = useForm()
-	const { signup,currentUser,error } = useAuth()
+	const { register, handleSubmit, reset,formState } = useForm()
+	const {errors}=formState
+	const { signup,error } = useAuth()
 	const navigate=useNavigate()
 
 
@@ -75,41 +76,44 @@ export default function Register() {
 				<label className='text-blue-200 my-2'>
 					email<br></br>
 					<input
-						className='bg-black border border-blue-200 mt-3 h-10 w-72'
+						className='bg-black border border-blue-300 mt-3 h-10 w-72'
 						id='email'
 						type='email'
 						{...register("email", {
 							required: "This field must be filled!",
 						})}
 					/>
+					{errors?.email?.message&&<p className="text-red-300 text-sm">{errors.email.message}</p>}
 				</label>
 				<label className='text-blue-200 my-2'>
 					password<br></br>
 					<input
-						className='bg-black border border-blue-200 mt-3 h-10 w-72'
+						className='bg-black border border-blue-300 mt-3 h-10 w-72'
 						id='password'
 						type='password'
 						{...register("password", {
 							required: "This field must be filled!",
 						})}
 					/>
+					{errors?.password?.message&&<p className="text-red-300 text-sm">{errors.password.message}</p>}
 				</label>
 				<label className='text-blue-200 my-2'>
 					confirm password<br></br>
 					<input
-						className='bg-black border border-blue-200 mt-3 h-10 w-72'
+						className='bg-black border border-blue-300 mt-3 h-10 w-72'
 						type='password'
 						id='passwordConfirm'
 						{...register("passwordConfirm", {
 							required: "This field must be filled!",
 						})}
 					/>
+					{errors?.passwordConfirm?.message&&<p className="text-red-300 text-sm">{errors.passwordConfirm.message}</p>}
 				</label>
 				{/* honeypot */}
 				<label className='hidden'>
 					age<br></br>
 					<input
-						className='bg-black border border-blue-200 mt-3 h-10 w-72'
+						className='bg-black border border-blue-300 mt-3 h-10 w-72'
 						type='text'
 						id='age'
 						{...register("age", { max: 0 })}
@@ -119,7 +123,7 @@ export default function Register() {
 				<div className='flex justify-center mt-10'>
 					<Button
 						disabled={isLoading}
-						// type="submit"
+						type="submit"
 						style={{
 							backgroundColor: "#88FFB6",
 							width: "130px",
