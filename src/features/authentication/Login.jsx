@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form"
-import { useAuth } from "./contexts/AuthContext"
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
 import { Link } from "react-router-dom"
 import { useState } from "react"
 import toast from "react-hot-toast"
@@ -9,25 +9,26 @@ import Button from "../../components/Button"
 export default function Login() {
 	const { register, handleSubmit, reset, formState } = useForm()
 	const { errors } = formState
-	const { login, error } = useAuth()
-
 	const [isLoading, setIsLoading] = useState(false)
+	const auth = getAuth()
 
 	async function onSubmit(data) {
-		setIsLoading(true)
-
-		if (data.age === undefined) {
+		if(data.age){
+			toast.error("Access denied")
 			reset()
-			toast.error("Failed to log in")
+			return
 		}
-		try {
-			await login(data.email, data.password)
-		} catch {
-			console.error(error)
-			//debug toaster :
-			// toast.error(error)
-		}
-
+		setIsLoading(true)
+		signInWithEmailAndPassword(auth, data.email, data.password)
+			.then((userCredential) => {
+				const user = userCredential.user
+				const userName = user.email.substring(0, user.email.indexOf("@"))
+				toast.success(`${userName} was successfully logged in`)
+			})
+			.catch((error) => {
+				const errorMessage = error.message
+				toast.error(errorMessage)
+			})
 		reset()
 		setIsLoading(false)
 	}
@@ -35,8 +36,6 @@ export default function Login() {
 	return (
 		<div className='h-dvh bg-black px-3'>
 			<Logo />
-			{/* toaster is not functioning, this line is instead of it */}
-			{error && <p className='text-red-300 text-center mt-2'>{error}</p>}
 			<form
 				onSubmit={handleSubmit(onSubmit)}
 				className='flex flex-col text-center mt-5'

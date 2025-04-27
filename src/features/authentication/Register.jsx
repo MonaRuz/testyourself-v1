@@ -21,13 +21,18 @@ export default function Register() {
 			reset()
 			return
 		}
+		if(data.age){
+			toast.error("Access denied")
+			reset()
+			return
+		}
 		setIsLoading(true)
 
 		createUserWithEmailAndPassword(auth, data.email, data.password)
 			.then((userCredential) => {
 				const user = userCredential.user
 				const userName = user.email.substring(0, user.email.indexOf("@"))
-				toast.success(`${userName} was successfully signed up`)
+				toast.success(`Account ${userName} was successfully created`)
 			})
 			.catch((error) => {
 				const errorMessage = error.message
