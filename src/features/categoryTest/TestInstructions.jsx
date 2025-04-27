@@ -13,7 +13,7 @@ export default function TestInstructions({ dispatch, questions, savedTest }) {
 		dispatch({ type: "newQuestions", payload: questions })
 		setIsSavedTest(false)
 	}
-
+	if(questions.lenght===0 || !questions)return
 	return (
 		<div className='mt-3'>
 			<h3 className='text-center text-purple-300 border-b border-purple-300 mb-3 pb-1'>
