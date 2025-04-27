@@ -1,16 +1,26 @@
 import { useNavigate } from "react-router-dom"
+import { getAuth } from "firebase/auth"
 import useCategories from "./useCategories"
 import Spinner from "../../components/Spinner"
 import Error from "../../components/Error"
 
 export default function CategoriesList() {
 	const navigate = useNavigate()
+	const auth = getAuth()
+	const user = auth.currentUser
+	const uid = user.uid
 
 	const { isLoading, categories } = useCategories()
-	
+
+	const categoriesByUid = categories?.filter((category) => {
+		return category.UId === uid
+	})
+
+	console.log(categoriesByUid)
+
 	if (isLoading) return <Spinner>Categories</Spinner>
 
-	if (categories?.length === 0)
+	if (categoriesByUid?.length === 0)
 		return <Error errorMessage={"There are no categories to display"} />
 
 	return (
@@ -19,7 +29,7 @@ export default function CategoriesList() {
 				Your categories:
 			</h3>
 			<ul className='text-yellow-200 text-center sm:grid sm:grid-cols-2 sm:gap-4 md:w-3/4 mx-auto'>
-				{categories.map((category) => {
+				{categoriesByUid.map((category) => {
 					return (
 						<li
 							onClick={() => navigate(`/${category.category}/overview`)}
