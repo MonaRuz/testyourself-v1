@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form"
 import { useAuth } from "./contexts/AuthContext"
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { useState } from "react"
 import toast from "react-hot-toast"
 import Logo from "../../components/Logo"
@@ -10,7 +10,6 @@ export default function Login() {
 	const { register, handleSubmit, reset, formState } = useForm()
 	const { errors } = formState
 	const { login, error } = useAuth()
-	// const navigate = useNavigate()
 
 	const [isLoading, setIsLoading] = useState(false)
 

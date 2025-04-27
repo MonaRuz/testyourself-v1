@@ -16,9 +16,8 @@ import NewQuestion from "./features/questions/NewQuestion"
 import Test from "./features/categoryTest/Test"
 import NewCategory from "./features/categories/NewCategory"
 import Results from "./features/categoryTest/Results"
-// import TestInstructions from "./features/categoryTest/TestInstructions"
 import DeleteCategory from "./features/categories/DeleteCategory"
-import { AuthProvider } from "./contexts/AuthContext"
+import { AuthProvider } from "./features/authentication/contexts/AuthContext"
 
 export default function App() {
 	const queryClient = new QueryClient({
@@ -47,6 +46,7 @@ export default function App() {
 							element={<Register />}
 						/>
 						<Route element={<AppLayout />}>
+						
 							<Route
 								path='dashboard'
 								element={<Dashboard />}

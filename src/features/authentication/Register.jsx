@@ -1,37 +1,36 @@
 import { useForm } from "react-hook-form"
-import { useAuth } from "./contexts/AuthContext"
-import { Link, useNavigate } from "react-router-dom"
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"
+import { Link } from "react-router-dom"
 import { useState } from "react"
 import toast from "react-hot-toast"
 import Logo from "../../components/Logo"
 import Button from "../../components/Button"
 
 export default function Register() {
+	const [error, setError] = useState("")
+	const auth = getAuth()
 	const { register, handleSubmit, reset, formState } = useForm()
 	const { errors } = formState
-	const { signup, error } = useAuth()
-	const navigate = useNavigate()
+	// const { signup, error } = useAuth()
+	// const navigate = useNavigate()
 
 	const [isLoading, setIsLoading] = useState(false)
 
 	async function onSubmit(data) {
 		setIsLoading(true)
+		setError("")
+		createUserWithEmailAndPassword(auth, data.email, data.password)
+			.then((userCredential) => {
+				const user = userCredential.user
+				const userName=user.email.substring(0, user.email.indexOf("@"));
+				toast.success(`${userName} was successfully signed up`)
+			})
+			.catch((error) => {
+				const errorMessage = error.message
+				toast.error(errorMessage)
+				setError(errorMessage)
+			})
 
-		if (data.password !== data.passwordConfirm) {
-			reset()
-			toast.error("Passwords do not match")
-		}
-		if (data.age === undefined) {
-			reset()
-			toast.error("Failed to create an account")
-		}
-		try {
-			await signup(data.email, data.password)
-		} catch {
-			console.error(error)
-			//debug toaster :
-			// toast.error(error)
-		}
 		reset()
 		setIsLoading(false)
 	}
@@ -39,23 +38,11 @@ export default function Register() {
 	return (
 		<div className='h-dvh bg-black px-3'>
 			<Logo />
-			{/* toaster is not functioning, this line is instead of it */}
-			{error && <p className='text-red-300 text-center mt-5'>{error}</p>}
+
 			<form
 				onSubmit={handleSubmit(onSubmit)}
 				className='flex flex-col text-center mt-5'
 			>
-				{/* <label className='text-blue-200 my-2'>
-					user name<br></br>
-					<input
-						className='bg-black border border-blue-200 mt-3 h-10 w-72'
-						id='userName'
-						type='text'
-						{...register("userName", {
-							required: "This field must be filled!",
-						})}
-					/>
-				</label> */}
 				<label className='text-blue-200 my-2'>
 					email<br></br>
 					<input
