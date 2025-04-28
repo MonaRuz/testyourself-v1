@@ -44,18 +44,32 @@ export default function NewCategory() {
 					type='text'
 				/>
 			</label>
-			<Button
-				type='submit'
-				onClick={handleNewCategory}
-				style={{
-					backgroundColor: "#88FFB6",
-					width: "250px",
-					height: "40px",
-					fontFamily: "kanit",
-				}}
-			>
-				Create new category
-			</Button>
+			<div className="flex items-center justify-center flex-wrap  gap-1">
+				<Button
+					type='submit'
+					onClick={()=>navigate(-1)}
+					style={{
+						backgroundColor: "rgb(254 240 138)",
+						width: "250px",
+						height: "40px",
+						fontFamily: "kanit",
+					}}
+				>
+					Back
+				</Button>
+				<Button
+					type='submit'
+					onClick={handleNewCategory}
+					style={{
+						backgroundColor: "#88FFB6",
+						width: "250px",
+						height: "40px",
+						fontFamily: "kanit",
+					}}
+				>
+					Create new category
+				</Button>
+			</div>
 		</form>
 	)
 }
