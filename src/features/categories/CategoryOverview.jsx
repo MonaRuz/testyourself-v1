@@ -1,11 +1,11 @@
 import { useNavigate, useParams } from "react-router-dom"
 import { useCategory } from "../categories/useCategory"
+import { useQuestions } from "../questions/useQuestions"
 import Button from "../../components/Button"
 import CategoryStats from "./CategoryStats"
 import QuestionsList from "../questions/QuestionsList"
 import Spinner from "../../components/Spinner"
 import toast from "react-hot-toast"
-import { useQuestions } from "../questions/useQuestions"
 
 export default function CategoryOverview() {
 	const navigate = useNavigate()

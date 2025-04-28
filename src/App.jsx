@@ -1,3 +1,4 @@
+import { lazy } from "react"
 //authentication
 //debug errors with creatig new category
 
@@ -6,8 +7,10 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import { Toaster } from "react-hot-toast"
 import { AuthProvider } from "./features/authentication/contexts/AuthContext"
-import Home from "./pages/Home"
-import Dashboard from "./pages/Dashboard"
+// import Home from "./pages/Home"
+const Home =lazy(()=>import("./pages/Home"))
+// import Dashboard from "./pages/Dashboard"
+const Dashboard =lazy(()=>import("./pages/Dashboard"))
 import AppLayout from "./components/AppLayout"
 import Login from "./features/authentication/Login"
 import Register from "./features/authentication/Register"
@@ -18,8 +21,10 @@ import Test from "./features/categoryTest/Test"
 import NewCategory from "./features/categories/NewCategory"
 import Results from "./features/categoryTest/Results"
 import DeleteCategory from "./features/categories/DeleteCategory"
-import ProtectedRoute from "./pages/ProtectedRoute"
-import ErrorPage from "./pages/ErrorPage"
+// import ProtectedRoute from "./pages/ProtectedRoute"
+const ProtectedRoute =lazy(()=>import("./pages/ProtectedRoute"))
+// import ErrorPage from "./pages/ErrorPage"
+const ErrorPage =lazy(()=>import("./pages/ErrorPage"))
 
 export default function App() {
 	const queryClient = new QueryClient({
