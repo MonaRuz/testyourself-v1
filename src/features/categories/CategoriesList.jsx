@@ -16,8 +16,6 @@ export default function CategoriesList() {
 		return category.UId === uid
 	})
 
-	console.log(categoriesByUid)
-
 	if (isLoading) return <Spinner>Categories</Spinner>
 
 	if (categoriesByUid?.length === 0)

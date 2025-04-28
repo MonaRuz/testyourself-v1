@@ -75,7 +75,6 @@ export default function Login() {
 					)}
 				</label>
 
-				{/* honeypot */}
 				<label className='hidden'>
 					age<br></br>
 					<input
