@@ -18,5 +18,7 @@ Why is this app so useful?
   4) New questions can be added to categories, so you can learn something new while not forgetting your previous knowledge.
   5) You have unlimited topic options. You can add as many categories as you want and they can cover any area of ​​education.
 
-This application is subject to copyright. If you have any problems with the application or have any questions, just contact us by email: mona.ruz@seznam.cz
+ The application is still in development and work is underway on category search, the ability to change login details or cancel your account, and adding images as answers.
+
+ This application is subject to copyright. If you have any problems with the application or have any questions, just contact us by email: mona.ruz@seznam.cz 
 
