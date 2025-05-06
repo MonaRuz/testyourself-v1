@@ -36,6 +36,15 @@ Systém opakování zaměřuje pozornost na slabší místa.
 Lze kombinovat nové a staré otázky.
 Neomezené množství kategorií a témat.
 
+Tech Stack
+----------
+React 
+Redux for test state
+React Query for Firebase data
+React Hook Form for form handling
+Tailwind CSS for styling
+Firebase (Authentication + Firestore)
+
 Aplikace je stále ve vývoji
 ---------------------------
 – plánujeme přidat možnost hledat mezi kategoriemi, upravit uživatelský účet a přidávat obrázky jako odpovědi.
