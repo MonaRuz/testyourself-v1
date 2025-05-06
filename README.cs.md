@@ -1,3 +1,5 @@
+🔗 **Live demo:** [https://test-yourself.netlify.app](https://test-yourself.netlify.app)
+
 Test Yourself
 -------------
 Aplikace Test Yourself je postavena na technologiích React, Redux Toolkit, React Hook Form, React Query, Tailwind CSS a Firebase. Slouží jako efektivní nástroj pro samostatné procvičování znalostí z jakéhokoli oboru. Umožňuje vytvářet vlastní otázky a odpovědi, spouštět testy, sledovat svůj postup a ukládat výsledky.
