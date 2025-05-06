@@ -1,53 +1,72 @@
-# Test Yourself
+A self-testing app built with React, Redux Toolkit, React Query, React Hook Form, Tailwind CSS, and Firebase as the backend. It allows users to create their own categories of questions and answers, track their test progress, and monitor their best scores.
 
-[🇨🇿 Česky](#česky) | [🇬🇧 English](#english)
+Features
+--------
+User authentication (Firebase Auth)
+Create, edit, delete categories of questions
+Custom questions & answers entry
+Searchable and editable question lists
+Run tests based on your own questions
+Test progress is saved in local storage
+High score tracking per category
+Visual feedback on performance
+Smart repetition: incorrect answers are repeated until mastered
 
----
+Getting Started
+---------------
+To use the app:
 
-## English
+Register or log in with your email and password.
+After login, you’ll see your dashboard with all your categories.
+Create a new category or manage existing ones.
+Add questions and answers to a category.
+Run a test using the "Run Test" button.
 
-**Test Yourself**
+The Test Flow
+-------------
+Questions are pulled from a selected category and stored in local storage.
+You answer mentally or on paper, then click "Display Correct Answer".
+Mark your answer as correct or incorrect.
+Correct answers are removed from the test.
+Incorrect answers repeat until you get them right.
+Progress and stats are shown throughout the test.
+Final score is saved and compared with your best score.
 
-The application was created using React, RTK, React Hook Form, React Query, and Tailwind, with Firebase as the backend. This app is a learning tool for self-testing your knowledge in any subject. You can input your own questions and answers and then run a test. You can also save your progress and view your highscore.
+⚠️ Clearing your browser’s local storage will erase your test progress.
 
-### How to use the app?
+Tech Stack
+----------
+React 
+Redux for test state
+React Query for Firebase data
+React Hook Form for form handling
+Tailwind CSS for styling
+Firebase (Authentication + Firestore)
 
-To access the application, register or log in with your email and password. Each user can see only their own categories and questions. From your dashboard, you can create and manage categories, view stats, and run tests. Each category contains a list of editable/searchable questions and answers. When running a test, you can save your progress, and the app will track your correct/incorrect answers and success rate.
+Why It Works
+------------
+You create your own questions → better understanding of the topic.
+Encourages active recall instead of passive multiple choice.
+Focuses on problem areas by repeating incorrect answers.
+Works for any field — create unlimited custom categories.
+Ideal for long-term learning and review.
 
-### Why is this useful?
+Future Improvements
+-------------------
+Search across all categories
+Add images to questions/answers
+Edit login info / delete account
+Improved mobile UX
 
-- You learn by writing your own questions
-- Not a multiple-choice quiz – it encourages deeper understanding
-- Focuses on questions you struggle with
-- Allows adding new topics while retaining old knowledge
-- Unlimited category creation
-- Features like progress saving and highscores included
-- More features are coming soon...
+Contact
+--------
+If you have questions or feedback, feel free to contact me at:
+📧 mona.ruz@seznam.cz
 
-This application is subject to copyright
+License
+--------
+This project is subject to copyright.
 
----
 
-## Česky
 
-Aplikace byla vytvořena pomocí knihoven React, RTK, React Hook Form, React Query a Tailwind. Backend zajišťuje Firebase. Aplikace slouží jako nástroj k samostatnému procvičování znalostí z libovolného oboru. Uživatel si zadává vlastní otázky a odpovědi a poté spouští test. Test lze během řešení uložit a ukládá se i nejlepší dosažený výsledek.
 
-### Jak aplikaci používat?
-
-Pro přístup do aplikace je nutná registrace nebo přihlášení pomocí e-mailu a hesla. Každý uživatel vidí jen své vlastní kategorie a otázky. Na dashboardu může vytvářet, upravovat nebo mazat kategorie a v nich otázky a odpovědi. Test lze spustit pouze tehdy, pokud kategorie obsahuje alespoň jednu otázku. Před spuštěním testu se zobrazí instrukce a případně možnost resetu dříve uloženého testu.
-
-Test náhodně zobrazuje otázky a sleduje, které z nich uživatel zodpověděl správně nebo špatně. Špatně zodpovězené otázky se opakují, dokud nejsou správně označeny. Test končí, jakmile jsou všechny otázky správně zodpovězeny.
-
-### Proč je to užitečné?
-
-- Nutí tě aktivně si tvořit otázky a odpovědi
-- Není to kvíz – důraz na hlubší porozumění
-- Znovu opakuješ jen to, co ti dělá problém
-- Můžeš přidávat nové otázky bez zapomínání těch starých
-- Libovolné množství témat a kategorií
-- Ukládání průběhu a vyhodnocení výsledků
-- Aplikace se dále vyvíjí...
-
-Aplikace podléhá autorskému právu. Pokud máš dotaz nebo problém, napiš na: mona.ruz@seznam.cz
-
----
