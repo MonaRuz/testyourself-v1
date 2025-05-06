@@ -1,3 +1,7 @@
+🔗 **Live demo:** [https://testys-71128.web.app/](https://testys-71128.web.app/)
+
+Test Yourself
+-------------
 A self-testing app built with React, Redux Toolkit, React Query, React Hook Form, Tailwind CSS, and Firebase as the backend. It allows users to create their own categories of questions and answers, track their test progress, and monitor their best scores.
 
 Features
