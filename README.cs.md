@@ -39,10 +39,10 @@ Neomezené množství kategorií a témat.
 Tech Stack
 ----------
 React 
-Redux for test state
-React Query for Firebase data
-React Hook Form for form handling
-Tailwind CSS for styling
+Redux pro state management testu
+React Query pro Firebase data
+React Hook Form pro formuláře
+Tailwind CSS pro vzhled
 Firebase (Authentication + Firestore)
 
 Aplikace je stále ve vývoji
