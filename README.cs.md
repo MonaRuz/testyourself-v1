@@ -1,4 +1,4 @@
-🔗 **Live demo:** [https://test-yourself.netlify.app](https://test-yourself.netlify.app)
+🔗 **Live demo:** [https://testys-71128.web.app/](https://testys-71128.web.app/)
 
 Test Yourself
 -------------
