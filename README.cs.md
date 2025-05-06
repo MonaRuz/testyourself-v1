@@ -26,6 +26,8 @@ Chybně označené otázky se opakují, dokud nejsou správně zodpovězeny.
 Průběžně lze test uložit.
 Po dokončení se zobrazí úspěšnost v % a případně se uloží jako nové highscore.
 
+⚠️ Smezání lokálního úložiště (local storage) smaže případně uložený probíhající test!
+
 Proč je tato aplikace užitečná?
 ------------------------------
 Otázky a odpovědi si uživatel píše sám – prohlubuje tím pochopení látky.
