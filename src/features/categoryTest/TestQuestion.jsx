@@ -1,5 +1,11 @@
 import PropTypes from "prop-types"
 
+TestQuestion.propTypes={
+	question:PropTypes.string,
+	answer:PropTypes.string,
+	isOpenAnswer:PropTypes.bool
+}
+
 export default function TestQuestion({ question, answer, isOpenAnswer }) {
 	
 	return (
@@ -22,8 +28,3 @@ export default function TestQuestion({ question, answer, isOpenAnswer }) {
 	)
 }
 
-TestQuestion.propTypes={
-	question:PropTypes.string,
-	answer:PropTypes.string,
-	isOpenAnswer:PropTypes.bool
-}

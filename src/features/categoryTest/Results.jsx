@@ -3,6 +3,11 @@ import PropTypes from "prop-types"
 import useHighscore from "./useHighscore"
 import Button from "../../components/Button"
 
+Results.propTypes = {
+	selectedCategory: PropTypes.object,
+	percentage: PropTypes.number,
+}
+
 export default function Results({ selectedCategory, percentage }) {
 	const { category } = useParams()
 	const navigate = useNavigate()
@@ -59,7 +64,4 @@ export default function Results({ selectedCategory, percentage }) {
 	)
 }
 
-Results.propTypes = {
-	selectedCategory: PropTypes.object,
-	percentage: PropTypes.number,
-}
+

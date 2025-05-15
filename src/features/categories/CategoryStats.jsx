@@ -4,6 +4,14 @@ import PropTypes from "prop-types"
 import Spinner from "../../components/Spinner"
 import Button from "../../components/Button"
 import useHighscore from "../categoryTest/useHighscore"
+
+CategoryStats.propTypes = {
+	selectedCategory: PropTypes.object,
+	id: PropTypes.string,
+	highscore: PropTypes.number,
+	category: PropTypes.string,
+}
+
 export default function CategoryStats({ selectedCategory }) {
 	const { id, highscore, category } = selectedCategory
 	const { isLoadingQuestions, questions } = useQuestions(id)
@@ -76,9 +84,3 @@ export default function CategoryStats({ selectedCategory }) {
 	)
 }
 
-CategoryStats.propTypes = {
-	selectedCategory: PropTypes.object,
-	id: PropTypes.string,
-	highscore: PropTypes.number,
-	category: PropTypes.string,
-}

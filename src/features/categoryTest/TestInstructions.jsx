@@ -3,6 +3,11 @@ import { useState } from "react"
 import PropTypes from "prop-types"
 import Button from "../../components/Button"
 
+TestInstructions.propTypes = {
+	dispatch: PropTypes.func,
+	questions: PropTypes.array,
+	savedTest: PropTypes.object,
+}
 
 export default function TestInstructions({ dispatch, questions, savedTest }) {
 	console.log(questions);
@@ -110,8 +115,4 @@ export default function TestInstructions({ dispatch, questions, savedTest }) {
 	)
 }
 
-TestInstructions.propTypes = {
-	dispatch: PropTypes.func,
-	questions: PropTypes.array,
-	savedTest: PropTypes.object,
-}
+

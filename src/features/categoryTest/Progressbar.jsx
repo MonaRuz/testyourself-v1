@@ -1,6 +1,12 @@
 import { useParams } from "react-router-dom"
 import PropTypes from "prop-types"
 
+Progressbar.propTypes={
+	allCategoryQuestions:PropTypes.number,
+	progress:PropTypes.number,
+	percentage:PropTypes.number
+}
+
 export default function Progressbar({
 	allCategoryQuestions,
 	progress,
@@ -25,8 +31,4 @@ export default function Progressbar({
 	)
 }
 
-Progressbar.propTypes={
-	allCategoryQuestions:PropTypes.number,
-	progress:PropTypes.number,
-	percentage:PropTypes.number
-}
+

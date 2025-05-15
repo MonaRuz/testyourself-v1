@@ -4,6 +4,11 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io"
 import { useDeleteQuestion } from "./useDeleteQuestion"
 import PropTypes from "prop-types"
 
+Question.propTypes={
+	question:PropTypes.object,
+	selectedCategory:PropTypes.object
+}
+
 export default function Question({ question, selectedCategory }) {
 	
 	const [isOpen, setIsOpen] = useState(false)
@@ -65,7 +70,3 @@ export default function Question({ question, selectedCategory }) {
 	)
 }
 
-Question.propTypes={
-	question:PropTypes.object,
-	selectedCategory:PropTypes.object
-}

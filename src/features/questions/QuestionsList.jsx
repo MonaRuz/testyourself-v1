@@ -5,6 +5,10 @@ import Spinner from "../../components/Spinner"
 import Error from "../../components/Error"
 import Question from "./Question"
 
+QuestionsList.propTypes = {
+	selectedCategory: PropTypes.object,
+}
+
 export default function QuestionsList({ selectedCategory }) {
 	const [searchedExpression, setSearchedExpression] = useState()
 
@@ -72,6 +76,4 @@ export default function QuestionsList({ selectedCategory }) {
 	)
 }
 
-QuestionsList.propTypes = {
-	selectedCategory: PropTypes.object,
-}
+

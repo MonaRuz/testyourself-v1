@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import Button from "../components/Button"
 
 ErrorPage.propTypes = {
-	children:PropTypes.element
+	children:PropTypes.string
 }
 
 export default function ErrorPage({children="Page not found"}) {
