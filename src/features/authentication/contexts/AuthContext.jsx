@@ -1,4 +1,9 @@
 import { createContext, useContext, useState } from "react"
+import PropTypes from "prop-types"
+
+AuthProvider.propTypes = {
+	children: PropTypes.element,
+}
 
 const AuthContext = createContext()
 
