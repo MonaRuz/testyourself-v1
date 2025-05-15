@@ -3,6 +3,10 @@ import { useAuth } from "../features/authentication/contexts/AuthContext"
 import { useEffect } from "react"
 import PropTypes from "prop-types"
 
+ProtectedRoute.propTypes = {
+	children:PropTypes.element
+}
+
 export default function ProtectedRoute({ children }) {
 	const { isAuthenticated } = useAuth()
 	const navigate = useNavigate()
@@ -17,6 +21,4 @@ export default function ProtectedRoute({ children }) {
 	return isAuthenticated?children:null
 }
 
-ProtectedRoute.propTypes = {
-	children:PropTypes.element
-}
+
