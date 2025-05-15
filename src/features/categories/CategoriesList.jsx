@@ -1,24 +1,24 @@
 import { useNavigate } from "react-router-dom"
-import { getAuth } from "firebase/auth"
+// import { getAuth } from "firebase/auth"
 import useCategories from "./useCategories"
 import Spinner from "../../components/Spinner"
 import Error from "../../components/Error"
 
 export default function CategoriesList() {
 	const navigate = useNavigate()
-	const auth = getAuth()
-	const user = auth.currentUser
-	const uid = user.uid
+	// const auth = getAuth()
+	// const user = auth.currentUser
+	// const uid = user.uid
 
 	const { isLoading, categories } = useCategories()
 
-	const categoriesByUid = categories?.filter((category) => {
-		return category.uid === uid
-	})
+	// const categoriesByUid = categories?.filter((category) => {
+	// 	return category.uid === uid
+	// })
 
 	if (isLoading) return <Spinner>Categories</Spinner>
 
-	if (categoriesByUid?.length === 0)
+	if (!categories)
 		return <Error errorMessage={"There are no categories to display"} />
 
 	return (
@@ -27,10 +27,10 @@ export default function CategoriesList() {
 				Your categories:
 			</h3>
 			<ul className='text-yellow-200 text-center sm:grid sm:grid-cols-2 sm:gap-4 md:w-3/4 mx-auto'>
-				{categoriesByUid.map((category) => {
+				{categories.map((category) => {
 					return (
 						<li
-							onClick={() => navigate(`/${category.category}/overview`)}
+							onClick={() => navigate(`/${category.id}/overview`)}
 							className='border border-yellow-200 hover:border hover:border-none hover:bg-yellow-200 hover:text-black my-1 py-2'
 							key={category.id}
 						>

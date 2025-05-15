@@ -1,44 +1,77 @@
 import {
 	collection,
 	getDocs,
+	getDoc,
 	addDoc,
 	deleteDoc,
 	doc,
 	query,
 	where,
 	updateDoc,
-	orderBy
+	orderBy,
 } from "firebase/firestore/lite"
 import db from "../firebase/config"
 import { getAuth } from "firebase/auth"
 
-const auth = getAuth()
-	const user = auth.currentUser
+// export async function getCategories() {
+// 	console.log(user.uid);
+
+// 	const categories = []
+// 	try {
+// 		const querySnapshot = await getDocs(collection(db, "categories"),where("uid", "==", user.uid),
+// 		orderBy("__name__"))
+
+// 		querySnapshot.forEach((doc) => {
+// 			categories.push({ id: doc.id, ...doc.data() })
+// 		})
+// 	} catch (err) {
+// 		console.error(err)
+// 		throw new Error("Categories could not by fetched.")
+// 	}
+// 	return categories
+// }
 
 export async function getCategories() {
+	const auth = getAuth()
+	const user = auth.currentUser
+
+	if (!user) throw new Error("No authenticated user.")
+
 	const categories = []
+
 	try {
-		const querySnapshot = await getDocs(collection(db, "categories"),where("uid", "==", user.uid),
-		orderBy("__name__"))
+		const q = query(
+			collection(db, "categories"),
+			where("uid", "==", user.uid),
+			orderBy("__name__")
+		)
+
+		const querySnapshot = await getDocs(q)
 
 		querySnapshot.forEach((doc) => {
 			categories.push({ id: doc.id, ...doc.data() })
 		})
 	} catch (err) {
 		console.error(err)
-		throw new Error("Categories could not by fetched.")
+		throw new Error("Categories could not be fetched.")
 	}
+
 	return categories
 }
 
-export async function getCategory(category) {
-	const q = query(
-		collection(db, "categories"),
-		where("category", "==", category)
-	)
-	let selectedCategory = {}
+export async function getCategory(categoryId) {
+
+	
+	
+	    // const q = query(
+		// 	collection(db, "categories"),
+		// 	where("category", "==", category)
+		// )
+		let selectedCategory = {}
+		const docRef = doc(db, "categories", categoryId);
 	try {
-		const data = await getDocs(q)
+		// const data = await getDocs(q)
+		const data = await getDoc(docRef);
 		data.forEach((doc) => {
 			selectedCategory = { id: doc.id, ...doc.data() }
 			return selectedCategory

@@ -9,25 +9,27 @@ import toast from "react-hot-toast"
 
 export default function CategoryOverview() {
 	const navigate = useNavigate()
-	const { category } = useParams()
-	const { isLoadingCategory, selectedCategory } = useCategory(category)
-	const { isLoadingQuestions, questions } = useQuestions(selectedCategory?.id)
+	const { categoryId } = useParams()
+
+	const { isLoadingCategory, selectedCategory } = useCategory(categoryId)
+	const { isLoadingQuestions, questions } = useQuestions(categoryId)
 
 	function handleStartTest() {
-		if ( questions?.length===0) {
+		if (questions?.length === 0) {
 			toast.error("There are no questions. You must add at least 1 question.")
 			return
 		} else {
-			navigate(`/${category}/test`)
+			navigate(`/${categoryId}/test`)
 		}
 	}
 
-	if (isLoadingCategory || isLoadingQuestions) return <Spinner>Loading category overview...</Spinner>
+	if (isLoadingCategory || isLoadingQuestions)
+		return <Spinner>Loading category overview...</Spinner>
 
 	return (
 		<div>
 			<h2 className='text-purple-300 border-b border-purple-300 text-center pb-1 text-lg'>
-				{category}
+				{selectedCategory.category}
 			</h2>
 			<p className='text-blue-200 text-center text-sm py-3 sm:text-base'>
 				Start test, add new questions or search in existing questions to edit
@@ -47,7 +49,7 @@ export default function CategoryOverview() {
 						Run test
 					</Button>
 					<Button
-						onClick={() => navigate(`/${category}/new-question`)}
+						onClick={() => navigate(`/${categoryId}/new-question`)}
 						style={{
 							backgroundColor: "#88FFB6",
 							width: "133px",
