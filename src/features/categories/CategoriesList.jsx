@@ -13,7 +13,7 @@ export default function CategoriesList() {
 	const { isLoading, categories } = useCategories()
 
 	const categoriesByUid = categories?.filter((category) => {
-		return category.UId === uid
+		return category.uid === uid
 	})
 
 	if (isLoading) return <Spinner>Categories</Spinner>
