@@ -12,5 +12,6 @@ export default function ProtectedRoute({ children }) {
 		},
 		[isAuthenticated, navigate]
 	)
+	// error page
 	return isAuthenticated?children:null
 }

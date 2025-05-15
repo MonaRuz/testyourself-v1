@@ -2,10 +2,14 @@ import { useNavigate, useParams } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { useCategory } from "../categories/useCategory"
 import { useNewQuestion } from "./useNewQuestion"
+import { getAuth } from "firebase/auth"
 import Button from "../../components/Button"
 import Spinner from "../../components/Spinner"
 
 export default function NewQuestion() {
+	const auth = getAuth()
+	const user = auth.currentUser
+	const uid = user.uid
 	const navigate = useNavigate()
 	const { category } = useParams()
 
@@ -21,7 +25,7 @@ export default function NewQuestion() {
 	function onSubmit(newQuestion) {
 		if (newQuestion.question === "" || newQuestion.answer === "") return
 		createQuestion(
-			{ selectedCategoryId, newQuestion, selectedCategory },
+			{ selectedCategoryId, newQuestion, selectedCategory,uid },
 			{
 				onSuccess: () => {
 					reset()
