@@ -50,7 +50,7 @@ export async function createCategory(newCategory) {
 		await addDoc(collection(db, "categories"), {
 			category: newCategory.categoryName,
 			highscore: 0,
-			UId: newCategory.uid,
+			uid: newCategory.uid,
 		})
 	} catch (err) {
 		console.error(err)
