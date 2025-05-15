@@ -1,5 +1,10 @@
 import { useNavigate } from "react-router-dom"
+import PropTypes from "prop-types"
 import Button from "../components/Button"
+
+ErrorPage.propTypes = {
+	children:PropTypes.element
+}
 
 export default function ErrorPage({children="Page not found"}) {
 	const navigate=useNavigate()
@@ -26,3 +31,5 @@ export default function ErrorPage({children="Page not found"}) {
 		</div>
 	)
 }
+
+
