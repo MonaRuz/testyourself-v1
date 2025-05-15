@@ -7,13 +7,20 @@ import {
 	query,
 	where,
 	updateDoc,
+	orderBy
 } from "firebase/firestore/lite"
 import db from "../firebase/config"
+import { getAuth } from "firebase/auth"
+
+const auth = getAuth()
+	const user = auth.currentUser
 
 export async function getCategories() {
 	const categories = []
 	try {
-		const querySnapshot = await getDocs(collection(db, "categories"))
+		const querySnapshot = await getDocs(collection(db, "categories"),where("uid", "==", user.uid),
+		orderBy("__name__"))
+
 		querySnapshot.forEach((doc) => {
 			categories.push({ id: doc.id, ...doc.data() })
 		})
