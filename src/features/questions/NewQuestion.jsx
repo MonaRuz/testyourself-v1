@@ -20,12 +20,12 @@ export default function NewQuestion() {
 
 	const { errors } = formState
 
-	const { createQuestion, isCreating } = useNewQuestion()
+	const { createQuestion, isCreating } = useNewQuestion(selectedCategoryId)
 
 	function onSubmit(newQuestion) {
 		if (newQuestion.question === "" || newQuestion.answer === "") return
 		createQuestion(
-			{ selectedCategoryId, newQuestion, selectedCategory,uid },
+			{ selectedCategoryId, newQuestion, selectedCategory, uid },
 			{
 				onSuccess: () => {
 					reset()
