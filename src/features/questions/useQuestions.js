@@ -4,11 +4,10 @@ import { useAuth } from "../authentication/contexts/AuthContext"
 
 export function useQuestions(categoryId) {
 	const { user, isLoadingUser } = useAuth()
-console.log(user?.uid);
 
 	const {
 		data: questions,
-		isLoading:isLoadingQuestions,
+		isLoading: isLoadingQuestions,
 		isError,
 		error,
 	} = useQuery({
