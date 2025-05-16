@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query"
-import { getQuestions } from "../services/apiQuestions"
-import { useAuth } from "../contexts/AuthContext"
+import { getQuestions } from "../../services/apiQuestions"
+import { useAuth } from "../authentication/contexts/AuthContext"
 
 export function useQuestions(categoryId) {
-	const { user, loading } = useAuth()
+	const { user, isLoadingUser } = useAuth()
+console.log(user?.uid);
 
 	const {
 		data: questions,
@@ -13,7 +14,7 @@ export function useQuestions(categoryId) {
 	} = useQuery({
 		queryKey: ["questions", categoryId, user?.uid],
 		queryFn: () => getQuestions(categoryId, user.uid),
-		enabled: !!user?.uid && !!categoryId && !loading,
+		enabled: !!user?.uid && !!categoryId && !isLoadingUser,
 	})
 
 	return { questions, isLoadingQuestions, isError, error }
