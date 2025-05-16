@@ -18,8 +18,6 @@ export default function EditQuestion() {
 
 	const { isEditing, editQuestion } = useEditQuestion(categoryId)
 
-	
-
 	const { isLoadingQuestion, question } = useQuestion(categoryId, questionId)
 
 	const { register, handleSubmit, reset } = useForm({
@@ -29,10 +27,14 @@ export default function EditQuestion() {
 		},
 	})
 
-	function handleEditQuestion(editedQuestion) {
-		
+	function handleEditQuestion(editedData) {
+		const fullEditedQuestion = {
+			...question,
+			...editedData,
+		}
+
 		editQuestion(
-			{ categoryId, questionId, editedQuestion },
+			{ categoryId, questionId, editedQuestion: fullEditedQuestion },
 			{
 				onSuccess: () => {
 					navigate(-1)
@@ -51,8 +53,7 @@ export default function EditQuestion() {
 		[question?.question, question?.answer, reset]
 	)
 
-	if ( isLoadingQuestion)
-		return <Spinner>Question editor</Spinner>
+	if (isLoadingQuestion) return <Spinner>Question editor</Spinner>
 	return (
 		<div>
 			<p className='text-blue-200 text-center p-3 text-sm sm:text-base mt-3'>
