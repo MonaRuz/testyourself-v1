@@ -8,6 +8,7 @@ import {
 	addDoc,
 	collection,
 	where,
+	serverTimestamp
 } from "firebase/firestore/lite"
 import db from "../firebase/config"
 
@@ -49,18 +50,32 @@ export async function getQuestion(categoryId, questionId) {
 export async function createQuestion({ categoryId, newQuestion, uid }) {
 	const qRef = collection(db, "categories", categoryId, "questions")
 
+	const questionWithMeta = {
+		question: newQuestion.question,
+		answer: newQuestion.answer,
+		uid,
+		createdAt: serverTimestamp(),
+		updatedAt: serverTimestamp(),
+	}
+
+	// try {
+	// 	await addDoc(qRef, {
+	// 		question: newQuestion.question,
+	// 		answer: newQuestion.answer,
+	// 		uid,
+	// 	})
+	// } catch (err) {
+	// 	console.error(err)
+	// 	throw new Error("Question could not be created.")
+	// }
+
 	try {
-		await addDoc(qRef, {
-			question: newQuestion.question,
-			answer: newQuestion.answer,
-			uid,
-		})
+		const docRef = await addDoc(qRef, questionWithMeta)
+		return { id: docRef.id, ...questionWithMeta }
 	} catch (err) {
 		console.error(err)
 		throw new Error("Question could not be created.")
 	}
-
-	return newQuestion
 }
 
 export async function deleteQuestion(categoryId, questionId) {

@@ -6,7 +6,8 @@ import Error from "../../components/Error"
 import Question from "./Question"
 
 QuestionsList.propTypes = {
-	questions:PropTypes.array
+	questions:PropTypes.array,
+	categoryId:PropTypes.string
 }
 
 export default function QuestionsList({ questions,categoryId }) {
