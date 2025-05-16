@@ -1,9 +1,8 @@
 import { FaRegUserCircle } from "react-icons/fa"
-import { getAuth } from "firebase/auth"
+import { useAuth } from "./contexts/AuthContext"
 
 export default function User() {
-	const auth = getAuth()
-	const user = auth.currentUser
+const{user}=useAuth()
 	const userName = user?.email.substring(0, user.email.indexOf("@"))
 
 	return (

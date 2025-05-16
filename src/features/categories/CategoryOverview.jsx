@@ -6,13 +6,15 @@ import CategoryStats from "./CategoryStats"
 import QuestionsList from "../questions/QuestionsList"
 import Spinner from "../../components/Spinner"
 import toast from "react-hot-toast"
+import { useAuth } from "../authentication/contexts/AuthContext"
 
 export default function CategoryOverview() {
 	const navigate = useNavigate()
 	const { categoryId } = useParams()
+	const{user,isLoadingUser}=useAuth()
 
 	const { isLoadingCategory, selectedCategory } = useCategory(categoryId)
-	const { isLoadingQuestions, questions } = useQuestions(categoryId)
+	const { isLoadingQuestions, questions } = useQuestions(categoryId,user?.uid)
 
 
 	function handleStartTest() {
@@ -24,7 +26,7 @@ export default function CategoryOverview() {
 		}
 	}
 
-	if (isLoadingCategory || isLoadingQuestions)
+	if (isLoadingCategory || isLoadingQuestions || isLoadingUser)
 		return <Spinner>Loading category overview...</Spinner>
 		
 

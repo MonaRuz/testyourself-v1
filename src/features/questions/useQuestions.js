@@ -1,15 +1,20 @@
-import { getQuestions } from "../../services/apiQuestions"
 import { useQuery } from "@tanstack/react-query"
+import { getQuestions } from "../services/apiQuestions"
+import { useAuth } from "../contexts/AuthContext"
 
-export function useQuestions(categoryId, uid) {
-	const { isLoading: isLoadingQuestions, data: questions } = useQuery({
-		queryKey: ["questions", categoryId],
-		queryFn: () => {
-			if (!categoryId || !uid) return Promise.resolve([])
-			return getQuestions(categoryId, uid)
-		},
+export function useQuestions(categoryId) {
+	const { user, loading } = useAuth()
 
-		enabled: !!categoryId && !!uid, // fetch only when both are available
+	const {
+		data: questions,
+		isLoading:isLoadingQuestions,
+		isError,
+		error,
+	} = useQuery({
+		queryKey: ["questions", categoryId, user?.uid],
+		queryFn: () => getQuestions(categoryId, user.uid),
+		enabled: !!user?.uid && !!categoryId && !loading,
 	})
-  return{isLoadingQuestions,questions}
+
+	return { questions, isLoadingQuestions, isError, error }
 }

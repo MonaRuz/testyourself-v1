@@ -30,19 +30,16 @@ import db from "../firebase/config"
 // 	return questions
 // }
 
-const auth = getAuth()
-const user = auth.currentUser
-
-export async function getQuestions(categoryId) {
-	if (!user) throw new Error("Not authenticated")
-
+export async function getQuestions(categoryId,uid) {
 	const questionsRef = collection(db, "categories", categoryId, "questions")
-	const q = query(questionsRef, where("uid", "==", user.uid))
+	const q = query(questionsRef, where("uid", "==", uid))
 
 	const snapshot = await getDocs(q)
-	const questions = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
 
-	console.log(questions);
+	const questions = []
+	snapshot.forEach((doc) => {
+		questions.push({ id: doc.id, ...doc.data() })
+	})
 	return questions
 	
 }
