@@ -10,7 +10,7 @@ import Button from "../../components/Button"
 export default function Login() {
 	const { register, handleSubmit, reset, formState } = useForm()
 	const { errors } = formState
-	const{setIsAuthenticated}=useAuth()
+	const{setIsAuthenticated,setUser}=useAuth()
 	const auth = getAuth()
 	const navigate=useNavigate()
 	
@@ -27,6 +27,7 @@ export default function Login() {
 			.then((userCredential) => {
 				const user = userCredential.user
 				setIsAuthenticated(true)
+				setUser(user)
 				const userName = user.email.substring(0, user.email.indexOf("@"))
 				toast.success(`${userName} was successfully logged in`)
 				navigate("/dashboard")
