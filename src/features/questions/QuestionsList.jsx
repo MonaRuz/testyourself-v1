@@ -11,7 +11,7 @@ QuestionsList.propTypes = {
 }
 
 export default function QuestionsList({ questions,categoryId }) {
-	const [searchedExpression, setSearchedExpression] = useState()
+	// const [searchedExpression, setSearchedExpression] = useState()
 
 	// const { isLoadingQuestions, questions } = useQuestions(selectedCategory.id)
 
@@ -20,29 +20,29 @@ export default function QuestionsList({ questions,categoryId }) {
 
 	//searching questions
 
-	const searchedQuestions =
-		searchedExpression?.length > 0
-			? questions.filter((question) =>
-					`${question.question}`
-						.toLowerCase()
-						.includes(searchedExpression.toLowerCase())
-			  )
-			: questions
+	// const searchedQuestions =
+	// 	searchedExpression?.length > 0
+	// 		? questions.filter((question) =>
+	// 				`${question.question}`
+	// 					.toLowerCase()
+	// 					.includes(searchedExpression.toLowerCase())
+	// 		  )
+	// 		: questions
 
 	//sorting questions
 
-	searchedQuestions?.sort((a, b) => {
-		const questionA = a.question?.toUpperCase()
-		const questionB = b.question?.toUpperCase()
-		if (questionA < questionB) {
-			return -1
-		}
-		if (questionA > questionB) {
-			return 1
-		}
+	// searchedQuestions?.sort((a, b) => {
+	// 	const questionA = a.question?.toUpperCase()
+	// 	const questionB = b.question?.toUpperCase()
+	// 	if (questionA < questionB) {
+	// 		return -1
+	// 	}
+	// 	if (questionA > questionB) {
+	// 		return 1
+	// 	}
 
-		return 0
-	})
+	// 	return 0
+	// })
 
 	// if (isLoadingQuestions) return <Spinner>Category overview</Spinner>
 	if (!questions)
@@ -62,12 +62,12 @@ export default function QuestionsList({ questions,categoryId }) {
 				<input
 					className='bg-black border border-yellow-200 h-8 text-sm px-3 text-yellow-200'
 					type='text'
-					value={searchedExpression}
-					onChange={(e) => setSearchedExpression(e.target.value)}
+					// value={searchedExpression}
+					// onChange={(e) => setSearchedExpression(e.target.value)}
 				/>
 			</div>
 			<ul>
-				{searchedQuestions?.map((q) => (
+				{questions?.map((q) => (
 					<li key={q.id}>
 						<Question
 							question={q}

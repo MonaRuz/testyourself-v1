@@ -21,6 +21,7 @@ import Test from "./features/categoryTest/Test"
 import NewCategory from "./features/categories/NewCategory"
 import Results from "./features/categoryTest/Results"
 import DeleteCategory from "./features/categories/DeleteCategory"
+import FixMissingTimestamps from "./pages/FixMissingTimeStamps"
 // import ProtectedRoute from "./pages/ProtectedRoute"
 const ProtectedRoute =lazy(()=>import("./pages/ProtectedRoute"))
 // import ErrorPage from "./pages/ErrorPage"

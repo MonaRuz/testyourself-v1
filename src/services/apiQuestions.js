@@ -8,23 +8,42 @@ import {
 	addDoc,
 	collection,
 	where,
-	serverTimestamp
+	serverTimestamp,
+	orderBy
 } from "firebase/firestore/lite"
 import db from "../firebase/config"
 
 
-export async function getQuestions(categoryId,uid) {
-	const questionsRef = collection(db, "categories", categoryId, "questions")
-	const q = query(questionsRef, where("uid", "==", uid))
+// export async function getQuestions(categoryId,uid) {
+// 	const questionsRef = collection(db, "categories", categoryId, "questions")
+// 	const q = query(questionsRef, where("uid", "==", uid))
 
-	const snapshot = await getDocs(q)
+// 	const snapshot = await getDocs(q)
 
-	const questions = []
-	snapshot.forEach((doc) => {
-		questions.push({ id: doc.id, ...doc.data() })
-	})
-	return questions
+// 	const questions = []
+// 	snapshot.forEach((doc) => {
+// 		questions.push({ id: doc.id, ...doc.data() })
+// 	})
+// 	return questions
 	
+// }
+
+export async function getQuestions(categoryId, uid) {
+	const qRef = collection(db, "categories", categoryId, "questions")
+	const q = query(
+		qRef,
+		where("uid", "==", uid),
+		orderBy("createdAt", "desc") // řadíme od nejnovější
+	)
+
+	const querySnapshot = await getDocs(q)
+
+	const questions = querySnapshot.docs.map(doc => ({
+		id: doc.id,
+		...doc.data(),
+	}))
+
+	return questions
 }
 
 export async function getQuestion(categoryId, questionId) {
