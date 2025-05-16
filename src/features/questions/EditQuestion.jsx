@@ -1,7 +1,6 @@
 import { useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { useForm } from "react-hook-form"
-import { useCategory } from "../categories/useCategory"
 import { useQuestion } from "./useQuestion"
 import { useEditQuestion } from "./useEditQuestion"
 import Button from "../../components/Button"
@@ -11,13 +10,15 @@ export default function EditQuestion() {
 	const navigate = useNavigate()
 	const param = useParams()
 
-	const { isLoading: isLoadingCategory, selectedCategory } = useCategory(
-		param.category
-	)
-	const { isEditing, editQuestion } = useEditQuestion()
-
-	const categoryId = selectedCategory.id
+	const categoryId = param.categoryId
 	const questionId = param.questionID
+
+	//+error page if not question
+	//upravená otázka se smaže neuloží jako upravená
+
+	const { isEditing, editQuestion } = useEditQuestion(categoryId)
+
+	
 
 	const { isLoadingQuestion, question } = useQuestion(categoryId, questionId)
 
@@ -29,11 +30,12 @@ export default function EditQuestion() {
 	})
 
 	function handleEditQuestion(editedQuestion) {
+		
 		editQuestion(
 			{ categoryId, questionId, editedQuestion },
 			{
 				onSuccess: () => {
-					navigate(`/${selectedCategory?.category}/overview`)
+					navigate(-1)
 				},
 			}
 		)
@@ -49,7 +51,7 @@ export default function EditQuestion() {
 		[question?.question, question?.answer, reset]
 	)
 
-	if (isLoadingCategory || isLoadingQuestion)
+	if ( isLoadingQuestion)
 		return <Spinner>Question editor</Spinner>
 	return (
 		<div>
@@ -81,9 +83,9 @@ export default function EditQuestion() {
 					</label>
 					<div className='flex flex-col justify-center gap-3 mt-5'>
 						<Button
-							type='submit'
+							type='button'
 							disabled={isEditing}
-							onClick={() => navigate(`/${selectedCategory.category}/overview`)}
+							onClick={() => navigate(-1)}
 							style={{
 								backgroundColor: "rgb(254 240 138)",
 								width: "250px",
@@ -94,7 +96,7 @@ export default function EditQuestion() {
 							Back
 						</Button>
 						<Button
-							type='button'
+							type='submit'
 							style={{
 								backgroundColor: "#88FFB6",
 								width: "250px",

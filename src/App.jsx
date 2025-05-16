@@ -73,10 +73,10 @@ export default function App() {
 								element={<NewCategory />}
 							/>
 							<Route
-								path=':category/delete'
+								path=':categoryId/delete'
 								element={<DeleteCategory />}
 							/>
-							<Route path=':category'>
+							<Route path=':categoryId'>
 								<Route
 									path='overview'
 									element={<CategoryOverview />}

@@ -11,21 +11,21 @@ export default function NewQuestion() {
 	const user = auth.currentUser
 	const uid = user.uid
 	const navigate = useNavigate()
-	const { category } = useParams()
+	const { categoryId } = useParams()
 
-	const { isLoadingCategory, selectedCategory } = useCategory(category)
-	const selectedCategoryId = selectedCategory.id
+	const { isLoadingCategory, selectedCategory } = useCategory(categoryId)
+
 
 	const { register, handleSubmit, reset, formState } = useForm()
 
 	const { errors } = formState
 
-	const { createQuestion, isCreating } = useNewQuestion(selectedCategoryId)
+	const { createQuestion, isCreating } = useNewQuestion(categoryId)
 
 	function onSubmit(newQuestion) {
 		if (newQuestion.question === "" || newQuestion.answer === "") return
 		createQuestion(
-			{ selectedCategoryId, newQuestion, selectedCategory, uid },
+			{ categoryId, newQuestion, uid },
 			{
 				onSuccess: () => {
 					reset()

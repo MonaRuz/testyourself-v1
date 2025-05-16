@@ -59,32 +59,24 @@ export async function getCategories() {
 	return categories
 }
 
+
+
 export async function getCategory(categoryId) {
-
-	
-	
-	    // const q = query(
-		// 	collection(db, "categories"),
-		// 	where("category", "==", category)
-		// )
-		let selectedCategory = {}
-		const docRef = doc(db, "categories", categoryId);
 	try {
-		// const data = await getDocs(q)
-		const data = await getDoc(docRef);
-		data.forEach((doc) => {
-			selectedCategory = { id: doc.id, ...doc.data() }
-			return selectedCategory
-		})
-	} catch (err) {
-		console.error(err)
-		throw new Error("Selected category was not found.")
-	}
+		const docRef = doc(db, "categories", categoryId);
+		const docSnap = await getDoc(docRef);
 
-	return selectedCategory
+		if (!docSnap.exists()) {
+			throw new Error("Category not found");
+		}
+
+		return { id: docSnap.id, ...docSnap.data() };
+	} catch (err) {
+		console.error(err);
+		throw new Error("Failed to fetch the category.");
+	}
 }
 
-//debug:
 export async function createCategory(newCategory) {
 	try {
 		await addDoc(collection(db, "categories"), {

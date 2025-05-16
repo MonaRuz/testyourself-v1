@@ -4,12 +4,12 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io"
 import { useDeleteQuestion } from "./useDeleteQuestion"
 import PropTypes from "prop-types"
 
-Question.propTypes={
-	question:PropTypes.object,
-	selectedCategory:PropTypes.object
-}
+// Question.propTypes={
+// 	question:PropTypes.object,
+// 	selectedCategory:PropTypes.object
+// }
 
-export default function Question({ question, selectedCategory }) {
+export default function Question({ question, categoryId }) {
 	
 	const [isOpen, setIsOpen] = useState(false)
 	
@@ -22,7 +22,7 @@ export default function Question({ question, selectedCategory }) {
 	}
 
 	function handleDeleteQuestion(id) {
-		deleteQuestion({categoryId:selectedCategory.id,questionId: id})
+		deleteQuestion({categoryId,questionId: id})
 	}
 	
 
@@ -52,7 +52,7 @@ export default function Question({ question, selectedCategory }) {
 					</p>
 					<div className='flex justify-center gap-4 mb-3'>
 						<button
-							onClick={() => navigate(`/${selectedCategory.category}/${question.id}/edit`)}
+							onClick={() => navigate(`/${categoryId}/${question.id}/edit`)}
 							className="text-zinc-900 bg-green-200 w-20 py-1 border-2 border-zinc-900 hover:border-none font-['kanit']"
 						>
 							Edit

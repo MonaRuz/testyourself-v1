@@ -7,28 +7,55 @@ import {
 	doc,
 	addDoc,
 	collection,
+	where,
 } from "firebase/firestore/lite"
+import { getAuth } from "firebase/auth"
 import db from "../firebase/config"
 
-export async function getQuestions(selectedCategoryId) {
-	const q = query(collection(db, "categories", selectedCategoryId, "questions"))
-	let questions = []
-	try {
-		const querySnapshot = await getDocs(q)
-		querySnapshot.forEach((doc) => {
-			questions.push({ id: doc.id, ...doc.data() })
-			return questions
-		})
-	} catch (err) {
-		console.error(err)
-		throw new Error("Questions cannot be fetched.")
-	}
+// export async function getQuestions(categoryId) {
 
+// 	const q = query(collection(db, "categories", categoryId, "questions"))
+// 	let questions = []
+// 	try {
+// 		const querySnapshot = await getDocs(q)
+// 		querySnapshot.forEach((doc) => {
+// 			questions.push({ id: doc.id, ...doc.data() })
+// 			return questions
+// 		})
+// 	} catch (err) {
+// 		console.error(err)
+// 		throw new Error("Questions cannot be fetched.")
+// 	}
+
+// 	return questions
+// }
+
+const auth = getAuth()
+const user = auth.currentUser
+
+export async function getQuestions(categoryId) {
+	if (!user) throw new Error("Not authenticated")
+
+	const questionsRef = collection(db, "categories", categoryId, "questions")
+	const q = query(questionsRef, where("uid", "==", user.uid))
+
+	const snapshot = await getDocs(q)
+	const questions = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+
+	console.log(questions);
 	return questions
+	
 }
 
-export async function getQuestion(selectedCategoryId, questionId) {
-	const qRef = doc(db, "categories", selectedCategoryId, "questions", questionId)
+export async function getQuestion(categoryId, questionId) {
+	
+	const qRef = doc(
+		db,
+		"categories",
+		categoryId,
+		"questions",
+		questionId
+	)
 
 	try {
 		const qSnap = await getDoc(qRef)
@@ -40,14 +67,14 @@ export async function getQuestion(selectedCategoryId, questionId) {
 	}
 }
 
-export async function createQuestion({ selectedCategoryId, newQuestion,uid }) {
-	const qRef = collection(db, "categories", selectedCategoryId, "questions")
+export async function createQuestion({ categoryId, newQuestion, uid }) {
+	const qRef = collection(db, "categories", categoryId, "questions")
 
 	try {
 		await addDoc(qRef, {
 			question: newQuestion.question,
 			answer: newQuestion.answer,
-			uid
+			uid,
 		})
 	} catch (err) {
 		console.error(err)
@@ -57,8 +84,14 @@ export async function createQuestion({ selectedCategoryId, newQuestion,uid }) {
 	return newQuestion
 }
 
-export async function deleteQuestion(selectedCategoryId, questionId) {
-	const qRef = doc(db, "categories", selectedCategoryId, "questions", questionId)
+export async function deleteQuestion(categoryId, questionId) {
+	const qRef = doc(
+		db,
+		"categories",
+		categoryId,
+		"questions",
+		questionId
+	)
 	try {
 		await deleteDoc(qRef)
 	} catch (err) {
@@ -68,6 +101,7 @@ export async function deleteQuestion(selectedCategoryId, questionId) {
 }
 
 export async function editQuestion({ categoryId, questionId, editedQuestion }) {
+	console.log(categoryId,questionId,editedQuestion);
 	
 	const qRef = doc(db, "categories", categoryId, "questions", questionId)
 	try {

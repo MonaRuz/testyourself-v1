@@ -14,8 +14,9 @@ export default function CategoryOverview() {
 	const { isLoadingCategory, selectedCategory } = useCategory(categoryId)
 	const { isLoadingQuestions, questions } = useQuestions(categoryId)
 
+
 	function handleStartTest() {
-		if (questions?.length === 0) {
+		if (!questions) {
 			toast.error("There are no questions. You must add at least 1 question.")
 			return
 		} else {
@@ -25,6 +26,7 @@ export default function CategoryOverview() {
 
 	if (isLoadingCategory || isLoadingQuestions)
 		return <Spinner>Loading category overview...</Spinner>
+		
 
 	return (
 		<div>
@@ -73,7 +75,7 @@ export default function CategoryOverview() {
 						Back
 					</Button>
 					<Button
-						onClick={() => navigate(`/${selectedCategory.category}/delete`)}
+						onClick={() => navigate(`/${categoryId}/delete`)}
 						style={{
 							backgroundColor: "rgb(252 165 165)",
 							width: "133px",
@@ -87,8 +89,13 @@ export default function CategoryOverview() {
 			</div>
 			<div className='flex flex-col'>
 				<div className='flex flex-col items-center lg:flex-row lg:justify-center lg:gap-5 lg:items-start'>
-					<CategoryStats selectedCategory={selectedCategory} />
-					<QuestionsList selectedCategory={selectedCategory} />
+					<CategoryStats
+						questions={questions}
+						id={categoryId}
+						highscore={selectedCategory.highscore}
+						categoryName={selectedCategory.category}
+					/>
+					<QuestionsList questions={questions} categoryId={categoryId} />
 				</div>
 			</div>
 		</div>

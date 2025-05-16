@@ -12,14 +12,16 @@ CategoryStats.propTypes = {
 	category: PropTypes.string,
 }
 
-export default function CategoryStats({ selectedCategory }) {
-	const { id, highscore, category } = selectedCategory
-	const { isLoadingQuestions, questions } = useQuestions(id)
-	const { updateHighscore } = useHighscore(category)
+export default function CategoryStats({ questions,id,highscore,categoryName }) {
+	
+	// console.log();
+	
+	
+	const { updateHighscore } = useHighscore(id)
 
 	const allCategoryQuestions = questions?.length
 
-	const savedTest = JSON.parse(getSavedTest(category))
+	const savedTest = JSON.parse(getSavedTest(categoryName))
 	const correctAttempts = savedTest?.correctAttempts
 	const wrongAttempts = savedTest?.wrongAttempts
 
@@ -31,8 +33,6 @@ export default function CategoryStats({ selectedCategory }) {
 	function handleResetHighscore() {
 		updateHighscore({ selectedCategoryId: id, percentage: 0 })
 	}
-
-	if (isLoadingQuestions) return <Spinner>category statistics</Spinner>
 
 	return (
 		<div className='mt-[13px] px-2'>

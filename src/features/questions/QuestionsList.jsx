@@ -6,13 +6,16 @@ import Error from "../../components/Error"
 import Question from "./Question"
 
 QuestionsList.propTypes = {
-	selectedCategory: PropTypes.object,
+	questions:PropTypes.array
 }
 
-export default function QuestionsList({ selectedCategory }) {
+export default function QuestionsList({ questions,categoryId }) {
 	const [searchedExpression, setSearchedExpression] = useState()
 
-	const { isLoadingQuestions, questions } = useQuestions(selectedCategory.id)
+	// const { isLoadingQuestions, questions } = useQuestions(selectedCategory.id)
+
+
+	
 
 	//searching questions
 
@@ -40,8 +43,8 @@ export default function QuestionsList({ selectedCategory }) {
 		return 0
 	})
 
-	if (isLoadingQuestions) return <Spinner>Category overview</Spinner>
-	if (questions.length === 0)
+	// if (isLoadingQuestions) return <Spinner>Category overview</Spinner>
+	if (!questions)
 		return (
 			<Error
 				className='text-red-300 mt-3'
@@ -67,7 +70,7 @@ export default function QuestionsList({ selectedCategory }) {
 					<li key={q.id}>
 						<Question
 							question={q}
-							selectedCategory={selectedCategory}
+							categoryId={categoryId}
 						/>
 					</li>
 				))}
