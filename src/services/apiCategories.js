@@ -62,6 +62,7 @@ export async function getCategories() {
 
 
 export async function getCategory(categoryId) {
+	
 	try {
 		const docRef = doc(db, "categories", categoryId);
 		const docSnap = await getDoc(docRef);
@@ -102,8 +103,6 @@ export async function deleteCategory(categoryId) {
 }
 
 export async function updateHighscore(categoryId, percentage) {
-	console.log(percentage)
-	console.log(categoryId)
 
 	const qRef = doc(db, "categories", categoryId)
 	try {

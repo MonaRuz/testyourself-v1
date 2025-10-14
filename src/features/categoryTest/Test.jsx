@@ -76,8 +76,10 @@ function reducer(state, action) {
 
 export default function Test() {
 	const navigate = useNavigate()
-	const { category } = useParams()
-	const { isLoadingCategory, selectedCategory } = useCategory(category)
+	const  category  = useParams()
+	console.log(category);
+	
+	const { isLoadingCategory, selectedCategory } = useCategory(category.categoryId)
 	const { isLoadingQuestions, questions } = useQuestions(selectedCategory?.id)
 
 	const [

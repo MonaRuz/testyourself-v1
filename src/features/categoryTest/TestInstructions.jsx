@@ -10,7 +10,6 @@ TestInstructions.propTypes = {
 }
 
 export default function TestInstructions({ dispatch, questions, savedTest }) {
-	console.log(questions);
 	
 	const navigate = useNavigate()
 	const { category } = useParams()
