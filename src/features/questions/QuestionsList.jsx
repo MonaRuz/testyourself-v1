@@ -31,18 +31,18 @@ export default function QuestionsList({ questions,categoryId }) {
 
 	//sorting questions
 
-	// searchedQuestions?.sort((a, b) => {
-	// 	const questionA = a.question?.toUpperCase()
-	// 	const questionB = b.question?.toUpperCase()
-	// 	if (questionA < questionB) {
-	// 		return -1
-	// 	}
-	// 	if (questionA > questionB) {
-	// 		return 1
-	// 	}
+	searchedQuestions?.sort((a, b) => {
+		const questionA = a.question?.toUpperCase()
+		const questionB = b.question?.toUpperCase()
+		if (questionA < questionB) {
+			return -1
+		}
+		if (questionA > questionB) {
+			return 1
+		}
 
-	// 	return 0
-	// })
+		return 0
+	})
 
 	// if (isLoadingQuestions) return <Spinner>Category overview</Spinner>
 	if (!questions)
