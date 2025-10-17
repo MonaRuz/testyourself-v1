@@ -11,10 +11,16 @@ import Button from "../../components/Button"
 import Results from "../categoryTest/Results"
 import TestInstructions from "./TestInstructions"
 
+// const getRandomIndex = (max) => {
+// 	const min = Math.ceil(0)
+// 	max = Math.floor(max)
+// 	return Math.floor(Math.random() * (max - min) + min)
+// }
+
 const getRandomIndex = (max) => {
-	const min = Math.ceil(0)
-	max = Math.floor(max)
-	return Math.floor(Math.random() * (max - min) + min)
+  const m = Math.floor(Number(max))
+  if (!Number.isFinite(m) || m <= 0) return 0 // or throw, or return null depending on desired behavior
+  return Math.floor(Math.random() * m)
 }
 
 const initialState = {
@@ -77,7 +83,6 @@ function reducer(state, action) {
 export default function Test() {
 	const navigate = useNavigate()
 	const  category  = useParams()
-	console.log(category);
 	
 	const { isLoadingCategory, selectedCategory } = useCategory(category.categoryId)
 	const { isLoadingQuestions, questions } = useQuestions(selectedCategory?.id)
@@ -112,8 +117,8 @@ export default function Test() {
 	}
 
 	function handleSaveTest() {
-		saveTestQuestions(testQuestions, correctAttempts, wrongAttempts, category)
-		navigate(`/${category}/overview`)
+		saveTestQuestions(testQuestions, correctAttempts, wrongAttempts, selectedCategory)
+		navigate(`/${category.categoryId}/overview`)
 	}
 
 	useEffect(function () {

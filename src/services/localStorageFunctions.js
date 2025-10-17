@@ -1,8 +1,8 @@
 //getting testQuestions
 
-export function saveTestQuestions(testQuestions,correctAttempts,wrongAttempts, category) {
+export function saveTestQuestions(testQuestions,correctAttempts,wrongAttempts, selectedCategory) {
 	localStorage.setItem(
-		`savedTest_${category}`,
+		`savedTest_${selectedCategory.category}`,
 		JSON.stringify({testQuestions,correctAttempts,wrongAttempts})
 	)
 }
