@@ -82,9 +82,10 @@ function reducer(state, action) {
 
 export default function Test() {
 	const navigate = useNavigate()
-	const  category  = useParams()
+	const  params  = useParams()
+	const categoryId=params.categoryId
 	
-	const { isLoadingCategory, selectedCategory } = useCategory(category.categoryId)
+	const { isLoadingCategory, selectedCategory } = useCategory(categoryId)
 	const { isLoadingQuestions, questions } = useQuestions(selectedCategory?.id)
 
 	const [
@@ -99,7 +100,10 @@ export default function Test() {
 		dispatch,
 	] = useReducer(reducer, initialState)
 
-	const savedTest = JSON.parse(getSavedTest(category))
+	const savedTest = JSON.parse(getSavedTest(selectedCategory))
+
+console.log(selectedCategory.id);
+
 
 	const percentage = Math.floor(
 		(correctAttempts / questions?.length) * 100 -
@@ -118,7 +122,7 @@ export default function Test() {
 
 	function handleSaveTest() {
 		saveTestQuestions(testQuestions, correctAttempts, wrongAttempts, selectedCategory)
-		navigate(`/${category.categoryId}/overview`)
+		navigate(`/${categoryId}/overview`)
 	}
 
 	useEffect(function () {

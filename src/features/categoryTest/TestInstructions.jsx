@@ -12,11 +12,12 @@ TestInstructions.propTypes = {
 export default function TestInstructions({ dispatch, questions, savedTest }) {
 	
 	const navigate = useNavigate()
-	const { category } = useParams()
+	const  category  = useParams()
 	const [isSavedTest, setIsSavedTest] = useState(savedTest)
+console.log(category);
 
 	function handleResetTest() {
-		localStorage.removeItem(`savedTest_${category}`)
+		localStorage.removeItem(`savedTest_${category.categoryId}`)
 		dispatch({ type: "newQuestions", payload: questions })
 		setIsSavedTest(false)
 	}
@@ -24,7 +25,7 @@ export default function TestInstructions({ dispatch, questions, savedTest }) {
 	return (
 		<div className='mt-3'>
 			<h3 className='text-center text-purple-300 border-b border-purple-300 mb-3 pb-1'>
-				Test in category <span className='text-green-200'>{category}</span>{" "}
+				Test in category <span className='text-green-200'>{category.category}</span>{" "}
 				<span className='text-purple-100'>- {questions?.lenght} questions</span>
 			</h3>
 			<div className='flex flex-col gap-1 items-center'>
@@ -53,7 +54,7 @@ export default function TestInstructions({ dispatch, questions, savedTest }) {
 					</Button>
 				)}
 				<Button
-					onClick={() => navigate(`/${category}/overview`)}
+					onClick={() => navigate(`/${category.categoryId}/overview`)}
 					style={{
 						backgroundColor: "rgb(254 240 138)",
 						width: "250px",

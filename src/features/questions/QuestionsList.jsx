@@ -1,5 +1,4 @@
 import { useState } from "react"
-import { useQuestions } from "./useQuestions"
 import PropTypes from "prop-types"
 import Spinner from "../../components/Spinner"
 import Error from "../../components/Error"
@@ -44,7 +43,6 @@ export default function QuestionsList({ questions,categoryId }) {
 		return 0
 	})
 
-	// if (isLoadingQuestions) return <Spinner>Category overview</Spinner>
 	if (!questions)
 		return (
 			<Error
