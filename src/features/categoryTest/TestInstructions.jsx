@@ -9,15 +9,14 @@ TestInstructions.propTypes = {
 	savedTest: PropTypes.object,
 }
 
-export default function TestInstructions({ dispatch, questions, savedTest }) {
+export default function TestInstructions({ dispatch, questions, savedTest,selectedCategory }) {
 	
 	const navigate = useNavigate()
-	const  category  = useParams()
+	// const  {categoryId}  = useParams()
 	const [isSavedTest, setIsSavedTest] = useState(savedTest)
-console.log(category);
 
 	function handleResetTest() {
-		localStorage.removeItem(`savedTest_${category.categoryId}`)
+		localStorage.removeItem(`savedTest_${selectedCategory.id}`)
 		dispatch({ type: "newQuestions", payload: questions })
 		setIsSavedTest(false)
 	}
@@ -25,7 +24,7 @@ console.log(category);
 	return (
 		<div className='mt-3'>
 			<h3 className='text-center text-purple-300 border-b border-purple-300 mb-3 pb-1'>
-				Test in category <span className='text-green-200'>{category.category}</span>{" "}
+				Test in category <span className='text-green-200'>{selectedCategory.category}</span>{" "}
 				<span className='text-purple-100'>- {questions?.lenght} questions</span>
 			</h3>
 			<div className='flex flex-col gap-1 items-center'>
@@ -54,7 +53,7 @@ console.log(category);
 					</Button>
 				)}
 				<Button
-					onClick={() => navigate(`/${category.categoryId}/overview`)}
+					onClick={() => navigate(`/${category.selectedCategory}/overview`)}
 					style={{
 						backgroundColor: "rgb(254 240 138)",
 						width: "250px",

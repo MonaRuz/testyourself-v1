@@ -82,8 +82,7 @@ function reducer(state, action) {
 
 export default function Test() {
 	const navigate = useNavigate()
-	const  params  = useParams()
-	const categoryId=params.categoryId
+	const  {categoryId}  = useParams()
 	
 	const { isLoadingCategory, selectedCategory } = useCategory(categoryId)
 	const { isLoadingQuestions, questions } = useQuestions(selectedCategory?.id)
@@ -100,9 +99,7 @@ export default function Test() {
 		dispatch,
 	] = useReducer(reducer, initialState)
 
-	const savedTest = JSON.parse(getSavedTest(selectedCategory))
-
-console.log(selectedCategory.id);
+	const savedTest = JSON.parse(getSavedTest(selectedCategory.id))
 
 
 	const percentage = Math.floor(
@@ -121,7 +118,7 @@ console.log(selectedCategory.id);
 	}
 
 	function handleSaveTest() {
-		saveTestQuestions(testQuestions, correctAttempts, wrongAttempts, selectedCategory)
+		saveTestQuestions(testQuestions, correctAttempts, wrongAttempts, selectedCategory.id)
 		navigate(`/${categoryId}/overview`)
 	}
 
@@ -143,6 +140,7 @@ console.log(selectedCategory.id);
 	if (!isRunningTest || isLoadingCategory || isLoadingQuestions)
 		return (
 			<TestInstructions
+				selectedCategory={selectedCategory}
 				dispatch={dispatch}
 				questions={questions}
 				savedTest={savedTest}

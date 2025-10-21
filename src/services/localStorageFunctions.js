@@ -1,19 +1,18 @@
 //getting testQuestions
 
-export function saveTestQuestions(testQuestions,correctAttempts,wrongAttempts, selectedCategory) {
+export function saveTestQuestions(
+	testQuestions,
+	correctAttempts,
+	wrongAttempts,
+	categoryId
+) {
 	localStorage.setItem(
-		`savedTest_${selectedCategory.id}`,
-		JSON.stringify({testQuestions,correctAttempts,wrongAttempts})
+		`savedTest_${categoryId}`,
+		JSON.stringify({ testQuestions, correctAttempts, wrongAttempts })
 	)
 }
 
-export function getSavedTest(selectedCategory) {
-	console.log(selectedCategory);
-	
-	const data = localStorage.getItem(`savedTest_${selectedCategory.id}`)
+export function getSavedTest(categoryId) {
+	const data = localStorage.getItem(`savedTest_${categoryId}`)
 	return data
 }
-
-
-
-
